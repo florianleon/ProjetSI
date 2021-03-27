@@ -1,56 +1,80 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "symbole_table.h"
+#include <string.h>
+#include "symbol_table.h"
 
 
 ligne table[TAILLE];
-int index = 0;
+int monIndex = 0;
 
 // début des fct //
 
-ligne* creer(char* v, int c, int i){
+ligne* creer(char* v, int c, int i){ // marche plus ???
     ligne* l;
-    //l->index = index;
-    l->variable = v;
+
+    strncpy(l->variable, v, TAILLE_VARIABLE-1);
+    //l->variable[TAILLE_VARIABLE-1] = 0;
     l->constante = c;
     l->init = i;
 
     return l;
 }
 
-void ajouter(ligne* l){
-    table[index] = *l;
-    index++;
+void ajouter(char* v, int c, int i){
+    //ligne * l = creer(v, c, i);
+
+    ligne* l;
+
+    strncpy(l->variable, v, TAILLE_VARIABLE-1);
+    //l->variable[TAILLE_VARIABLE-1] = 0;
+    l->constante = c;
+    l->init = i;
+
+    if(monIndex < TAILLE){
+        table[monIndex] = *l;
+
+        ++monIndex;
+    }
 
 }
 
-void enleverTmp(l){
-    index--;
+void enleverTmp(){
+    monIndex--;
+
+}
+
+void enlever(char * s){
+    int monIndex2 = adresse(s);
+
+    for(int i = monIndex2; i < monIndex; i++){
+        table[i]  = table[i+1];
+    }
+    monIndex--;
 
 }
 
 void setInit(char* s){
     int addr = adresse(s);
-    table[addr]->init = 1;
+    table[addr].init = 1;
 
 }
 
 int isInit(char* s){
     int addr = adresse(s);
-    return table[addr]->init;
+    return table[addr].init;
 
 }
 
 int adresse(char* s){
 
-    for(int i=0; i<INDEX; i++){
-        char* symbole = table[i]->variable;
+    for(int i=0; i<monIndex; i++){
+        char* symbole = table[i].variable;
         if(strcmp(s, symbole) == 0){
             return i;
         }
     }
 
-    printf("init avant decl\n");
+    printf("initialisation avant declaration\n");
     exit(1);
 
 }
@@ -62,10 +86,10 @@ void afficher(){
 
     printf("index\tnom\tconst\tinit\n");
 
-    for(int i = 0; i<index; i++){
-        variable = table[i]->variable;
-        constante = table[i]->constante;
-        init = table[i]->init;
+    for(int i = 0; i<monIndex; i++){
+        variable = table[i].variable;
+        constante = table[i].constante;
+        init = table[i].init;
         printf("%d\t%s\t%d\t%d\n", i, variable, constante, init);
     }
 }

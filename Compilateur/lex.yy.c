@@ -836,7 +836,7 @@ return tPRINT;
 case 17:
 YY_RULE_SETUP
 #line 23 "AL2.lex"
-return tNB;
+{yylval.nombre = atoi(yytext); return tNB;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
@@ -846,7 +846,7 @@ return tEXP;
 case 19:
 YY_RULE_SETUP
 #line 25 "AL2.lex"
-return tVAR;
+{yylval.variable = yytext; return tVAR;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP

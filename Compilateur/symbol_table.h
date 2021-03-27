@@ -1,22 +1,25 @@
-#define TAILLE 10
+#define TAILLE 256
+#define TAILLE_VARIABLE 256
 
 typedef struct {
     //int index;
-    char* variable;
+    char variable[TAILLE_VARIABLE];
     int constante;
     int init;
 } ligne;
 
 ligne* creer(char* v, int c, int i);
 
-void ajouter(ligne* l);
+void ajouter(char* v, int c, int i);
 
 void enleverTmp();
 
-void setInit(ligne* l);
+void enlever(char * s);
+
+void setInit(char* s);
 
 int isInit(char* s);
 
-uint32_t adresse(char* s);
+int adresse(char* s);
 
 void afficher();

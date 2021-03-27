@@ -1,6 +1,7 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
+#include "symbol_table.h"
 int yyerror(char*s) ;
 int yylex();
 
@@ -35,7 +36,10 @@ int yylex();
 %%
 
 Main : tINT tMAIN tAO Programme tAF 
-            {printf("Fin Main\n");}
+            {printf("Fin Main\n");
+            ligne* l = creer("a", 0, 1);
+            ajouter(l);
+            afficher();}
      ;
 
 Programme : Declaration tPV Programme
