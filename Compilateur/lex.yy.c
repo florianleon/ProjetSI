@@ -470,8 +470,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "AL2.lex"
-#line 2 "AL2.lex"
+#line 1 "AL3.lex"
+#line 2 "AL3.lex"
 #include "y.tab.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -693,7 +693,7 @@ YY_DECL
 		}
 
 	{
-#line 6 "AL2.lex"
+#line 6 "AL3.lex"
 
 #line 699 "lex.yy.c"
 
@@ -754,103 +754,103 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 7 "AL2.lex"
+#line 7 "AL3.lex"
 return tMAIN;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 8 "AL2.lex"
+#line 8 "AL3.lex"
 return tAO;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 9 "AL2.lex"
+#line 9 "AL3.lex"
 return tAF;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 10 "AL2.lex"
+#line 10 "AL3.lex"
 return tINT;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 11 "AL2.lex"
+#line 11 "AL3.lex"
 return tCONST;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 12 "AL2.lex"
+#line 12 "AL3.lex"
 return tADD;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 13 "AL2.lex"
+#line 13 "AL3.lex"
 return tSUB;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 14 "AL2.lex"
+#line 14 "AL3.lex"
 return tMUL;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 15 "AL2.lex"
+#line 15 "AL3.lex"
 return tDIV;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 16 "AL2.lex"
+#line 16 "AL3.lex"
 return tEQ;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 17 "AL2.lex"
+#line 17 "AL3.lex"
 return tPO;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 18 "AL2.lex"
+#line 18 "AL3.lex"
 return tPF;
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 19 "AL2.lex"
+#line 19 "AL3.lex"
 ;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 20 "AL2.lex"
+#line 20 "AL3.lex"
 return tV;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 21 "AL2.lex"
+#line 21 "AL3.lex"
 return tPV;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 22 "AL2.lex"
+#line 22 "AL3.lex"
 return tPRINT;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 23 "AL2.lex"
+#line 23 "AL3.lex"
 {yylval.nombre = atoi(yytext); return tNB;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 24 "AL2.lex"
+#line 24 "AL3.lex"
 return tEXP;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 25 "AL2.lex"
-{yylval.variable = yytext; return tVAR;}
+#line 25 "AL3.lex"
+{yylval.variable = strdup(yytext); return tVAR;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 27 "AL2.lex"
+#line 27 "AL3.lex"
 ECHO;
 	YY_BREAK
 #line 857 "lex.yy.c"
@@ -1858,7 +1858,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 27 "AL2.lex"
+#line 27 "AL3.lex"
 
 
 int yywrap() {

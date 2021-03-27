@@ -4,10 +4,10 @@ Terminals unused in grammar
     tEXP
 
 
-State 43 conflicts: 4 shift/reduce
+State 41 conflicts: 4 shift/reduce
+State 42 conflicts: 1 shift/reduce
+State 43 conflicts: 1 shift/reduce
 State 44 conflicts: 1 shift/reduce
-State 45 conflicts: 1 shift/reduce
-State 46 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -16,9 +16,9 @@ Grammar
 
     1 Main: tINT tMAIN tAO Programme tAF
 
-    2 Programme: Declaration tPV Programme
-    3          | Instruction tPV Programme
-    4          | tPRINT tPO tVAR tPF tPV Programme
+    2 Programme: Programme Declaration tPV
+    3          | Programme Instruction tPV
+    4          | Programme tPRINT tPO tVAR tPF tPV
     5          | %empty
 
     6 Declaration: tCONST tINT Variable tEQ Expression
@@ -26,7 +26,7 @@ Grammar
     8            | tINT Variable tEQ Expression
     9            | tINT Variable
 
-   10 Variable: tVAR tV Variable
+   10 Variable: Variable tVAR tV
    11         | tVAR
 
    12 Expression: Expression tADD Expression
@@ -75,7 +75,7 @@ Nonterminals, with rules where they appear
     Programme (24)
         on left: 2 3 4 5
         on right: 1 2 3 4
-    Declaration <variable> (25)
+    Declaration (25)
         on left: 6 7 8 9
         on right: 2
     Variable <variable> (26)
@@ -84,7 +84,7 @@ Nonterminals, with rules where they appear
     Expression (27)
         on left: 12 13 14 15 16 17 18
         on right: 6 8 12 13 14 15 16 19
-    Instruction (28)
+    Instruction <variable> (28)
         on left: 19
         on right: 3
 
@@ -130,109 +130,118 @@ State 5
 
     1 Main: tINT tMAIN tAO . Programme tAF
 
-    tINT    shift, and go to state 6
-    tCONST  shift, and go to state 7
-    tPRINT  shift, and go to state 8
-    tVAR    shift, and go to state 9
-
     $default  reduce using rule 5 (Programme)
 
-    Programme    go to state 10
-    Declaration  go to state 11
-    Instruction  go to state 12
+    Programme  go to state 6
 
 
 State 6
 
-    8 Declaration: tINT . Variable tEQ Expression
-    9            | tINT . Variable
+    1 Main: tINT tMAIN tAO Programme . tAF
+    2 Programme: Programme . Declaration tPV
+    3          | Programme . Instruction tPV
+    4          | Programme . tPRINT tPO tVAR tPF tPV
 
-    tVAR  shift, and go to state 13
+    tAF     shift, and go to state 7
+    tINT    shift, and go to state 8
+    tCONST  shift, and go to state 9
+    tPRINT  shift, and go to state 10
+    tVAR    shift, and go to state 11
 
-    Variable  go to state 14
+    Declaration  go to state 12
+    Instruction  go to state 13
 
 
 State 7
 
-    6 Declaration: tCONST . tINT Variable tEQ Expression
-    7            | tCONST . tINT Variable
+    1 Main: tINT tMAIN tAO Programme tAF .
 
-    tINT  shift, and go to state 15
+    $default  reduce using rule 1 (Main)
 
 
 State 8
 
-    4 Programme: tPRINT . tPO tVAR tPF tPV Programme
+    8 Declaration: tINT . Variable tEQ Expression
+    9            | tINT . Variable
 
-    tPO  shift, and go to state 16
+    tVAR  shift, and go to state 14
+
+    Variable  go to state 15
 
 
 State 9
 
-   19 Instruction: tVAR . tEQ Expression
+    6 Declaration: tCONST . tINT Variable tEQ Expression
+    7            | tCONST . tINT Variable
 
-    tEQ  shift, and go to state 17
+    tINT  shift, and go to state 16
 
 
 State 10
 
-    1 Main: tINT tMAIN tAO Programme . tAF
+    4 Programme: Programme tPRINT . tPO tVAR tPF tPV
 
-    tAF  shift, and go to state 18
+    tPO  shift, and go to state 17
 
 
 State 11
 
-    2 Programme: Declaration . tPV Programme
+   19 Instruction: tVAR . tEQ Expression
 
-    tPV  shift, and go to state 19
+    tEQ  shift, and go to state 18
 
 
 State 12
 
-    3 Programme: Instruction . tPV Programme
+    2 Programme: Programme Declaration . tPV
 
-    tPV  shift, and go to state 20
+    tPV  shift, and go to state 19
 
 
 State 13
 
-   10 Variable: tVAR . tV Variable
-   11         | tVAR .
+    3 Programme: Programme Instruction . tPV
 
-    tV  shift, and go to state 21
-
-    $default  reduce using rule 11 (Variable)
+    tPV  shift, and go to state 20
 
 
 State 14
 
-    8 Declaration: tINT Variable . tEQ Expression
-    9            | tINT Variable .
+   11 Variable: tVAR .
 
-    tEQ  shift, and go to state 22
-
-    $default  reduce using rule 9 (Declaration)
+    $default  reduce using rule 11 (Variable)
 
 
 State 15
 
-    6 Declaration: tCONST tINT . Variable tEQ Expression
-    7            | tCONST tINT . Variable
+    8 Declaration: tINT Variable . tEQ Expression
+    9            | tINT Variable .
+   10 Variable: Variable . tVAR tV
 
-    tVAR  shift, and go to state 13
+    tVAR  shift, and go to state 21
+    tEQ   shift, and go to state 22
 
-    Variable  go to state 23
+    $default  reduce using rule 9 (Declaration)
 
 
 State 16
 
-    4 Programme: tPRINT tPO . tVAR tPF tPV Programme
+    6 Declaration: tCONST tINT . Variable tEQ Expression
+    7            | tCONST tINT . Variable
+
+    tVAR  shift, and go to state 14
+
+    Variable  go to state 23
+
+
+State 17
+
+    4 Programme: Programme tPRINT tPO . tVAR tPF tPV
 
     tVAR  shift, and go to state 24
 
 
-State 17
+State 18
 
    19 Instruction: tVAR tEQ . Expression
 
@@ -243,52 +252,25 @@ State 17
     Expression  go to state 28
 
 
-State 18
-
-    1 Main: tINT tMAIN tAO Programme tAF .
-
-    $default  reduce using rule 1 (Main)
-
-
 State 19
 
-    2 Programme: Declaration tPV . Programme
+    2 Programme: Programme Declaration tPV .
 
-    tINT    shift, and go to state 6
-    tCONST  shift, and go to state 7
-    tPRINT  shift, and go to state 8
-    tVAR    shift, and go to state 9
-
-    $default  reduce using rule 5 (Programme)
-
-    Programme    go to state 29
-    Declaration  go to state 11
-    Instruction  go to state 12
+    $default  reduce using rule 2 (Programme)
 
 
 State 20
 
-    3 Programme: Instruction tPV . Programme
+    3 Programme: Programme Instruction tPV .
 
-    tINT    shift, and go to state 6
-    tCONST  shift, and go to state 7
-    tPRINT  shift, and go to state 8
-    tVAR    shift, and go to state 9
-
-    $default  reduce using rule 5 (Programme)
-
-    Programme    go to state 30
-    Declaration  go to state 11
-    Instruction  go to state 12
+    $default  reduce using rule 3 (Programme)
 
 
 State 21
 
-   10 Variable: tVAR tV . Variable
+   10 Variable: Variable tVAR . tV
 
-    tVAR  shift, and go to state 13
-
-    Variable  go to state 31
+    tV  shift, and go to state 29
 
 
 State 22
@@ -299,24 +281,26 @@ State 22
     tNB   shift, and go to state 26
     tVAR  shift, and go to state 27
 
-    Expression  go to state 32
+    Expression  go to state 30
 
 
 State 23
 
     6 Declaration: tCONST tINT Variable . tEQ Expression
     7            | tCONST tINT Variable .
+   10 Variable: Variable . tVAR tV
 
-    tEQ  shift, and go to state 33
+    tVAR  shift, and go to state 21
+    tEQ   shift, and go to state 31
 
     $default  reduce using rule 7 (Declaration)
 
 
 State 24
 
-    4 Programme: tPRINT tPO tVAR . tPF tPV Programme
+    4 Programme: Programme tPRINT tPO tVAR . tPF tPV
 
-    tPF  shift, and go to state 34
+    tPF  shift, and go to state 32
 
 
 State 25
@@ -327,7 +311,7 @@ State 25
     tNB   shift, and go to state 26
     tVAR  shift, and go to state 27
 
-    Expression  go to state 35
+    Expression  go to state 33
 
 
 State 26
@@ -352,36 +336,22 @@ State 28
    15           | Expression . tDIV Expression
    19 Instruction: tVAR tEQ Expression .
 
-    tMUL  shift, and go to state 36
-    tADD  shift, and go to state 37
-    tSUB  shift, and go to state 38
-    tDIV  shift, and go to state 39
+    tMUL  shift, and go to state 34
+    tADD  shift, and go to state 35
+    tSUB  shift, and go to state 36
+    tDIV  shift, and go to state 37
 
     $default  reduce using rule 19 (Instruction)
 
 
 State 29
 
-    2 Programme: Declaration tPV Programme .
-
-    $default  reduce using rule 2 (Programme)
-
-
-State 30
-
-    3 Programme: Instruction tPV Programme .
-
-    $default  reduce using rule 3 (Programme)
-
-
-State 31
-
-   10 Variable: tVAR tV Variable .
+   10 Variable: Variable tVAR tV .
 
     $default  reduce using rule 10 (Variable)
 
 
-State 32
+State 30
 
     8 Declaration: tINT Variable tEQ Expression .
    12 Expression: Expression . tADD Expression
@@ -389,15 +359,15 @@ State 32
    14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 36
-    tADD  shift, and go to state 37
-    tSUB  shift, and go to state 38
-    tDIV  shift, and go to state 39
+    tMUL  shift, and go to state 34
+    tADD  shift, and go to state 35
+    tSUB  shift, and go to state 36
+    tDIV  shift, and go to state 37
 
     $default  reduce using rule 8 (Declaration)
 
 
-State 33
+State 31
 
     6 Declaration: tCONST tINT Variable tEQ . Expression
 
@@ -405,17 +375,17 @@ State 33
     tNB   shift, and go to state 26
     tVAR  shift, and go to state 27
 
-    Expression  go to state 40
+    Expression  go to state 38
 
 
-State 34
+State 32
 
-    4 Programme: tPRINT tPO tVAR tPF . tPV Programme
+    4 Programme: Programme tPRINT tPO tVAR tPF . tPV
 
-    tPV  shift, and go to state 41
+    tPV  shift, and go to state 39
 
 
-State 35
+State 33
 
    12 Expression: Expression . tADD Expression
    13           | Expression . tSUB Expression
@@ -423,16 +393,38 @@ State 35
    15           | Expression . tDIV Expression
    16           | tPO Expression . tPF
 
-    tPF   shift, and go to state 42
-    tMUL  shift, and go to state 36
-    tADD  shift, and go to state 37
-    tSUB  shift, and go to state 38
-    tDIV  shift, and go to state 39
+    tPF   shift, and go to state 40
+    tMUL  shift, and go to state 34
+    tADD  shift, and go to state 35
+    tSUB  shift, and go to state 36
+    tDIV  shift, and go to state 37
+
+
+State 34
+
+   14 Expression: Expression tMUL . Expression
+
+    tPO   shift, and go to state 25
+    tNB   shift, and go to state 26
+    tVAR  shift, and go to state 27
+
+    Expression  go to state 41
+
+
+State 35
+
+   12 Expression: Expression tADD . Expression
+
+    tPO   shift, and go to state 25
+    tNB   shift, and go to state 26
+    tVAR  shift, and go to state 27
+
+    Expression  go to state 42
 
 
 State 36
 
-   14 Expression: Expression tMUL . Expression
+   13 Expression: Expression tSUB . Expression
 
     tPO   shift, and go to state 25
     tNB   shift, and go to state 26
@@ -443,7 +435,7 @@ State 36
 
 State 37
 
-   12 Expression: Expression tADD . Expression
+   15 Expression: Expression tDIV . Expression
 
     tPO   shift, and go to state 25
     tNB   shift, and go to state 26
@@ -454,66 +446,35 @@ State 37
 
 State 38
 
-   13 Expression: Expression tSUB . Expression
-
-    tPO   shift, and go to state 25
-    tNB   shift, and go to state 26
-    tVAR  shift, and go to state 27
-
-    Expression  go to state 45
-
-
-State 39
-
-   15 Expression: Expression tDIV . Expression
-
-    tPO   shift, and go to state 25
-    tNB   shift, and go to state 26
-    tVAR  shift, and go to state 27
-
-    Expression  go to state 46
-
-
-State 40
-
     6 Declaration: tCONST tINT Variable tEQ Expression .
    12 Expression: Expression . tADD Expression
    13           | Expression . tSUB Expression
    14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 36
-    tADD  shift, and go to state 37
-    tSUB  shift, and go to state 38
-    tDIV  shift, and go to state 39
+    tMUL  shift, and go to state 34
+    tADD  shift, and go to state 35
+    tSUB  shift, and go to state 36
+    tDIV  shift, and go to state 37
 
     $default  reduce using rule 6 (Declaration)
 
 
-State 41
+State 39
 
-    4 Programme: tPRINT tPO tVAR tPF tPV . Programme
+    4 Programme: Programme tPRINT tPO tVAR tPF tPV .
 
-    tINT    shift, and go to state 6
-    tCONST  shift, and go to state 7
-    tPRINT  shift, and go to state 8
-    tVAR    shift, and go to state 9
-
-    $default  reduce using rule 5 (Programme)
-
-    Programme    go to state 47
-    Declaration  go to state 11
-    Instruction  go to state 12
+    $default  reduce using rule 4 (Programme)
 
 
-State 42
+State 40
 
    16 Expression: tPO Expression tPF .
 
     $default  reduce using rule 16 (Expression)
 
 
-State 43
+State 41
 
    12 Expression: Expression . tADD Expression
    13           | Expression . tSUB Expression
@@ -521,10 +482,10 @@ State 43
    14           | Expression tMUL Expression .
    15           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 36
-    tADD  shift, and go to state 37
-    tSUB  shift, and go to state 38
-    tDIV  shift, and go to state 39
+    tMUL  shift, and go to state 34
+    tADD  shift, and go to state 35
+    tSUB  shift, and go to state 36
+    tDIV  shift, and go to state 37
 
     tMUL      [reduce using rule 14 (Expression)]
     tADD      [reduce using rule 14 (Expression)]
@@ -533,7 +494,7 @@ State 43
     $default  reduce using rule 14 (Expression)
 
 
-State 44
+State 42
 
    12 Expression: Expression . tADD Expression
    12           | Expression tADD Expression .
@@ -541,15 +502,15 @@ State 44
    14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 36
-    tSUB  shift, and go to state 38
-    tDIV  shift, and go to state 39
+    tMUL  shift, and go to state 34
+    tSUB  shift, and go to state 36
+    tDIV  shift, and go to state 37
 
     tMUL      [reduce using rule 12 (Expression)]
     $default  reduce using rule 12 (Expression)
 
 
-State 45
+State 43
 
    12 Expression: Expression . tADD Expression
    13           | Expression . tSUB Expression
@@ -557,14 +518,14 @@ State 45
    14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 36
-    tDIV  shift, and go to state 39
+    tMUL  shift, and go to state 34
+    tDIV  shift, and go to state 37
 
     tMUL      [reduce using rule 13 (Expression)]
     $default  reduce using rule 13 (Expression)
 
 
-State 46
+State 44
 
    12 Expression: Expression . tADD Expression
    13           | Expression . tSUB Expression
@@ -572,14 +533,7 @@ State 46
    15           | Expression . tDIV Expression
    15           | Expression tDIV Expression .
 
-    tMUL  shift, and go to state 36
+    tMUL  shift, and go to state 34
 
     tMUL      [reduce using rule 15 (Expression)]
     $default  reduce using rule 15 (Expression)
-
-
-State 47
-
-    4 Programme: tPRINT tPO tVAR tPF tPV Programme .
-
-    $default  reduce using rule 4 (Programme)

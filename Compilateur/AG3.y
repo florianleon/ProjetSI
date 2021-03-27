@@ -34,7 +34,7 @@ int yylex();
 %left tSUB 
 %left tDIV
 
-%type<variable> Declaration Variable
+%type<variable> Variable Instruction
 
 
 %%
@@ -44,9 +44,9 @@ Main : tINT tMAIN tAO Programme tAF
             afficher();}
      ;
 
-Programme : Declaration tPV Programme
-          | Instruction tPV Programme
-          | tPRINT tPO tVAR tPF tPV Programme
+Programme : Programme Declaration tPV 
+          | Programme Instruction tPV
+          | Programme tPRINT tPO tVAR tPF tPV 
                 {printf("Print !\n");}
           |
           ;
@@ -54,6 +54,7 @@ Programme : Declaration tPV Programme
 
 Declaration : tCONST tINT Variable tEQ Expression
                 {printf("declaration assignation constante\n");
+                printf("%s\n", $3);
                 ajouter($3, 1, 1);
                 }
             | tCONST tINT Variable
@@ -70,11 +71,12 @@ Declaration : tCONST tINT Variable tEQ Expression
                 afficher();}
             ;
 
-Variable : tVAR tV Variable 
+Variable : Variable tVAR tV 
             {$$ = $1;
             printf("declaration Var+\n");}
          | tVAR 
             {$$ = $1;
+            printf("%s\n", $$);
             printf("declaration Var\n");}
          ;
 
@@ -96,7 +98,8 @@ Expression : Expression tADD Expression
            ;
 
 Instruction : tVAR tEQ Expression 
-                {printf("assignation Var,\n");}
+                {printf("assignation Var already declared\n");
+                setInit($1);}
             ;
 
 

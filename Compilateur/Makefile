@@ -1,6 +1,6 @@
-3 : AG3.y AL2.lex symbol_table.c
+3 : AG3.y AL3.lex symbol_table.c
 	yacc -d -v AG3.y
-	lex AL2.lex
+	lex AL3.lex
 	gcc y.tab.c lex.yy.c symbol_table.c -o ag
 	./ag
 

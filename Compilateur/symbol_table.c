@@ -23,17 +23,26 @@ ligne* creer(char* v, int c, int i){ // marche plus ???
 void ajouter(char* v, int c, int i){
     //ligne * l = creer(v, c, i);
 
+    // on crée la ligne a ajouter
     ligne* l;
-
     strncpy(l->variable, v, TAILLE_VARIABLE-1);
-    //l->variable[TAILLE_VARIABLE-1] = 0;
+    l->variable[TAILLE_VARIABLE-1] = 0;
     l->constante = c;
     l->init = i;
 
-    if(monIndex < TAILLE){
+    
+    int addr = adresse(v);
+    if( (monIndex < TAILLE) && (addr == -1) ){
         table[monIndex] = *l;
-
         ++monIndex;
+    }
+    else if( (monIndex < TAILLE) && (addr >= 0) ){
+        table[addr] = *l;
+        printf("WARNING : Variable already declared\n");
+    }
+    else{
+        printf("ERROR : Heap full\n");
+        exit(1);
     }
 
 }
@@ -46,6 +55,11 @@ void enleverTmp(){
 void enlever(char * s){
     int monIndex2 = adresse(s);
 
+    if(monIndex2 == -1){
+        printf("ERROR : remove non-existing variable\n");
+        exit(1);
+    }
+
     for(int i = monIndex2; i < monIndex; i++){
         table[i]  = table[i+1];
     }
@@ -55,12 +69,21 @@ void enlever(char * s){
 
 void setInit(char* s){
     int addr = adresse(s);
+    if(addr == -1){
+        printf("ERROR : initialisation of a non-existing variable\n");
+        exit(1);
+    }
+
     table[addr].init = 1;
 
 }
 
 int isInit(char* s){
     int addr = adresse(s);
+    if(addr == -1){
+        printf("ERROR : variable does not exist\n");
+        exit(1);
+    }
     return table[addr].init;
 
 }
@@ -74,8 +97,7 @@ int adresse(char* s){
         }
     }
 
-    printf("initialisation avant declaration\n");
-    exit(1);
+    return (-1);
 
 }
 
