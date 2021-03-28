@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 %}
+
 %%
+
 "main()" return tMAIN;
 \{ return tAO;
 \} return tAF;

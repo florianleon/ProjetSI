@@ -552,9 +552,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    42,    42,    47,    48,    49,    51,    55,    60,    64,
-      68,    74,    77,    83,    85,    87,    89,    91,    93,    95,
-      99
+       0,    42,    42,    47,    48,    49,    51,    55,    59,    63,
+      67,    73,    76,    82,    84,    86,    88,    90,    92,    94,
+      98
 };
 #endif
 
@@ -1384,101 +1384,100 @@ yyreduce:
   case 7:
 #line 56 "AG3.y"
                 {printf("declaration assignation constante\n");
-                printf("%s\n", (yyvsp[-2].variable));
                 ajouter(1, 1);
                 }
-#line 1391 "y.tab.c"
+#line 1390 "y.tab.c"
     break;
 
   case 8:
-#line 61 "AG3.y"
+#line 60 "AG3.y"
                 {printf("declaration constante\n");
                 ajouter(1, 0);
                 }
-#line 1399 "y.tab.c"
+#line 1398 "y.tab.c"
     break;
 
   case 9:
-#line 65 "AG3.y"
+#line 64 "AG3.y"
                 {printf("declaration assignation\n");
                 ajouter(0, 1);
                 afficher();}
-#line 1407 "y.tab.c"
+#line 1406 "y.tab.c"
     break;
 
   case 10:
-#line 69 "AG3.y"
+#line 68 "AG3.y"
                 {printf("declaration \n");
                 ajouter(0, 0);
                 afficher();}
-#line 1415 "y.tab.c"
+#line 1414 "y.tab.c"
     break;
 
   case 11:
-#line 75 "AG3.y"
+#line 74 "AG3.y"
             {ajouterListe((yyvsp[-2].variable));
             printf("declaration Var+\n");}
-#line 1422 "y.tab.c"
+#line 1421 "y.tab.c"
     break;
 
   case 12:
-#line 78 "AG3.y"
+#line 77 "AG3.y"
             {ajouterListe((yyvsp[0].variable));
             printf("declaration Var\n");}
-#line 1429 "y.tab.c"
+#line 1428 "y.tab.c"
     break;
 
   case 13:
-#line 84 "AG3.y"
+#line 83 "AG3.y"
                 {printf("Addition\n");}
-#line 1435 "y.tab.c"
+#line 1434 "y.tab.c"
     break;
 
   case 14:
-#line 86 "AG3.y"
+#line 85 "AG3.y"
                 {printf("Soustraction\n");}
-#line 1441 "y.tab.c"
+#line 1440 "y.tab.c"
     break;
 
   case 15:
-#line 88 "AG3.y"
+#line 87 "AG3.y"
                 {printf("Multiplication\n");}
-#line 1447 "y.tab.c"
+#line 1446 "y.tab.c"
     break;
 
   case 16:
-#line 90 "AG3.y"
+#line 89 "AG3.y"
                 {printf("Division\n");}
-#line 1453 "y.tab.c"
+#line 1452 "y.tab.c"
     break;
 
   case 17:
-#line 92 "AG3.y"
+#line 91 "AG3.y"
                 {printf("(Expr)\n");}
-#line 1459 "y.tab.c"
+#line 1458 "y.tab.c"
     break;
 
   case 18:
-#line 94 "AG3.y"
+#line 93 "AG3.y"
                 {printf("Nombre !\n");}
-#line 1465 "y.tab.c"
+#line 1464 "y.tab.c"
     break;
 
   case 19:
-#line 96 "AG3.y"
+#line 95 "AG3.y"
                 {printf("Variable !\n");}
-#line 1471 "y.tab.c"
+#line 1470 "y.tab.c"
     break;
 
   case 20:
-#line 100 "AG3.y"
+#line 99 "AG3.y"
                 {printf("assignation Var already declared\n");
                 setInit((yyvsp[-2].variable));}
-#line 1478 "y.tab.c"
+#line 1477 "y.tab.c"
     break;
 
 
-#line 1482 "y.tab.c"
+#line 1481 "y.tab.c"
 
       default: break;
     }
@@ -1710,7 +1709,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 105 "AG3.y"
+#line 104 "AG3.y"
 
 int yyerror(char*s) {
     printf("Erreur : %s\n", s);

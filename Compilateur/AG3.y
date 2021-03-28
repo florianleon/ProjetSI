@@ -54,7 +54,6 @@ Programme : Programme Declaration tPV
 
 Declaration : tCONST tINT Variable tEQ Expression
                 {printf("declaration assignation constante\n");
-                printf("%s\n", $3);
                 ajouter(1, 1);
                 }
             | tCONST tINT Variable
