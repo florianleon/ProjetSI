@@ -26,7 +26,7 @@ Grammar
     8            | tINT Variable tEQ Expression
     9            | tINT Variable
 
-   10 Variable: Variable tVAR tV
+   10 Variable: tVAR tV Variable
    11         | tVAR
 
    12 Expression: Expression tADD Expression
@@ -84,7 +84,7 @@ Nonterminals, with rules where they appear
     Expression (27)
         on left: 12 13 14 15 16 17 18
         on right: 6 8 12 13 14 15 16 19
-    Instruction <variable> (28)
+    Instruction (28)
         on left: 19
         on right: 3
 
@@ -207,7 +207,10 @@ State 13
 
 State 14
 
-   11 Variable: tVAR .
+   10 Variable: tVAR . tV Variable
+   11         | tVAR .
+
+    tV  shift, and go to state 21
 
     $default  reduce using rule 11 (Variable)
 
@@ -216,10 +219,8 @@ State 15
 
     8 Declaration: tINT Variable . tEQ Expression
     9            | tINT Variable .
-   10 Variable: Variable . tVAR tV
 
-    tVAR  shift, and go to state 21
-    tEQ   shift, and go to state 22
+    tEQ  shift, and go to state 22
 
     $default  reduce using rule 9 (Declaration)
 
@@ -268,9 +269,11 @@ State 20
 
 State 21
 
-   10 Variable: Variable tVAR . tV
+   10 Variable: tVAR tV . Variable
 
-    tV  shift, and go to state 29
+    tVAR  shift, and go to state 14
+
+    Variable  go to state 29
 
 
 State 22
@@ -288,10 +291,8 @@ State 23
 
     6 Declaration: tCONST tINT Variable . tEQ Expression
     7            | tCONST tINT Variable .
-   10 Variable: Variable . tVAR tV
 
-    tVAR  shift, and go to state 21
-    tEQ   shift, and go to state 31
+    tEQ  shift, and go to state 31
 
     $default  reduce using rule 7 (Declaration)
 
@@ -346,7 +347,7 @@ State 28
 
 State 29
 
-   10 Variable: Variable tVAR tV .
+   10 Variable: tVAR tV Variable .
 
     $default  reduce using rule 10 (Variable)
 

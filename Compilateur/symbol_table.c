@@ -7,43 +7,63 @@
 ligne table[TAILLE];
 int monIndex = 0;
 
+char* tableVariable[TAILLE_TABLE_VARIABLE];
+int varIndex = 0;
+
 // début des fct //
 
-ligne* creer(char* v, int c, int i){ // marche plus ???
+ligne* creer(char * v, int c, int i){ // marche plus ???
     ligne* l;
-
-    strncpy(l->variable, v, TAILLE_VARIABLE-1);
-    //l->variable[TAILLE_VARIABLE-1] = 0;
-    l->constante = c;
-    l->init = i;
+        //strncpy(l->variable, tableVariable[j], TAILLE_VARIABLE-1);
+        //l->variable[TAILLE_VARIABLE-1] = 0;
+        l->variable = v;
+        l->constante = c;
+        l->init = i;
 
     return l;
 }
 
-void ajouter(char* v, int c, int i){
-    //ligne * l = creer(v, c, i);
-
-    // on crée la ligne a ajouter
-    ligne* l;
-    strncpy(l->variable, v, TAILLE_VARIABLE-1);
-    l->variable[TAILLE_VARIABLE-1] = 0;
-    l->constante = c;
-    l->init = i;
-
-    
-    int addr = adresse(v);
-    if( (monIndex < TAILLE) && (addr == -1) ){
-        table[monIndex] = *l;
-        ++monIndex;
-    }
-    else if( (monIndex < TAILLE) && (addr >= 0) ){
-        table[addr] = *l;
-        printf("WARNING : Variable already declared\n");
+void ajouterListe(char* v){
+    if(varIndex < TAILLE_TABLE_VARIABLE){
+        // strcpy(tableVariable[varIndex], v); // if ...
+        tableVariable[varIndex] = v;
+        varIndex++;
     }
     else{
-        printf("ERROR : Heap full\n");
+        printf("ERROR : Too many declartion : %d maximul\n", TAILLE_TABLE_VARIABLE);
         exit(1);
     }
+}
+
+void ajouter(int c, int i){
+    //ligne * l = creer(v, c, i);
+    
+    for(int j = 0; j < varIndex; j++){
+        // on crée la ligne a ajouter
+        ligne* l;
+        //strncpy(l->variable, tableVariable[j], TAILLE_VARIABLE-1);
+        //l->variable[TAILLE_VARIABLE-1] = 0;
+        l->variable = tableVariable[j];
+        l->constante = c;
+        l->init = i;
+
+        // on l'ajoute au bon endroit
+        int addr = adresse(tableVariable[j]);
+        if( (monIndex < TAILLE) && (addr == -1) ){
+            table[monIndex] = *l;
+            ++monIndex;
+        }
+        else if( (monIndex < TAILLE) && (addr >= 0) ){
+            table[addr] = *l;
+            printf("WARNING : Variable already declared : \"%s\"\n", l->variable);
+        }
+        else{
+            printf("ERROR : Heap full\n");
+            exit(1);
+        }
+    }
+
+    varIndex = 0;
 
 }
 
@@ -56,7 +76,7 @@ void enlever(char * s){
     int monIndex2 = adresse(s);
 
     if(monIndex2 == -1){
-        printf("ERROR : remove non-existing variable\n");
+        printf("ERROR : remove non-existing variable : \"%s\"\n", s);
         exit(1);
     }
 
@@ -70,7 +90,7 @@ void enlever(char * s){
 void setInit(char* s){
     int addr = adresse(s);
     if(addr == -1){
-        printf("ERROR : initialisation of a non-existing variable\n");
+        printf("ERROR : initialisation of a non-existing variable : \"%s\"\n", s);
         exit(1);
     }
 
@@ -81,7 +101,7 @@ void setInit(char* s){
 int isInit(char* s){
     int addr = adresse(s);
     if(addr == -1){
-        printf("ERROR : variable does not exist\n");
+        printf("ERROR : variable does not exist : \"%s\"\n", s);
         exit(1);
     }
     return table[addr].init;
