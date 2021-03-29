@@ -95,7 +95,8 @@ Expression : Expression tADD Expression
                 {printf("Nombre !\n");
                 $$ = $1;}
            | tVAR 
-                {printf("Variable !\n");}
+                {printf("Variable !\n");
+                $$ = adresse($1);}
            ;
 
 Instruction : tVAR tEQ Expression 

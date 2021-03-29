@@ -39,7 +39,7 @@ void ajouterListe(char* v){
 }
 
 // ajoute toutes les variables de la liste dans le tableau
-void ajouter(int c, int i, FILE* fd, int val){
+void ajouter(int c, int i, FILE* fd, int valAddr){
     // Pour chaque variable de la liste
     for(int j = 0; j < varIndex; j++){
         // on crée la ligne a ajouter
@@ -53,7 +53,7 @@ void ajouter(int c, int i, FILE* fd, int val){
         if( (monIndex < TAILLE) && (addr == -1) ){
             table[monIndex] = l;
             if (i == 1) {
-                fprintf(fd, "AFC %d %d\n", monIndex, val);
+                fprintf(fd, "COP %d %d\n", monIndex, valAddr);
             }
             ++monIndex;
         }
@@ -73,8 +73,6 @@ void ajouter(int c, int i, FILE* fd, int val){
     // on "efface" la liste
     varIndex = 0;
 }
-
-
 
 // Enlève le dernier élément du tableau
 void enleverTmp(){
