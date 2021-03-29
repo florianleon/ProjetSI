@@ -4,7 +4,7 @@
 #include "symbol_table.h"
 int yyerror(char*s) ;
 int yylex();
-
+FILE *fd;
 
 %}
 %union {
@@ -35,13 +35,15 @@ int yylex();
 %left tDIV
 
 %type<variable> Variable    /* inutile pour le moment */
+%type<nombre> Expression
 
 
 %%
 
 Main : tINT tMAIN tAO Programme tAF 
             {printf("Fin Main\n");
-            afficher();}
+            afficher();
+            exit(0);}
      ;
 
 Programme : Programme Declaration tPV 
@@ -54,19 +56,19 @@ Programme : Programme Declaration tPV
 
 Declaration : tCONST tINT Variable tEQ Expression
                 {printf("declaration assignation constante\n");
-                ajouter(1, 1);
+                ajouter(1, 1, fd, $5);
                 }
             | tCONST tINT Variable
                 {printf("declaration constante\n");
-                ajouter(1, 0);
+                ajouter(1, 0, fd, 0);
                 }
             | tINT Variable tEQ Expression
                 {printf("declaration assignation\n");
-                ajouter(0, 1);
+                ajouter(0, 1, fd, $4);
                 afficher();}
             | tINT Variable
                 {printf("declaration \n");
-                ajouter(0, 0);
+                ajouter(0, 0, fd, 0);
                 afficher();}
             ;
 
@@ -90,7 +92,8 @@ Expression : Expression tADD Expression
            | tPO Expression tPF 
                 {printf("(Expr)\n");}
            | tNB 
-                {printf("Nombre !\n");}
+                {printf("Nombre !\n");
+                $$ = $1;}
            | tVAR 
                 {printf("Variable !\n");}
            ;
@@ -106,7 +109,9 @@ int yyerror(char*s) {
     printf("Erreur : %s\n", s);
 }
 int main() {
+    fd = fopen("codeasm.s", "w");
     yyparse();
+    fclose(fd);
     return 1;
 }
 

@@ -15,7 +15,7 @@ ligne* creer(char* v, int c, int i); // inutile ?
 void ajouterListe(char* v);
 
 // ajoute toutes les variables de la liste dans le tableau
-void ajouter(int c, int i);
+void ajouter(int c, int i, FILE* fd, int val);
 
 // enlève le dernier éléments du tableau
 void enleverTmp();

@@ -15,7 +15,7 @@ int varIndex = 0;
 ligne* creer(char * v, int c, int i){ // marche plus ???
     ligne* l;
         //strncpy(l->variable, tableVariable[j], TAILLE_VARIABLE-1);
-        //l->variable[TAILLE_VARIABLE-1] = 0;
+        //l->variable[TAILLE_VstderrARIABLE-1] = 0;
         l->variable = v;
         l->constante = c;
         l->init = i;
@@ -33,48 +33,48 @@ void ajouterListe(char* v){
     }
     // sinon on arrête tout
     else{
-        printf("ERROR : Too many declartion : %d maximul\n", TAILLE_TABLE_VARIABLE);
+        printf("ERROR : Too many declartion : %d maximum\n", TAILLE_TABLE_VARIABLE);
         exit(1);
     }
 }
 
 // ajoute toutes les variables de la liste dans le tableau
-void ajouter(int c, int i){
-    //ligne * l = creer(v, c, i);
-    
+void ajouter(int c, int i, FILE* fd, int val){
     // Pour chaque variable de la liste
     for(int j = 0; j < varIndex; j++){
         // on crée la ligne a ajouter
-        ligne* l;
-        //strncpy(l->variable, tableVariable[j], TAILLE_VARIABLE-1);
-        //l->variable[TAILLE_VARIABLE-1] = 0;
-        l->variable = tableVariable[j];
-        l->constante = c;
-        l->init = i;
-
+        ligne l;
+        l.variable = tableVariable[j];
+        l.constante = c;
+        l.init = i;
         // on regarde si la varianle existe déjà
         int addr = adresse(tableVariable[j]);
         // on l'ajoute si elle n'exsite pas encore
         if( (monIndex < TAILLE) && (addr == -1) ){
-            table[monIndex] = *l;
+            table[monIndex] = l;
+            if (i == 1) {
+                fprintf(fd, "AFC %d %d\n", monIndex, val);
+            }
             ++monIndex;
         }
         // on change sa déclaration sinon (ou on arrête tout ?)
         else if( (monIndex < TAILLE) && (addr >= 0) ){
-            table[addr] = *l;
-            printf("WARNING : Variable already declared : %s\n", l->variable); // ERROR ?
+            table[addr] = l;
+            printf("WARNING : Variable already declared : %s\n", l.variable);
+            exit(1);
         }
         // Sinon (si le tableau est plein) on arrête tout
         else{
-            printf("ERROR : Heap full\n");
+            perror("Heap full\n");
             exit(1);
         }
     }
 
     // on "efface" la liste
     varIndex = 0;
-
 }
+
+
 
 // Enlève le dernier élément du tableau
 void enleverTmp(){
