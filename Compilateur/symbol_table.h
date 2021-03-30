@@ -1,10 +1,8 @@
 #define TAILLE 256
-//#define TAILLE_VARIABLE 20
 #define TAILLE_TABLE_VARIABLE 10
 
 typedef struct {
-    //int index;
-    char * variable; //[TAILLE_VARIABLE];
+    char * variable;
     int constante;
     int init;
 } ligne;
@@ -17,11 +15,17 @@ void ajouterListe(char* v);
 // ajoute toutes les variables de la liste dans le tableau
 void ajouter(int c, int i, FILE* fd, int val);
 
-// enlève le dernier éléments du tableau
-void enleverTmp();
-
 // enlève un élément donné du tableau
 void enlever(char * s);
+
+// enlève la dernière variable temporaire
+void enleverTmp();
+
+// ajoute une variable temporaire
+void ajouterTmp();
+
+// retourne l'index de la dernière varibale temporaire
+int derniereTmp();
 
 // met à 1 le champs init d'une structure
 void setInit(char* s);
@@ -34,3 +38,23 @@ int adresse(char* s);
 
 // affiche le tableau
 void afficher();
+
+// Ecrit une opération donnée en asm
+void ecrireOperationASM(FILE* fd, char* op, int tmp1, int tmp2);
+
+// Assignation une variable temporaire à un nombre en asm
+void asignerASM(FILE* fd, char* v);
+
+// assigne un nombre à une variable temporaire
+void nbASM(FILE* fd, int nb);
+
+// assigne une adresse connue à une variable temporaire
+void varASM(FILE* fd, char* v);
+
+
+
+
+
+
+
+void a();

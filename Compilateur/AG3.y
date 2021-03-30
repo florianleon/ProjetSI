@@ -47,7 +47,7 @@ Main : tINT tMAIN tAO Programme tAF
      ;
 
 Programme : Programme Declaration tPV 
-          | Programme Instruction tPV
+          | Programme Assignation tPV
           | Programme tPRINT tPO tVAR tPF tPV 
                 {printf("Print !\n");}
           |
@@ -68,7 +68,7 @@ Declaration : tCONST tINT Variable tEQ Expression
                 afficher();}
             | tINT Variable
                 {printf("declaration \n");
-                ajouter(0, 0, fd, 0);
+                ajouter(0, 0, fd, 0); // assigner ? directement en c ?
                 afficher();}
             ;
 
@@ -82,7 +82,9 @@ Variable : tVAR tV Variable
 
 
 Expression : Expression tADD Expression 
-                {printf("Addition\n");}
+                {printf("Addition\n");
+                ecrireOperationASM(fd, "ADD", $1, $3);
+                }
            | Expression tSUB Expression 
                 {printf("Soustraction\n");}
            | Expression tMUL Expression 
@@ -93,15 +95,21 @@ Expression : Expression tADD Expression
                 {printf("(Expr)\n");}
            | tNB 
                 {printf("Nombre !\n");
-                $$ = $1;}
+                nbASM(fd, $1);
+                // tmp TODO
+                $$ = derniereTmp();}
            | tVAR 
                 {printf("Variable !\n");
-                $$ = adresse($1);}
+                varASM(fd, $1);
+                $$ = derniereTmp(); // à modifier pour utiliser tmp TODO
+                }
            ;
 
-Instruction : tVAR tEQ Expression 
+Assignation : tVAR tEQ Expression 
                 {printf("assignation Var already declared\n");
-                setInit($1);}
+                setInit($1);
+                asignerASM(fd, $1); // TODO verifier que expression et bien dans tmp et à la bonne place
+                }
             ;
 
 

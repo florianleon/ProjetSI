@@ -6,6 +6,7 @@
 
 ligne table[TAILLE];
 int monIndex = 0;
+int tmpIndex = TAILLE - 1;
 
 char* tableVariable[TAILLE_TABLE_VARIABLE];
 int varIndex = 0;
@@ -14,14 +15,14 @@ int varIndex = 0;
 
 ligne* creer(char * v, int c, int i){ // marche plus ???
     ligne* l;
-        //strncpy(l->variable, tableVariable[j], TAILLE_VARIABLE-1);
-        //l->variable[TAILLE_VstderrARIABLE-1] = 0;
         l->variable = v;
         l->constante = c;
         l->init = i;
 
     return l;
 }
+
+// TABLEAU DE VARIABLE
 
 // rajoute une variable déclarée sur une seul ligne à la liste
 void ajouterListe(char* v){
@@ -50,17 +51,17 @@ void ajouter(int c, int i, FILE* fd, int valAddr){
         // on regarde si la varianle existe déjà
         int addr = adresse(tableVariable[j]);
         // on l'ajoute si elle n'exsite pas encore
-        if( (monIndex < TAILLE) && (addr == -1) ){
+        if( (monIndex < tmpIndex) && (addr == -1) ){
             table[monIndex] = l;
             if (i == 1) {
                 fprintf(fd, "COP %d %d\n", monIndex, valAddr);
             }
-            ++monIndex;
+            monIndex++;
         }
         // on change sa déclaration sinon (ou on arrête tout ?)
-        else if( (monIndex < TAILLE) && (addr >= 0) ){
+        else if( (monIndex < tmpIndex) && (addr >= 0) ){
             table[addr] = l;
-            printf("WARNING : Variable already declared : %s\n", l.variable);
+            printf("ERROR : Variable already declared : %s\n", l.variable);
             exit(1);
         }
         // Sinon (si le tableau est plein) on arrête tout
@@ -69,15 +70,13 @@ void ajouter(int c, int i, FILE* fd, int valAddr){
             exit(1);
         }
     }
-
+    // Si on a assigné les variables on supprime l'adresse temporaire
+    if(i==1){
+        enleverTmp();
+    }
+    
     // on "efface" la liste
     varIndex = 0;
-}
-
-// Enlève le dernier élément du tableau
-void enleverTmp(){
-    monIndex--;
-
 }
 
 // enlève un élément donné du tableau
@@ -100,6 +99,46 @@ void enlever(char * s){
     monIndex--;
 
 }
+
+// VARIABLE TEMPORAIRE
+
+// enlève la dernière variable temporaire
+void enleverTmp(){
+    if(tmpIndex == TAILLE){
+        printf("ERROR : Plus de variable temporaire à enlever");
+        exit(1);
+    }
+    tmpIndex++;
+
+}
+
+// ajoute une variable temporaire
+void ajouterTmp(){ //TODO vérifier qu'on ne rentre pas en colision
+    // on crée la structure
+    ligne l;
+    l.variable = "tmp";
+    l.constante = 0;
+    l.init = 0;
+
+    // on l'ajoute à la suite
+    table[tmpIndex] = l;
+
+    // on met à jour l'index
+    tmpIndex--;
+
+    // on vérifie que la pile est toujours de la place
+    if(tmpIndex <= monIndex){
+        printf("ERROR : Pile pleine, Trop de variable temporaire\n");
+        exit(1);
+    }
+}
+
+// retourne l'index de la dernière varibale temporaire
+int derniereTmp(){
+    return tmpIndex+1;
+}
+
+// PRATIQUE
 
 // met à 1 le champs init d'une structure
 void setInit(char* s){
@@ -165,4 +204,62 @@ void afficher(){
     for(int i = 0; i<monIndex; i++){
         printf("%d\t%s\t%d\t%d\n", i, table[i].variable, table[i].constante, table[i].init);
     }
+}
+
+// ASM
+
+// Ecrit une opération donnée en asm
+void ecrireOperationASM(FILE* fd, char* op, int tmp1, int tmp2){ // TODO rajouter les autres opérateurs
+    fprintf(fd,"ADD %d %d %d\n", tmpIndex+2, tmpIndex+2, tmpIndex+1);
+    enleverTmp();
+}
+
+// Assignation une variable temporaire à un nombre en asm
+void asignerASM(FILE* fd, char* v){
+    // on regarde si la variable existe déjà
+    int addr = adresse(v);
+    // on l'assigne si c'est le cas
+    if( (addr != -1) ){
+        // on arrête tout 
+        if(tmpIndex != TAILLE-2){ // à verifier TODO (assigantion = dernière opération avant reset complet des tmp)
+            printf("ERROR : variable temporaire mal désempiler : %d\n", TAILLE - tmpIndex);
+            exit(1);
+        }
+        // on écrit la ligne d'assignation
+        fprintf(fd, "COP %d %d\n", addr, tmpIndex+1);
+        enleverTmp();
+    }
+    else{
+        printf("ERROR : Assignation before declaration : %s\n", v);
+        exit(1);
+    }
+}
+
+// assigne un nombre à une variable temporaire
+void nbASM(FILE* fd, int nb){
+    fprintf(fd, "AFC %d %d\n", tmpIndex, nb);
+    ajouterTmp();
+
+}
+
+// assigne une adresse connue à une variable temporaire
+void varASM(FILE* fd, char* v){
+    int addr = adresse(v);
+    if(addr == -1){
+        printf("ERROR : Usage before declaration : %s\n", v);
+        exit(1);
+    }
+    if( table[addr].init != 1 ){
+        printf("ERROR : Usage before assignation : %s\n", v);
+        exit(1);
+    }
+    fprintf(fd, "COP %d %d\n", tmpIndex, addr);
+    ajouterTmp();
+}
+
+
+
+
+void a(){
+    printf("INDEX TMP = %d\n", TAILLE - tmpIndex);
 }
