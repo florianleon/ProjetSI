@@ -40,7 +40,7 @@ void ajouterListe(char* v){
 }
 
 // ajoute toutes les variables de la liste dans le tableau
-void ajouter(int c, int i, FILE* fd, int valAddr){
+void ajouter(int c, int i, FILE* fdClair, FILE* fdCode, int valAddr){
     // Pour chaque variable de la liste
     for(int j = 0; j < varIndex; j++){
         // on crée la ligne a ajouter
@@ -54,7 +54,8 @@ void ajouter(int c, int i, FILE* fd, int valAddr){
         if( (monIndex < tmpIndex) && (addr == -1) ){
             table[monIndex] = l;
             if (i == 1) {
-                fprintf(fd, "COP %d %d\n", monIndex, valAddr);
+                fprintf(fdClair, "COP %d %d\n", monIndex, valAddr);
+                fprintf(fdCode, "5 %d %d\n", monIndex, valAddr);
             }
             monIndex++;
         }
@@ -113,7 +114,7 @@ void enleverTmp(){
 }
 
 // ajoute une variable temporaire
-void ajouterTmp(){ //TODO vérifier qu'on ne rentre pas en colision
+void ajouterTmp(){
     // on crée la structure
     ligne l;
     l.variable = "tmp";
@@ -209,13 +210,28 @@ void afficher(){
 // ASM
 
 // Ecrit une opération donnée en asm
-void ecrireOperationASM(FILE* fd, char* op, int tmp1, int tmp2){ // TODO rajouter les autres opérateurs
-    fprintf(fd,"ADD %d %d %d\n", tmpIndex+2, tmpIndex+2, tmpIndex+1);
+void ecrireOperationASM(FILE* fdClair, FILE* fdCode, int op, int tmp1, int tmp2){
+    if( op == 1 ){
+        fprintf(fdClair,"ADD %d %d %d\n", tmpIndex+2, tmpIndex+2, tmpIndex+1);
+    }
+    else if( op == 2 ){
+        fprintf(fdClair,"MUL %d %d %d\n", tmpIndex+2, tmpIndex+2, tmpIndex+1);
+    }
+    else if( op == 3 ){
+        fprintf(fdClair,"SOU %d %d %d\n", tmpIndex+2, tmpIndex+2, tmpIndex+1);
+    }
+    else if( op == 4 ){
+        fprintf(fdClair,"DIV %d %d %d\n", tmpIndex+2, tmpIndex+2, tmpIndex+1);
+    }
+    // On Ecrit l'opéaration "codé" en ASM
+    fprintf(fdCode,"%d %d %d %d\n", op, tmpIndex+2, tmpIndex+2, tmpIndex+1);
+
+    // on décrémente l'indice des variable temporaire de 1
     enleverTmp();
 }
 
 // Assignation une variable temporaire à un nombre en asm
-void asignerASM(FILE* fd, char* v){
+void asignerASM(FILE* fdClair, FILE* fdCode, char* v){
     // on regarde si la variable existe déjà
     int addr = adresse(v);
     // on l'assigne si c'est le cas
@@ -226,7 +242,8 @@ void asignerASM(FILE* fd, char* v){
             exit(1);
         }
         // on écrit la ligne d'assignation
-        fprintf(fd, "COP %d %d\n", addr, tmpIndex+1);
+        fprintf(fdClair, "COP %d %d\n", addr, tmpIndex+1);
+        fprintf(fdCode, "5 %d %d\n", addr, tmpIndex+1);
         enleverTmp();
     }
     else{
@@ -236,14 +253,15 @@ void asignerASM(FILE* fd, char* v){
 }
 
 // assigne un nombre à une variable temporaire
-void nbASM(FILE* fd, int nb){
-    fprintf(fd, "AFC %d %d\n", tmpIndex, nb);
+void nbASM(FILE* fdClair, FILE* fdCode, int nb){
+    fprintf(fdClair, "AFC %d %d\n", tmpIndex, nb);
+    fprintf(fdCode, "6 %d %d\n", tmpIndex, nb);
     ajouterTmp();
 
 }
 
 // assigne une adresse connue à une variable temporaire
-void varASM(FILE* fd, char* v){
+void varASM(FILE* fdClair, FILE* fdCode, char* v){
     int addr = adresse(v);
     if(addr == -1){
         printf("ERROR : Usage before declaration : %s\n", v);
@@ -253,7 +271,8 @@ void varASM(FILE* fd, char* v){
         printf("ERROR : Usage before assignation : %s\n", v);
         exit(1);
     }
-    fprintf(fd, "COP %d %d\n", tmpIndex, addr);
+    fprintf(fdClair, "COP %d %d\n", tmpIndex, addr);
+    fprintf(fdCode, "5 %d %d\n", tmpIndex, addr);
     ajouterTmp();
 }
 

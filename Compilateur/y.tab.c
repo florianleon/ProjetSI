@@ -73,10 +73,11 @@
 #include "symbol_table.h"
 int yyerror(char*s) ;
 int yylex();
-FILE *fd;
+FILE *fdCode;
+FILE *fdClair;
 
 
-#line 80 "y.tab.c"
+#line 81 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -170,12 +171,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 10 "AG3.y"
+#line 11 "AG3.y"
 
     char *variable;
     int nombre;
 
-#line 179 "y.tab.c"
+#line 180 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -552,9 +553,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    43,    43,    49,    50,    51,    53,    57,    61,    65,
-      69,    75,    78,    84,    88,    90,    92,    94,    96,   101,
-     108
+       0,    44,    44,    50,    51,    52,    54,    58,    62,    66,
+      70,    76,    79,    85,    89,    91,    93,    95,    97,   102,
+     109
 };
 #endif
 
@@ -1369,126 +1370,126 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 44 "AG3.y"
+#line 45 "AG3.y"
             {printf("Fin Main\n");
             afficher();
             exit(0);}
-#line 1377 "y.tab.c"
+#line 1378 "y.tab.c"
     break;
 
   case 5:
-#line 52 "AG3.y"
+#line 53 "AG3.y"
                 {printf("Print !\n");}
-#line 1383 "y.tab.c"
+#line 1384 "y.tab.c"
     break;
 
   case 7:
-#line 58 "AG3.y"
+#line 59 "AG3.y"
                 {printf("declaration assignation constante\n");
-                ajouter(1, 1, fd, (yyvsp[0].nombre));
+                ajouter(1, 1, fdClair, fdCode, (yyvsp[0].nombre));
                 }
-#line 1391 "y.tab.c"
+#line 1392 "y.tab.c"
     break;
 
   case 8:
-#line 62 "AG3.y"
+#line 63 "AG3.y"
                 {printf("declaration constante\n");
-                ajouter(1, 0, fd, 0);
+                ajouter(1, 0, fdClair, fdCode, 0);
                 }
-#line 1399 "y.tab.c"
+#line 1400 "y.tab.c"
     break;
 
   case 9:
-#line 66 "AG3.y"
+#line 67 "AG3.y"
                 {printf("declaration assignation\n");
-                ajouter(0, 1, fd, (yyvsp[0].nombre));
+                ajouter(0, 1, fdClair, fdCode, (yyvsp[0].nombre));
                 afficher();}
-#line 1407 "y.tab.c"
+#line 1408 "y.tab.c"
     break;
 
   case 10:
-#line 70 "AG3.y"
+#line 71 "AG3.y"
                 {printf("declaration \n");
-                ajouter(0, 0, fd, 0); // assigner ? directement en c ?
+                ajouter(0, 0, fdClair, fdCode, 0); // assigner ? directement en c ?
                 afficher();}
-#line 1415 "y.tab.c"
+#line 1416 "y.tab.c"
     break;
 
   case 11:
-#line 76 "AG3.y"
+#line 77 "AG3.y"
             {ajouterListe((yyvsp[-2].variable));
             printf("declaration Var+\n");}
-#line 1422 "y.tab.c"
+#line 1423 "y.tab.c"
     break;
 
   case 12:
-#line 79 "AG3.y"
+#line 80 "AG3.y"
             {ajouterListe((yyvsp[0].variable));
             printf("declaration Var\n");}
-#line 1429 "y.tab.c"
+#line 1430 "y.tab.c"
     break;
 
   case 13:
-#line 85 "AG3.y"
+#line 86 "AG3.y"
                 {printf("Addition\n");
-                ecrireOperationASM(fd, "ADD", (yyvsp[-2].nombre), (yyvsp[0].nombre));
+                ecrireOperationASM(fdClair, fdCode, 1, (yyvsp[-2].nombre), (yyvsp[0].nombre));
                 }
-#line 1437 "y.tab.c"
+#line 1438 "y.tab.c"
     break;
 
   case 14:
-#line 89 "AG3.y"
+#line 90 "AG3.y"
                 {printf("Soustraction\n");}
-#line 1443 "y.tab.c"
+#line 1444 "y.tab.c"
     break;
 
   case 15:
-#line 91 "AG3.y"
+#line 92 "AG3.y"
                 {printf("Multiplication\n");}
-#line 1449 "y.tab.c"
+#line 1450 "y.tab.c"
     break;
 
   case 16:
-#line 93 "AG3.y"
+#line 94 "AG3.y"
                 {printf("Division\n");}
-#line 1455 "y.tab.c"
+#line 1456 "y.tab.c"
     break;
 
   case 17:
-#line 95 "AG3.y"
+#line 96 "AG3.y"
                 {printf("(Expr)\n");}
-#line 1461 "y.tab.c"
+#line 1462 "y.tab.c"
     break;
 
   case 18:
-#line 97 "AG3.y"
+#line 98 "AG3.y"
                 {printf("Nombre !\n");
-                nbASM(fd, (yyvsp[0].nombre));
+                nbASM(fdClair, fdCode, (yyvsp[0].nombre));
                 // tmp TODO
                 (yyval.nombre) = derniereTmp();}
-#line 1470 "y.tab.c"
+#line 1471 "y.tab.c"
     break;
 
   case 19:
-#line 102 "AG3.y"
+#line 103 "AG3.y"
                 {printf("Variable !\n");
-                varASM(fd, (yyvsp[0].variable));
+                varASM(fdClair, fdCode, (yyvsp[0].variable));
                 (yyval.nombre) = derniereTmp(); // à modifier pour utiliser tmp TODO
                 }
-#line 1479 "y.tab.c"
+#line 1480 "y.tab.c"
     break;
 
   case 20:
-#line 109 "AG3.y"
+#line 110 "AG3.y"
                 {printf("assignation Var already declared\n");
                 setInit((yyvsp[-2].variable));
-                asignerASM(fd, (yyvsp[-2].variable)); // TODO verifier que expression et bien dans tmp et à la bonne place
+                asignerASM(fdClair, fdCode, (yyvsp[-2].variable)); // TODO verifier que expression et bien dans tmp et à la bonne place
                 }
-#line 1488 "y.tab.c"
+#line 1489 "y.tab.c"
     break;
 
 
-#line 1492 "y.tab.c"
+#line 1493 "y.tab.c"
 
       default: break;
     }
@@ -1720,15 +1721,17 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 116 "AG3.y"
+#line 117 "AG3.y"
 
 int yyerror(char*s) {
     printf("Erreur : %s\n", s);
 }
 int main() {
-    fd = fopen("codeasm.s", "w");
+    fdClair = fopen("codeasm.s", "w");
+    fdCode = fopen("code.s", "w");
     yyparse();
-    fclose(fd);
+    fclose(fdCode);
+    fclose(fdClair);
     return 1;
 }
 

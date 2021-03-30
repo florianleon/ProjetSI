@@ -95,7 +95,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 10 "AG3.y"
+#line 11 "AG3.y"
 
     char *variable;
     int nombre;

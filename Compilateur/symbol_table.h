@@ -13,7 +13,7 @@ ligne* creer(char* v, int c, int i); // inutile ?
 void ajouterListe(char* v);
 
 // ajoute toutes les variables de la liste dans le tableau
-void ajouter(int c, int i, FILE* fd, int val);
+void ajouter(int c, int i, FILE* fdClair, FILE* fdCode, int val);
 
 // enlève un élément donné du tableau
 void enlever(char * s);
@@ -40,16 +40,16 @@ int adresse(char* s);
 void afficher();
 
 // Ecrit une opération donnée en asm
-void ecrireOperationASM(FILE* fd, char* op, int tmp1, int tmp2);
+void ecrireOperationASM(FILE* fdClair, FILE* fdCode, int op, int tmp1, int tmp2);
 
 // Assignation une variable temporaire à un nombre en asm
-void asignerASM(FILE* fd, char* v);
+void asignerASM(FILE* fdClair, FILE* fdCode, char* v);
 
 // assigne un nombre à une variable temporaire
-void nbASM(FILE* fd, int nb);
+void nbASM(FILE* fdClair, FILE* fdCode, int nb);
 
 // assigne une adresse connue à une variable temporaire
-void varASM(FILE* fd, char* v);
+void varASM(FILE* fdClair, FILE* fdCode, char* v);
 
 
 
