@@ -88,11 +88,14 @@ Expression : Expression tADD Expression
                 ecrireOperationASM(fdClair, fdCode, 1, $1, $3);
                 }
            | Expression tSUB Expression 
-                {printf("Soustraction\n");}
+                {printf("Soustraction\n");
+                ecrireOperationASM(fdClair, fdCode, 3, $1, $3);}
            | Expression tMUL Expression 
-                {printf("Multiplication\n");}
+                {printf("Multiplication\n");
+                ecrireOperationASM(fdClair, fdCode, 2, $1, $3);}
            | Expression tDIV Expression 
-                {printf("Division\n");}
+                {printf("Division\n");
+                ecrireOperationASM(fdClair, fdCode, 4, $1, $3);}
            | tPO Expression tPF 
                 {printf("(Expr)\n");}
            | tNB 
