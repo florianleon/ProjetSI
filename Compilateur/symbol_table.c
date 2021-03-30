@@ -276,9 +276,22 @@ void varASM(FILE* fdClair, FILE* fdCode, char* v){
     ajouterTmp();
 }
 
-
-
-
-void a(){
-    printf("INDEX TMP = %d\n", TAILLE - tmpIndex);
+// Ecrit la ligne print en ASM
+void printASM(FILE* fdClair, FILE* fdCode, char* v){
+    int addr = adresse(v);
+    // si la variable n'existe pas on arrête tout
+    if(addr == -1){
+        printf("ERROR : Cannot print an undeclared variable : %s\n", v);
+        exit(1);
+    }
+    // Si la variable n'a pas de valeur on arrête tout
+    else if(table[addr].init == 0){
+        printf("ERROR : Cannot print a variable without assignation : %s\n", v);
+        exit(1);
+    }
+    // Sinon on crée le code associé
+    else{
+        fprintf(fdClair, "PRI %d\n", addr);
+        fprintf(fdCode, "C %d\n", addr);
+    }
 }

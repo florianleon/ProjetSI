@@ -50,7 +50,8 @@ Main : tINT tMAIN tAO Programme tAF
 Programme : Programme Declaration tPV 
           | Programme Assignation tPV
           | Programme tPRINT tPO tVAR tPF tPV 
-                {printf("Print !\n");}
+                {printf("Print !\n");
+                printASM(fdClair, fdCode, $4);}
           |
           ;
 

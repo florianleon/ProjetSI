@@ -51,10 +51,5 @@ void nbASM(FILE* fdClair, FILE* fdCode, int nb);
 // assigne une adresse connue à une variable temporaire
 void varASM(FILE* fdClair, FILE* fdCode, char* v);
 
-
-
-
-
-
-
-void a();
+// Ecrit la ligne print en ASM
+void printASM(FILE* fdClair, FILE* fdCode, char* v);
