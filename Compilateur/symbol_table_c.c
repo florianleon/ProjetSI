@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "symbol_table.h"
+#include "symbol_table_c.h"
 
 
 ligne table[TAILLE];

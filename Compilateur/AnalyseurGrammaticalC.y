@@ -1,13 +1,16 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
-#include "symbol_table.h"
+#include "symbol_table_c.h"
+
 int yyerror(char*s) ;
 int yylex();
+
 FILE *fdCode;
 FILE *fdClair;
 
 %}
+
 %union {
     char *variable;
     int nombre;
@@ -35,7 +38,7 @@ FILE *fdClair;
 %left tSUB 
 %left tDIV
 
-%type<variable> Variable    /* inutile pour le moment */
+
 %type<nombre> Expression
 
 
@@ -70,7 +73,7 @@ Declaration : tCONST tINT Variable tEQ Expression
                 afficher();}
             | tINT Variable
                 {printf("declaration \n");
-                ajouter(0, 0, fdClair, fdCode, 0); // assigner ? directement en c ?
+                ajouter(0, 0, fdClair, fdCode, 0);
                 afficher();}
             ;
 
@@ -117,15 +120,21 @@ Assignation : tVAR tEQ Expression
 
 
 %%
+
+
 int yyerror(char*s) {
     printf("Erreur : %s\n", s);
 }
+
 int main() {
     fdClair = fopen("codeasm.s", "w");
     fdCode = fopen("code.s", "w");
+
     yyparse();
+
     fclose(fdCode);
     fclose(fdClair);
+
     return 1;
 }
 
