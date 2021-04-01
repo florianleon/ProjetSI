@@ -30,8 +30,8 @@ Grammar
    11         | tVAR
 
    12 Expression: Expression tADD Expression
-   13           | Expression tMUL Expression
-   14           | Expression tSUB Expression
+   13           | Expression tSUB Expression
+   14           | Expression tMUL Expression
    15           | Expression tDIV Expression
    16           | tPO Expression tPF
    17           | tNB
@@ -58,10 +58,10 @@ Terminals, with rules where they appear
     tNB <nombre> (269) 17
     tEXP (270)
     tVAR <variable> (271) 4 10 11 18 19
-    tMUL (272) 13
+    tMUL (272) 14
     tEQ (273) 6 8 19
     tADD (274) 12
-    tSUB (275) 14
+    tSUB (275) 13
     tDIV (276) 15
 
 
@@ -332,8 +332,8 @@ State 27
 State 28
 
    12 Expression: Expression . tADD Expression
-   13           | Expression . tMUL Expression
-   14           | Expression . tSUB Expression
+   13           | Expression . tSUB Expression
+   14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
    19 Assignation: tVAR tEQ Expression .
 
@@ -356,8 +356,8 @@ State 30
 
     8 Declaration: tINT Variable tEQ Expression .
    12 Expression: Expression . tADD Expression
-   13           | Expression . tMUL Expression
-   14           | Expression . tSUB Expression
+   13           | Expression . tSUB Expression
+   14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
 
     tMUL  shift, and go to state 34
@@ -389,8 +389,8 @@ State 32
 State 33
 
    12 Expression: Expression . tADD Expression
-   13           | Expression . tMUL Expression
-   14           | Expression . tSUB Expression
+   13           | Expression . tSUB Expression
+   14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
    16           | tPO Expression . tPF
 
@@ -403,7 +403,7 @@ State 33
 
 State 34
 
-   13 Expression: Expression tMUL . Expression
+   14 Expression: Expression tMUL . Expression
 
     tPO   shift, and go to state 25
     tNB   shift, and go to state 26
@@ -425,7 +425,7 @@ State 35
 
 State 36
 
-   14 Expression: Expression tSUB . Expression
+   13 Expression: Expression tSUB . Expression
 
     tPO   shift, and go to state 25
     tNB   shift, and go to state 26
@@ -449,8 +449,8 @@ State 38
 
     6 Declaration: tCONST tINT Variable tEQ Expression .
    12 Expression: Expression . tADD Expression
-   13           | Expression . tMUL Expression
-   14           | Expression . tSUB Expression
+   13           | Expression . tSUB Expression
+   14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
 
     tMUL  shift, and go to state 34
@@ -478,9 +478,9 @@ State 40
 State 41
 
    12 Expression: Expression . tADD Expression
-   13           | Expression . tMUL Expression
-   13           | Expression tMUL Expression .
-   14           | Expression . tSUB Expression
+   13           | Expression . tSUB Expression
+   14           | Expression . tMUL Expression
+   14           | Expression tMUL Expression .
    15           | Expression . tDIV Expression
 
     tMUL  shift, and go to state 34
@@ -488,19 +488,19 @@ State 41
     tSUB  shift, and go to state 36
     tDIV  shift, and go to state 37
 
-    tMUL      [reduce using rule 13 (Expression)]
-    tADD      [reduce using rule 13 (Expression)]
-    tSUB      [reduce using rule 13 (Expression)]
-    tDIV      [reduce using rule 13 (Expression)]
-    $default  reduce using rule 13 (Expression)
+    tMUL      [reduce using rule 14 (Expression)]
+    tADD      [reduce using rule 14 (Expression)]
+    tSUB      [reduce using rule 14 (Expression)]
+    tDIV      [reduce using rule 14 (Expression)]
+    $default  reduce using rule 14 (Expression)
 
 
 State 42
 
    12 Expression: Expression . tADD Expression
    12           | Expression tADD Expression .
-   13           | Expression . tMUL Expression
-   14           | Expression . tSUB Expression
+   13           | Expression . tSUB Expression
+   14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
 
     tMUL  shift, and go to state 34
@@ -514,23 +514,23 @@ State 42
 State 43
 
    12 Expression: Expression . tADD Expression
-   13           | Expression . tMUL Expression
-   14           | Expression . tSUB Expression
-   14           | Expression tSUB Expression .
+   13           | Expression . tSUB Expression
+   13           | Expression tSUB Expression .
+   14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
 
     tMUL  shift, and go to state 34
     tDIV  shift, and go to state 37
 
-    tMUL      [reduce using rule 14 (Expression)]
-    $default  reduce using rule 14 (Expression)
+    tMUL      [reduce using rule 13 (Expression)]
+    $default  reduce using rule 13 (Expression)
 
 
 State 44
 
    12 Expression: Expression . tADD Expression
-   13           | Expression . tMUL Expression
-   14           | Expression . tSUB Expression
+   13           | Expression . tSUB Expression
+   14           | Expression . tMUL Expression
    15           | Expression . tDIV Expression
    15           | Expression tDIV Expression .
 

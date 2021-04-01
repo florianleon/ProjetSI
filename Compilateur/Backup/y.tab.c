@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "AnalyseurGrammatical.y"
+#line 1 "AG3.y"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -171,7 +171,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 11 "AnalyseurGrammatical.y"
+#line 11 "AG3.y"
 
     char *variable;
     int nombre;
@@ -554,7 +554,7 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int8 yyrline[] =
 {
        0,    44,    44,    50,    51,    52,    55,    59,    63,    67,
-      71,    77,    80,    86,    89,    92,    95,    98,   101,   106,
+      71,    77,    80,    86,    90,    93,    96,    99,   101,   106,
      113
 };
 #endif
@@ -612,7 +612,7 @@ static const yytype_int8 yydefact[] =
        0,     0,     0,     0,    12,    10,     0,     0,     0,     3,
        4,     0,     0,     8,     0,     0,    18,    19,    20,    11,
        9,     0,     0,     0,     0,     0,     0,     0,     7,     5,
-      17,    14,    13,    15,    16
+      17,    15,    13,    14,    16
 };
 
   /* YYPGOTO[NTERM-NUM].  */
@@ -1370,7 +1370,7 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 45 "AnalyseurGrammatical.y"
+#line 45 "AG3.y"
             {printf("Fin Main\n");
             afficher();
             exit(0);}
@@ -1378,14 +1378,14 @@ yyreduce:
     break;
 
   case 5:
-#line 53 "AnalyseurGrammatical.y"
+#line 53 "AG3.y"
                 {printf("Print !\n");
                 printASM(fdClair, fdCode, (yyvsp[-2].variable));}
 #line 1385 "y.tab.c"
     break;
 
   case 7:
-#line 60 "AnalyseurGrammatical.y"
+#line 60 "AG3.y"
                 {printf("declaration assignation constante\n");
                 ajouter(1, 1, fdClair, fdCode, (yyvsp[0].nombre));
                 }
@@ -1393,7 +1393,7 @@ yyreduce:
     break;
 
   case 8:
-#line 64 "AnalyseurGrammatical.y"
+#line 64 "AG3.y"
                 {printf("declaration constante\n");
                 ajouter(1, 0, fdClair, fdCode, 0);
                 }
@@ -1401,7 +1401,7 @@ yyreduce:
     break;
 
   case 9:
-#line 68 "AnalyseurGrammatical.y"
+#line 68 "AG3.y"
                 {printf("declaration assignation\n");
                 ajouter(0, 1, fdClair, fdCode, (yyvsp[0].nombre));
                 afficher();}
@@ -1409,7 +1409,7 @@ yyreduce:
     break;
 
   case 10:
-#line 72 "AnalyseurGrammatical.y"
+#line 72 "AG3.y"
                 {printf("declaration \n");
                 ajouter(0, 0, fdClair, fdCode, 0); // assigner ? directement en c ?
                 afficher();}
@@ -1417,56 +1417,56 @@ yyreduce:
     break;
 
   case 11:
-#line 78 "AnalyseurGrammatical.y"
+#line 78 "AG3.y"
             {ajouterListe((yyvsp[-2].variable));
             printf("declaration Var+\n");}
 #line 1424 "y.tab.c"
     break;
 
   case 12:
-#line 81 "AnalyseurGrammatical.y"
+#line 81 "AG3.y"
             {ajouterListe((yyvsp[0].variable));
             printf("declaration Var\n");}
 #line 1431 "y.tab.c"
     break;
 
   case 13:
-#line 87 "AnalyseurGrammatical.y"
+#line 87 "AG3.y"
                 {printf("Addition\n");
-                ecrireOperationASM(fdClair, fdCode, 1, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
-#line 1438 "y.tab.c"
+                ecrireOperationASM(fdClair, fdCode, 1, (yyvsp[-2].nombre), (yyvsp[0].nombre));
+                }
+#line 1439 "y.tab.c"
     break;
 
   case 14:
-#line 90 "AnalyseurGrammatical.y"
-                {printf("Multiplication\n");
-                ecrireOperationASM(fdClair, fdCode, 2, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
-#line 1445 "y.tab.c"
+#line 91 "AG3.y"
+                {printf("Soustraction\n");
+                ecrireOperationASM(fdClair, fdCode, 3, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
+#line 1446 "y.tab.c"
     break;
 
   case 15:
-#line 93 "AnalyseurGrammatical.y"
-                {printf("Soustraction\n");
-                ecrireOperationASM(fdClair, fdCode, 3, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
-#line 1452 "y.tab.c"
+#line 94 "AG3.y"
+                {printf("Multiplication\n");
+                ecrireOperationASM(fdClair, fdCode, 2, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
+#line 1453 "y.tab.c"
     break;
 
   case 16:
-#line 96 "AnalyseurGrammatical.y"
+#line 97 "AG3.y"
                 {printf("Division\n");
                 ecrireOperationASM(fdClair, fdCode, 4, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
-#line 1459 "y.tab.c"
+#line 1460 "y.tab.c"
     break;
 
   case 17:
-#line 99 "AnalyseurGrammatical.y"
-                {printf("(Expr)\n");
-                (yyval.nombre) = derniereTmp();}
+#line 100 "AG3.y"
+                {printf("(Expr)\n");}
 #line 1466 "y.tab.c"
     break;
 
   case 18:
-#line 102 "AnalyseurGrammatical.y"
+#line 102 "AG3.y"
                 {printf("Nombre !\n");
                 nbASM(fdClair, fdCode, (yyvsp[0].nombre));
                 // tmp TODO
@@ -1475,7 +1475,7 @@ yyreduce:
     break;
 
   case 19:
-#line 107 "AnalyseurGrammatical.y"
+#line 107 "AG3.y"
                 {printf("Variable !\n");
                 varASM(fdClair, fdCode, (yyvsp[0].variable));
                 (yyval.nombre) = derniereTmp(); // à modifier pour utiliser tmp TODO
@@ -1484,7 +1484,7 @@ yyreduce:
     break;
 
   case 20:
-#line 114 "AnalyseurGrammatical.y"
+#line 114 "AG3.y"
                 {printf("assignation Var already declared\n");
                 setInit((yyvsp[-2].variable));
                 asignerASM(fdClair, fdCode, (yyvsp[-2].variable)); // TODO verifier que expression et bien dans tmp et à la bonne place
@@ -1725,7 +1725,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 121 "AnalyseurGrammatical.y"
+#line 121 "AG3.y"
 
 int yyerror(char*s) {
     printf("Erreur : %s\n", s);
