@@ -101,13 +101,11 @@ Expression : Expression tADD Expression
            | tNB 
                 {printf("Nombre !\n");
                 nbASM(fdClair, fdCode, $1);
-                // tmp TODO
                 $$ = derniereTmp();}
            | tVAR 
                 {printf("Variable !\n");
                 varASM(fdClair, fdCode, $1);
-                $$ = derniereTmp(); // à modifier pour utiliser tmp TODO
-                }
+                $$ = derniereTmp();}
            ;
 
 Assignation : tVAR tEQ Expression 
