@@ -49,26 +49,58 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tCV = 258,
-    tNB = 259,
-    tNL = 260
+    tMAIN = 258,
+    tAO = 259,
+    tAF = 260,
+    tINT = 261,
+    tCONST = 262,
+    tPO = 263,
+    tPF = 264,
+    tESPACE = 265,
+    tV = 266,
+    tPV = 267,
+    tPRINT = 268,
+    tNB = 269,
+    tEXP = 270,
+    tVAR = 271,
+    tMUL = 272,
+    tEQ = 273,
+    tADD = 274,
+    tSUB = 275,
+    tDIV = 276
   };
 #endif
 /* Tokens.  */
-#define tCV 258
-#define tNB 259
-#define tNL 260
+#define tMAIN 258
+#define tAO 259
+#define tAF 260
+#define tINT 261
+#define tCONST 262
+#define tPO 263
+#define tPF 264
+#define tESPACE 265
+#define tV 266
+#define tPV 267
+#define tPRINT 268
+#define tNB 269
+#define tEXP 270
+#define tVAR 271
+#define tMUL 272
+#define tEQ 273
+#define tADD 274
+#define tSUB 275
+#define tDIV 276
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 12 "AnalyseurGrammaticalASM.y"
+#line 11 "AG3.y"
 
-    int adresse;
-    char* codeVar;
+    char *variable;
+    int nombre;
 
-#line 72 "y.tab.h"
+#line 104 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

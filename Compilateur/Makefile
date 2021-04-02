@@ -1,15 +1,21 @@
-3 : AG3.y AL3.lex symbol_table.c
-	yacc -d -v AG3.y
-	lex AL3.lex
-	gcc y.tab.c lex.yy.c symbol_table.c -o ag
+analyseur : AnalyseurGrammaticalC.y AnalyseurLexicalC.lex symbol_table_c.c
+	yacc -d -v AnalyseurGrammaticalC.y
+	lex AnalyseurLexicalC.lex
+	gcc y.tab.c lex.yy.c symbol_table_c.c -o ag
 	./ag
 
-2 : AG2.y AL2.lex symbol_table.c
-	yacc -d -v AG2.y
-	lex AL2.lex
-	gcc y.tab.c lex.yy.c symbol_table.c -o ag
+interpreteur : AnalyseurGrammaticalASM.y AnalyseurLexicalASM.lex code.s symbol_table_asm.c
+	yacc -d -v AnalyseurGrammaticalASM.y
+	lex AnalyseurLexicalASM.lex
+	gcc y.tab.c lex.yy.c symbol_table_asm.c -o interp
+	./interp < code.s
 
-1 : AG1.y AL1.lex
-	yacc -d -v AG1.y
-	lex AL1.lex
-	gcc y.tab.c lex.yy.c -o ag
+final : AnalyseurGrammaticalC.y AnalyseurLexicalC.lex symbol_table_c.c code.c AnalyseurGrammaticalASM.y AnalyseurLexicalASM.lex symbol_table_asm.c
+	yacc -d -v AnalyseurGrammaticalC.y
+	lex AnalyseurLexicalC.lex
+	gcc y.tab.c lex.yy.c symbol_table_c.c -o ag
+	./ag < code.c
+	yacc -d -v AnalyseurGrammaticalASM.y
+	lex AnalyseurLexicalASM.lex
+	gcc y.tab.c lex.yy.c symbol_table_asm.c -o interp
+	./interp < code.s

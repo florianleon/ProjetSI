@@ -66,15 +66,15 @@
 
 
 /* First part of user prologue.  */
-#line 1 "AnalyseurGrammaticalASM.y"
+#line 1 "AG3.y"
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "symbol_table_asm.h"
-
+#include "symbol_table.h"
 int yyerror(char*s) ;
 int yylex();
-
+FILE *fdCode;
+FILE *fdClair;
 
 
 #line 81 "y.tab.c"
@@ -125,26 +125,58 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tCV = 258,
-    tNB = 259,
-    tNL = 260
+    tMAIN = 258,
+    tAO = 259,
+    tAF = 260,
+    tINT = 261,
+    tCONST = 262,
+    tPO = 263,
+    tPF = 264,
+    tESPACE = 265,
+    tV = 266,
+    tPV = 267,
+    tPRINT = 268,
+    tNB = 269,
+    tEXP = 270,
+    tVAR = 271,
+    tMUL = 272,
+    tEQ = 273,
+    tADD = 274,
+    tSUB = 275,
+    tDIV = 276
   };
 #endif
 /* Tokens.  */
-#define tCV 258
-#define tNB 259
-#define tNL 260
+#define tMAIN 258
+#define tAO 259
+#define tAF 260
+#define tINT 261
+#define tCONST 262
+#define tPO 263
+#define tPF 264
+#define tESPACE 265
+#define tV 266
+#define tPV 267
+#define tPRINT 268
+#define tNB 269
+#define tEXP 270
+#define tVAR 271
+#define tMUL 272
+#define tEQ 273
+#define tADD 274
+#define tSUB 275
+#define tDIV 276
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 12 "AnalyseurGrammaticalASM.y"
+#line 11 "AG3.y"
 
-    int adresse;
-    char* codeVar;
+    char *variable;
+    int nombre;
 
-#line 148 "y.tab.c"
+#line 180 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -461,21 +493,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  6
+#define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   13
+#define YYLAST   51
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  6
+#define YYNTOKENS  22
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  5
+#define YYNNTS  7
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  20
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  18
+#define YYNSTATES  45
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   260
+#define YYMAXUTOK   276
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -513,14 +545,17 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    21
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    27,    27,    26,    32,    31,    37,    36,    42
+       0,    44,    44,    50,    51,    52,    55,    59,    63,    67,
+      71,    77,    80,    86,    90,    93,    96,    99,   101,   106,
+     113
 };
 #endif
 
@@ -529,8 +564,10 @@ static const yytype_int8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "tCV", "tNB", "tNL", "$accept", "Code",
-  "$@1", "$@2", "$@3", YY_NULLPTR
+  "$end", "error", "$undefined", "tMAIN", "tAO", "tAF", "tINT", "tCONST",
+  "tPO", "tPF", "tESPACE", "tV", "tPV", "tPRINT", "tNB", "tEXP", "tVAR",
+  "tMUL", "tEQ", "tADD", "tSUB", "tDIV", "$accept", "Main", "Programme",
+  "Declaration", "Variable", "Expression", "Assignation", YY_NULLPTR
 };
 #endif
 
@@ -539,11 +576,13 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_int16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275,   276
 };
 # endif
 
-#define YYPACT_NINF (-10)
+#define YYPACT_NINF (-23)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -557,8 +596,11 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,     3,     4,     9,     5,     7,   -10,   -10,    -1,    -2,
-       8,   -10,   -10,   -10,    -2,    -2,   -10,   -10
+      -4,     1,     5,    31,   -23,   -23,    16,   -23,    20,    11,
+      29,    21,    26,    28,    30,    24,    20,    27,    17,   -23,
+     -23,    20,    17,    32,    35,    17,   -23,   -23,     7,   -23,
+       7,    17,    33,    -1,    17,    17,    17,    17,     7,   -23,
+     -23,     7,   -10,    13,    34
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -566,20 +608,23 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       8,     0,     0,     0,     0,     0,     1,     6,     0,     8,
-       0,     2,     7,     4,     8,     8,     3,     5
+       0,     0,     0,     0,     1,     6,     0,     2,     0,     0,
+       0,     0,     0,     0,    12,    10,     0,     0,     0,     3,
+       4,     0,     0,     8,     0,     0,    18,    19,    20,    11,
+       9,     0,     0,     0,     0,     0,     0,     0,     7,     5,
+      17,    15,    13,    14,    16
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -10,    -9,   -10,   -10,   -10
+     -23,   -23,   -23,   -23,   -15,   -22,   -23
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     3,    14,    15,     9
+      -1,     2,     6,    12,    15,    28,    13
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -587,34 +632,49 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      12,     1,     2,    10,    11,    16,    17,     4,     5,     6,
-       7,     8,     0,    13
+      30,    23,     1,    33,     3,     4,    29,    34,    40,    38,
+      36,    37,    41,    42,    43,    44,    34,    16,    35,    36,
+      37,     7,     8,     9,    34,    25,    35,    36,    37,    10,
+      34,    26,    11,    27,    37,     5,    14,    17,    19,    18,
+      20,    21,    22,    24,    32,    39,     0,     0,     0,     0,
+      31,    34
 };
 
 static const yytype_int8 yycheck[] =
 {
-       9,     3,     4,     4,     5,    14,    15,     4,     4,     0,
-       5,     4,    -1,     5
+      22,    16,     6,    25,     3,     0,    21,    17,     9,    31,
+      20,    21,    34,    35,    36,    37,    17,     6,    19,    20,
+      21,     5,     6,     7,    17,     8,    19,    20,    21,    13,
+      17,    14,    16,    16,    21,     4,    16,     8,    12,    18,
+      12,    11,    18,    16,     9,    12,    -1,    -1,    -1,    -1,
+      18,    17
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     4,     7,     4,     4,     0,     5,     4,    10,
-       4,     5,     7,     5,     8,     9,     7,     7
+       0,     6,    23,     3,     0,     4,    24,     5,     6,     7,
+      13,    16,    25,    28,    16,    26,     6,     8,    18,    12,
+      12,    11,    18,    26,    16,     8,    14,    16,    27,    26,
+      27,    18,     9,    27,    17,    19,    20,    21,    27,    12,
+       9,    27,    27,    27,    27
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     6,     8,     7,     9,     7,    10,     7,     7
+       0,    22,    23,    24,    24,    24,    24,    25,    25,    25,
+      25,    26,    26,    27,    27,    27,    27,    27,    27,    27,
+      28
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0,     6,     0,     7,     0,     5,     0
+       0,     2,     5,     3,     3,     6,     0,     5,     3,     4,
+       2,     3,     1,     3,     3,     3,     3,     3,     1,     1,
+       3
 };
 
 
@@ -1310,38 +1370,130 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 27 "AnalyseurGrammaticalASM.y"
-        {
-            tripleOrdre((yyvsp[-3].adresse), (yyvsp[-2].adresse), (yyvsp[-1].adresse));
-        }
-#line 1318 "y.tab.c"
+#line 45 "AG3.y"
+            {printf("Fin Main\n");
+            afficher();
+            exit(0);}
+#line 1378 "y.tab.c"
     break;
 
-  case 4:
-#line 32 "AnalyseurGrammaticalASM.y"
-        {
-            quadrupleOrdre((yyvsp[-4].adresse), (yyvsp[-3].adresse), (yyvsp[-2].adresse), (yyvsp[-1].adresse));
-        }
-#line 1326 "y.tab.c"
+  case 5:
+#line 53 "AG3.y"
+                {printf("Print !\n");
+                printASM(fdClair, fdCode, (yyvsp[-2].variable));}
+#line 1385 "y.tab.c"
     break;
 
-  case 6:
-#line 37 "AnalyseurGrammaticalASM.y"
-        {
-            doubleVar((yyvsp[-2].codeVar), (yyvsp[-1].adresse));
-        }
-#line 1334 "y.tab.c"
+  case 7:
+#line 60 "AG3.y"
+                {printf("declaration assignation constante\n");
+                ajouter(1, 1, fdClair, fdCode, (yyvsp[0].nombre));
+                }
+#line 1393 "y.tab.c"
     break;
 
   case 8:
-#line 42 "AnalyseurGrammaticalASM.y"
-        {printf("Fin Code\n");
-        exit(0);}
-#line 1341 "y.tab.c"
+#line 64 "AG3.y"
+                {printf("declaration constante\n");
+                ajouter(1, 0, fdClair, fdCode, 0);
+                }
+#line 1401 "y.tab.c"
+    break;
+
+  case 9:
+#line 68 "AG3.y"
+                {printf("declaration assignation\n");
+                ajouter(0, 1, fdClair, fdCode, (yyvsp[0].nombre));
+                afficher();}
+#line 1409 "y.tab.c"
+    break;
+
+  case 10:
+#line 72 "AG3.y"
+                {printf("declaration \n");
+                ajouter(0, 0, fdClair, fdCode, 0); // assigner ? directement en c ?
+                afficher();}
+#line 1417 "y.tab.c"
+    break;
+
+  case 11:
+#line 78 "AG3.y"
+            {ajouterListe((yyvsp[-2].variable));
+            printf("declaration Var+\n");}
+#line 1424 "y.tab.c"
+    break;
+
+  case 12:
+#line 81 "AG3.y"
+            {ajouterListe((yyvsp[0].variable));
+            printf("declaration Var\n");}
+#line 1431 "y.tab.c"
+    break;
+
+  case 13:
+#line 87 "AG3.y"
+                {printf("Addition\n");
+                ecrireOperationASM(fdClair, fdCode, 1, (yyvsp[-2].nombre), (yyvsp[0].nombre));
+                }
+#line 1439 "y.tab.c"
+    break;
+
+  case 14:
+#line 91 "AG3.y"
+                {printf("Soustraction\n");
+                ecrireOperationASM(fdClair, fdCode, 3, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
+#line 1446 "y.tab.c"
+    break;
+
+  case 15:
+#line 94 "AG3.y"
+                {printf("Multiplication\n");
+                ecrireOperationASM(fdClair, fdCode, 2, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
+#line 1453 "y.tab.c"
+    break;
+
+  case 16:
+#line 97 "AG3.y"
+                {printf("Division\n");
+                ecrireOperationASM(fdClair, fdCode, 4, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
+#line 1460 "y.tab.c"
+    break;
+
+  case 17:
+#line 100 "AG3.y"
+                {printf("(Expr)\n");}
+#line 1466 "y.tab.c"
+    break;
+
+  case 18:
+#line 102 "AG3.y"
+                {printf("Nombre !\n");
+                nbASM(fdClair, fdCode, (yyvsp[0].nombre));
+                // tmp TODO
+                (yyval.nombre) = derniereTmp();}
+#line 1475 "y.tab.c"
+    break;
+
+  case 19:
+#line 107 "AG3.y"
+                {printf("Variable !\n");
+                varASM(fdClair, fdCode, (yyvsp[0].variable));
+                (yyval.nombre) = derniereTmp(); // à modifier pour utiliser tmp TODO
+                }
+#line 1484 "y.tab.c"
+    break;
+
+  case 20:
+#line 114 "AG3.y"
+                {printf("assignation Var already declared\n");
+                setInit((yyvsp[-2].variable));
+                asignerASM(fdClair, fdCode, (yyvsp[-2].variable)); // TODO verifier que expression et bien dans tmp et à la bonne place
+                }
+#line 1493 "y.tab.c"
     break;
 
 
-#line 1345 "y.tab.c"
+#line 1497 "y.tab.c"
 
       default: break;
     }
@@ -1573,18 +1725,17 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 48 "AnalyseurGrammaticalASM.y"
-
-
+#line 121 "AG3.y"
 
 int yyerror(char*s) {
-    printf("Erreur yyerror : %s\n", s);
+    printf("Erreur : %s\n", s);
 }
-
 int main() {
-    printf("Debut Interpreteur :\n");
+    fdClair = fopen("codeasm.s", "w");
+    fdCode = fopen("code.s", "w");
     yyparse();
-
+    fclose(fdCode);
+    fclose(fdClair);
     return 1;
 }
 
