@@ -49,26 +49,76 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tCV = 258,
-    tNB = 259,
-    tNL = 260
+    tMAIN = 258,
+    tAO = 259,
+    tAF = 260,
+    tINT = 261,
+    tCONST = 262,
+    tPO = 263,
+    tPF = 264,
+    tESPACE = 265,
+    tV = 266,
+    tPV = 267,
+    tPRINT = 268,
+    tNB = 269,
+    tEXP = 270,
+    tVAR = 271,
+    tET = 272,
+    tNE = 273,
+    tSE = 274,
+    tIE = 275,
+    tST = 276,
+    tIT = 277,
+    tIF = 278,
+    tELSE = 279,
+    tWHILE = 280,
+    tMUL = 281,
+    tEQ = 282,
+    tADD = 283,
+    tSUB = 284,
+    tDIV = 285
   };
 #endif
 /* Tokens.  */
-#define tCV 258
-#define tNB 259
-#define tNL 260
+#define tMAIN 258
+#define tAO 259
+#define tAF 260
+#define tINT 261
+#define tCONST 262
+#define tPO 263
+#define tPF 264
+#define tESPACE 265
+#define tV 266
+#define tPV 267
+#define tPRINT 268
+#define tNB 269
+#define tEXP 270
+#define tVAR 271
+#define tET 272
+#define tNE 273
+#define tSE 274
+#define tIE 275
+#define tST 276
+#define tIT 277
+#define tIF 278
+#define tELSE 279
+#define tWHILE 280
+#define tMUL 281
+#define tEQ 282
+#define tADD 283
+#define tSUB 284
+#define tDIV 285
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 12 "AnalyseurGrammaticalASM.y"
+#line 14 "AnalyseurGrammaticalC.y"
 
-    int adresse;
-    char* codeVar;
+    char *variable;
+    int nombre;
 
-#line 72 "y.tab.h"
+#line 122 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -1,199 +1,1025 @@
+Terminals unused in grammar
+
+    tESPACE
+    tEXP
+
+
+State 56 conflicts: 4 shift/reduce
+State 57 conflicts: 1 shift/reduce
+State 58 conflicts: 1 shift/reduce
+State 59 conflicts: 1 shift/reduce
+
+
 Grammar
 
-    0 $accept: Code $end
+    0 $accept: Main $end
 
-    1 $@1: %empty
+    1 Main: tINT tMAIN tAO Programme tAF
 
-    2 Code: tNB tNB tNB tNL $@1 Code
+    2 Programme: Programme Declaration tPV
+    3          | Programme Assignation tPV
+    4          | Programme tPRINT tPO tVAR tPF tPV
 
-    3 $@2: %empty
+    5 $@1: %empty
 
-    4 Code: tNB tNB tNB tNB tNL $@2 Code
+    6 $@2: %empty
 
-    5 $@3: %empty
+    7 Programme: Programme tIF tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite
 
-    6 Code: tCV tNB tNL $@3 Code
-    7     | %empty
+    8 $@3: %empty
+
+    9 $@4: %empty
+
+   10 Programme: Programme tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF
+   11          | %empty
+
+   12 $@5: %empty
+
+   13 IFsuite: tELSE $@5 tAO Programme tAF
+   14        | %empty
+
+   15 Declaration: tCONST tINT Variable tEQ Expression
+   16            | tCONST tINT Variable
+   17            | tINT Variable tEQ Expression
+   18            | tINT Variable
+
+   19 Variable: tVAR tV Variable
+   20         | tVAR
+
+   21 Expression: Expression tADD Expression
+   22           | Expression tMUL Expression
+   23           | Expression tSUB Expression
+   24           | Expression tDIV Expression
+   25           | tPO Expression tPF
+   26           | tNB
+   27           | tVAR
+
+   28 Assignation: tVAR tEQ Expression
+
+   29 Condition: Expression tIT Expression
+   30          | Expression tST Expression
+   31          | Expression tET Expression
+   32          | Expression tNE Expression
+   33          | Expression tIE Expression
+   34          | Expression tSE Expression
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    tCV <codeVar> (258) 6
-    tNB <adresse> (259) 2 4 6
-    tNL (260) 2 4 6
+    tMAIN (258) 1
+    tAO (259) 1 7 10 13
+    tAF (260) 1 7 10 13
+    tINT (261) 1 15 16 17 18
+    tCONST (262) 15 16
+    tPO (263) 4 7 10 25
+    tPF (264) 4 7 10 25
+    tESPACE (265)
+    tV (266) 19
+    tPV (267) 2 3 4
+    tPRINT (268) 4
+    tNB <nombre> (269) 26
+    tEXP (270)
+    tVAR <variable> (271) 4 19 20 27 28
+    tET (272) 31
+    tNE (273) 32
+    tSE (274) 34
+    tIE (275) 33
+    tST (276) 30
+    tIT (277) 29
+    tIF (278) 7
+    tELSE (279) 13
+    tWHILE (280) 10
+    tMUL (281) 22
+    tEQ (282) 15 17 28
+    tADD (283) 21
+    tSUB (284) 23
+    tDIV (285) 24
 
 
 Nonterminals, with rules where they appear
 
-    $accept (6)
+    $accept (31)
         on left: 0
-    Code (7)
-        on left: 2 4 6 7
-        on right: 0 2 4 6
-    $@1 (8)
+    Main (32)
         on left: 1
-        on right: 2
-    $@2 (9)
-        on left: 3
-        on right: 4
-    $@3 (10)
+        on right: 0
+    Programme (33)
+        on left: 2 3 4 7 10 11
+        on right: 1 2 3 4 7 10 13
+    $@1 (34)
         on left: 5
-        on right: 6
+        on right: 7
+    $@2 (35)
+        on left: 6
+        on right: 7
+    $@3 (36)
+        on left: 8
+        on right: 10
+    $@4 (37)
+        on left: 9
+        on right: 10
+    IFsuite (38)
+        on left: 13 14
+        on right: 7
+    $@5 (39)
+        on left: 12
+        on right: 13
+    Declaration (40)
+        on left: 15 16 17 18
+        on right: 2
+    Variable (41)
+        on left: 19 20
+        on right: 15 16 17 18 19
+    Expression <nombre> (42)
+        on left: 21 22 23 24 25 26 27
+        on right: 15 17 21 22 23 24 25 28 29 30 31 32 33 34
+    Assignation (43)
+        on left: 28
+        on right: 3
+    Condition <nombre> (44)
+        on left: 29 30 31 32 33 34
+        on right: 7 10
 
 
 State 0
 
-    0 $accept: . Code $end
+    0 $accept: . Main $end
 
-    tCV  shift, and go to state 1
-    tNB  shift, and go to state 2
+    tINT  shift, and go to state 1
 
-    $default  reduce using rule 7 (Code)
-
-    Code  go to state 3
+    Main  go to state 2
 
 
 State 1
 
-    6 Code: tCV . tNB tNL $@3 Code
+    1 Main: tINT . tMAIN tAO Programme tAF
 
-    tNB  shift, and go to state 4
+    tMAIN  shift, and go to state 3
 
 
 State 2
 
-    2 Code: tNB . tNB tNB tNL $@1 Code
-    4     | tNB . tNB tNB tNB tNL $@2 Code
+    0 $accept: Main . $end
 
-    tNB  shift, and go to state 5
+    $end  shift, and go to state 4
 
 
 State 3
 
-    0 $accept: Code . $end
+    1 Main: tINT tMAIN . tAO Programme tAF
 
-    $end  shift, and go to state 6
+    tAO  shift, and go to state 5
 
 
 State 4
 
-    6 Code: tCV tNB . tNL $@3 Code
-
-    tNL  shift, and go to state 7
-
-
-State 5
-
-    2 Code: tNB tNB . tNB tNL $@1 Code
-    4     | tNB tNB . tNB tNB tNL $@2 Code
-
-    tNB  shift, and go to state 8
-
-
-State 6
-
-    0 $accept: Code $end .
+    0 $accept: Main $end .
 
     $default  accept
 
 
+State 5
+
+    1 Main: tINT tMAIN tAO . Programme tAF
+
+    $default  reduce using rule 11 (Programme)
+
+    Programme  go to state 6
+
+
+State 6
+
+    1 Main: tINT tMAIN tAO Programme . tAF
+    2 Programme: Programme . Declaration tPV
+    3          | Programme . Assignation tPV
+    4          | Programme . tPRINT tPO tVAR tPF tPV
+    7          | Programme . tIF tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite
+   10          | Programme . tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF
+
+    tAF     shift, and go to state 7
+    tINT    shift, and go to state 8
+    tCONST  shift, and go to state 9
+    tPRINT  shift, and go to state 10
+    tVAR    shift, and go to state 11
+    tIF     shift, and go to state 12
+    tWHILE  shift, and go to state 13
+
+    Declaration  go to state 14
+    Assignation  go to state 15
+
+
 State 7
 
-    6 Code: tCV tNB tNL . $@3 Code
+    1 Main: tINT tMAIN tAO Programme tAF .
 
-    $default  reduce using rule 5 ($@3)
-
-    $@3  go to state 9
+    $default  reduce using rule 1 (Main)
 
 
 State 8
 
-    2 Code: tNB tNB tNB . tNL $@1 Code
-    4     | tNB tNB tNB . tNB tNL $@2 Code
+   17 Declaration: tINT . Variable tEQ Expression
+   18            | tINT . Variable
 
-    tNB  shift, and go to state 10
-    tNL  shift, and go to state 11
+    tVAR  shift, and go to state 16
+
+    Variable  go to state 17
 
 
 State 9
 
-    6 Code: tCV tNB tNL $@3 . Code
+   15 Declaration: tCONST . tINT Variable tEQ Expression
+   16            | tCONST . tINT Variable
 
-    tCV  shift, and go to state 1
-    tNB  shift, and go to state 2
-
-    $default  reduce using rule 7 (Code)
-
-    Code  go to state 12
+    tINT  shift, and go to state 18
 
 
 State 10
 
-    4 Code: tNB tNB tNB tNB . tNL $@2 Code
+    4 Programme: Programme tPRINT . tPO tVAR tPF tPV
 
-    tNL  shift, and go to state 13
+    tPO  shift, and go to state 19
 
 
 State 11
 
-    2 Code: tNB tNB tNB tNL . $@1 Code
+   28 Assignation: tVAR . tEQ Expression
 
-    $default  reduce using rule 1 ($@1)
-
-    $@1  go to state 14
+    tEQ  shift, and go to state 20
 
 
 State 12
 
-    6 Code: tCV tNB tNL $@3 Code .
+    7 Programme: Programme tIF . tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite
 
-    $default  reduce using rule 6 (Code)
+    tPO  shift, and go to state 21
 
 
 State 13
 
-    4 Code: tNB tNB tNB tNB tNL . $@2 Code
+   10 Programme: Programme tWHILE . $@3 tPO Condition tPF $@4 tAO Programme tAF
 
-    $default  reduce using rule 3 ($@2)
+    $default  reduce using rule 8 ($@3)
 
-    $@2  go to state 15
+    $@3  go to state 22
 
 
 State 14
 
-    2 Code: tNB tNB tNB tNL $@1 . Code
+    2 Programme: Programme Declaration . tPV
 
-    tCV  shift, and go to state 1
-    tNB  shift, and go to state 2
-
-    $default  reduce using rule 7 (Code)
-
-    Code  go to state 16
+    tPV  shift, and go to state 23
 
 
 State 15
 
-    4 Code: tNB tNB tNB tNB tNL $@2 . Code
+    3 Programme: Programme Assignation . tPV
 
-    tCV  shift, and go to state 1
-    tNB  shift, and go to state 2
-
-    $default  reduce using rule 7 (Code)
-
-    Code  go to state 17
+    tPV  shift, and go to state 24
 
 
 State 16
 
-    2 Code: tNB tNB tNB tNL $@1 Code .
+   19 Variable: tVAR . tV Variable
+   20         | tVAR .
 
-    $default  reduce using rule 2 (Code)
+    tV  shift, and go to state 25
+
+    $default  reduce using rule 20 (Variable)
 
 
 State 17
 
-    4 Code: tNB tNB tNB tNB tNL $@2 Code .
+   17 Declaration: tINT Variable . tEQ Expression
+   18            | tINT Variable .
 
-    $default  reduce using rule 4 (Code)
+    tEQ  shift, and go to state 26
+
+    $default  reduce using rule 18 (Declaration)
+
+
+State 18
+
+   15 Declaration: tCONST tINT . Variable tEQ Expression
+   16            | tCONST tINT . Variable
+
+    tVAR  shift, and go to state 16
+
+    Variable  go to state 27
+
+
+State 19
+
+    4 Programme: Programme tPRINT tPO . tVAR tPF tPV
+
+    tVAR  shift, and go to state 28
+
+
+State 20
+
+   28 Assignation: tVAR tEQ . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 32
+
+
+State 21
+
+    7 Programme: Programme tIF tPO . Condition tPF $@1 tAO Programme tAF $@2 IFsuite
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 33
+    Condition   go to state 34
+
+
+State 22
+
+   10 Programme: Programme tWHILE $@3 . tPO Condition tPF $@4 tAO Programme tAF
+
+    tPO  shift, and go to state 35
+
+
+State 23
+
+    2 Programme: Programme Declaration tPV .
+
+    $default  reduce using rule 2 (Programme)
+
+
+State 24
+
+    3 Programme: Programme Assignation tPV .
+
+    $default  reduce using rule 3 (Programme)
+
+
+State 25
+
+   19 Variable: tVAR tV . Variable
+
+    tVAR  shift, and go to state 16
+
+    Variable  go to state 36
+
+
+State 26
+
+   17 Declaration: tINT Variable tEQ . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 37
+
+
+State 27
+
+   15 Declaration: tCONST tINT Variable . tEQ Expression
+   16            | tCONST tINT Variable .
+
+    tEQ  shift, and go to state 38
+
+    $default  reduce using rule 16 (Declaration)
+
+
+State 28
+
+    4 Programme: Programme tPRINT tPO tVAR . tPF tPV
+
+    tPF  shift, and go to state 39
+
+
+State 29
+
+   25 Expression: tPO . Expression tPF
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 40
+
+
+State 30
+
+   26 Expression: tNB .
+
+    $default  reduce using rule 26 (Expression)
+
+
+State 31
+
+   27 Expression: tVAR .
+
+    $default  reduce using rule 27 (Expression)
+
+
+State 32
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   28 Assignation: tVAR tEQ Expression .
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    $default  reduce using rule 28 (Assignation)
+
+
+State 33
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   29 Condition: Expression . tIT Expression
+   30          | Expression . tST Expression
+   31          | Expression . tET Expression
+   32          | Expression . tNE Expression
+   33          | Expression . tIE Expression
+   34          | Expression . tSE Expression
+
+    tET   shift, and go to state 45
+    tNE   shift, and go to state 46
+    tSE   shift, and go to state 47
+    tIE   shift, and go to state 48
+    tST   shift, and go to state 49
+    tIT   shift, and go to state 50
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+
+State 34
+
+    7 Programme: Programme tIF tPO Condition . tPF $@1 tAO Programme tAF $@2 IFsuite
+
+    tPF  shift, and go to state 51
+
+
+State 35
+
+   10 Programme: Programme tWHILE $@3 tPO . Condition tPF $@4 tAO Programme tAF
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 33
+    Condition   go to state 52
+
+
+State 36
+
+   19 Variable: tVAR tV Variable .
+
+    $default  reduce using rule 19 (Variable)
+
+
+State 37
+
+   17 Declaration: tINT Variable tEQ Expression .
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    $default  reduce using rule 17 (Declaration)
+
+
+State 38
+
+   15 Declaration: tCONST tINT Variable tEQ . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 53
+
+
+State 39
+
+    4 Programme: Programme tPRINT tPO tVAR tPF . tPV
+
+    tPV  shift, and go to state 54
+
+
+State 40
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   25           | tPO Expression . tPF
+
+    tPF   shift, and go to state 55
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+
+State 41
+
+   22 Expression: Expression tMUL . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 56
+
+
+State 42
+
+   21 Expression: Expression tADD . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 57
+
+
+State 43
+
+   23 Expression: Expression tSUB . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 58
+
+
+State 44
+
+   24 Expression: Expression tDIV . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 59
+
+
+State 45
+
+   31 Condition: Expression tET . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 60
+
+
+State 46
+
+   32 Condition: Expression tNE . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 61
+
+
+State 47
+
+   34 Condition: Expression tSE . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 62
+
+
+State 48
+
+   33 Condition: Expression tIE . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 63
+
+
+State 49
+
+   30 Condition: Expression tST . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 64
+
+
+State 50
+
+   29 Condition: Expression tIT . Expression
+
+    tPO   shift, and go to state 29
+    tNB   shift, and go to state 30
+    tVAR  shift, and go to state 31
+
+    Expression  go to state 65
+
+
+State 51
+
+    7 Programme: Programme tIF tPO Condition tPF . $@1 tAO Programme tAF $@2 IFsuite
+
+    $default  reduce using rule 5 ($@1)
+
+    $@1  go to state 66
+
+
+State 52
+
+   10 Programme: Programme tWHILE $@3 tPO Condition . tPF $@4 tAO Programme tAF
+
+    tPF  shift, and go to state 67
+
+
+State 53
+
+   15 Declaration: tCONST tINT Variable tEQ Expression .
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    $default  reduce using rule 15 (Declaration)
+
+
+State 54
+
+    4 Programme: Programme tPRINT tPO tVAR tPF tPV .
+
+    $default  reduce using rule 4 (Programme)
+
+
+State 55
+
+   25 Expression: tPO Expression tPF .
+
+    $default  reduce using rule 25 (Expression)
+
+
+State 56
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   22           | Expression tMUL Expression .
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    tMUL      [reduce using rule 22 (Expression)]
+    tADD      [reduce using rule 22 (Expression)]
+    tSUB      [reduce using rule 22 (Expression)]
+    tDIV      [reduce using rule 22 (Expression)]
+    $default  reduce using rule 22 (Expression)
+
+
+State 57
+
+   21 Expression: Expression . tADD Expression
+   21           | Expression tADD Expression .
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+
+    tMUL  shift, and go to state 41
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    tMUL      [reduce using rule 21 (Expression)]
+    $default  reduce using rule 21 (Expression)
+
+
+State 58
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   23           | Expression tSUB Expression .
+   24           | Expression . tDIV Expression
+
+    tMUL  shift, and go to state 41
+    tDIV  shift, and go to state 44
+
+    tMUL      [reduce using rule 23 (Expression)]
+    $default  reduce using rule 23 (Expression)
+
+
+State 59
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   24           | Expression tDIV Expression .
+
+    tMUL  shift, and go to state 41
+
+    tMUL      [reduce using rule 24 (Expression)]
+    $default  reduce using rule 24 (Expression)
+
+
+State 60
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   31 Condition: Expression tET Expression .
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    $default  reduce using rule 31 (Condition)
+
+
+State 61
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   32 Condition: Expression tNE Expression .
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    $default  reduce using rule 32 (Condition)
+
+
+State 62
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   34 Condition: Expression tSE Expression .
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    $default  reduce using rule 34 (Condition)
+
+
+State 63
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   33 Condition: Expression tIE Expression .
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    $default  reduce using rule 33 (Condition)
+
+
+State 64
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   30 Condition: Expression tST Expression .
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    $default  reduce using rule 30 (Condition)
+
+
+State 65
+
+   21 Expression: Expression . tADD Expression
+   22           | Expression . tMUL Expression
+   23           | Expression . tSUB Expression
+   24           | Expression . tDIV Expression
+   29 Condition: Expression tIT Expression .
+
+    tMUL  shift, and go to state 41
+    tADD  shift, and go to state 42
+    tSUB  shift, and go to state 43
+    tDIV  shift, and go to state 44
+
+    $default  reduce using rule 29 (Condition)
+
+
+State 66
+
+    7 Programme: Programme tIF tPO Condition tPF $@1 . tAO Programme tAF $@2 IFsuite
+
+    tAO  shift, and go to state 68
+
+
+State 67
+
+   10 Programme: Programme tWHILE $@3 tPO Condition tPF . $@4 tAO Programme tAF
+
+    $default  reduce using rule 9 ($@4)
+
+    $@4  go to state 69
+
+
+State 68
+
+    7 Programme: Programme tIF tPO Condition tPF $@1 tAO . Programme tAF $@2 IFsuite
+
+    $default  reduce using rule 11 (Programme)
+
+    Programme  go to state 70
+
+
+State 69
+
+   10 Programme: Programme tWHILE $@3 tPO Condition tPF $@4 . tAO Programme tAF
+
+    tAO  shift, and go to state 71
+
+
+State 70
+
+    2 Programme: Programme . Declaration tPV
+    3          | Programme . Assignation tPV
+    4          | Programme . tPRINT tPO tVAR tPF tPV
+    7          | Programme . tIF tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite
+    7          | Programme tIF tPO Condition tPF $@1 tAO Programme . tAF $@2 IFsuite
+   10          | Programme . tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF
+
+    tAF     shift, and go to state 72
+    tINT    shift, and go to state 8
+    tCONST  shift, and go to state 9
+    tPRINT  shift, and go to state 10
+    tVAR    shift, and go to state 11
+    tIF     shift, and go to state 12
+    tWHILE  shift, and go to state 13
+
+    Declaration  go to state 14
+    Assignation  go to state 15
+
+
+State 71
+
+   10 Programme: Programme tWHILE $@3 tPO Condition tPF $@4 tAO . Programme tAF
+
+    $default  reduce using rule 11 (Programme)
+
+    Programme  go to state 73
+
+
+State 72
+
+    7 Programme: Programme tIF tPO Condition tPF $@1 tAO Programme tAF . $@2 IFsuite
+
+    $default  reduce using rule 6 ($@2)
+
+    $@2  go to state 74
+
+
+State 73
+
+    2 Programme: Programme . Declaration tPV
+    3          | Programme . Assignation tPV
+    4          | Programme . tPRINT tPO tVAR tPF tPV
+    7          | Programme . tIF tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite
+   10          | Programme . tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF
+   10          | Programme tWHILE $@3 tPO Condition tPF $@4 tAO Programme . tAF
+
+    tAF     shift, and go to state 75
+    tINT    shift, and go to state 8
+    tCONST  shift, and go to state 9
+    tPRINT  shift, and go to state 10
+    tVAR    shift, and go to state 11
+    tIF     shift, and go to state 12
+    tWHILE  shift, and go to state 13
+
+    Declaration  go to state 14
+    Assignation  go to state 15
+
+
+State 74
+
+    7 Programme: Programme tIF tPO Condition tPF $@1 tAO Programme tAF $@2 . IFsuite
+
+    tELSE  shift, and go to state 76
+
+    $default  reduce using rule 14 (IFsuite)
+
+    IFsuite  go to state 77
+
+
+State 75
+
+   10 Programme: Programme tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF .
+
+    $default  reduce using rule 10 (Programme)
+
+
+State 76
+
+   13 IFsuite: tELSE . $@5 tAO Programme tAF
+
+    $default  reduce using rule 12 ($@5)
+
+    $@5  go to state 78
+
+
+State 77
+
+    7 Programme: Programme tIF tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite .
+
+    $default  reduce using rule 7 (Programme)
+
+
+State 78
+
+   13 IFsuite: tELSE $@5 . tAO Programme tAF
+
+    tAO  shift, and go to state 79
+
+
+State 79
+
+   13 IFsuite: tELSE $@5 tAO . Programme tAF
+
+    $default  reduce using rule 11 (Programme)
+
+    Programme  go to state 80
+
+
+State 80
+
+    2 Programme: Programme . Declaration tPV
+    3          | Programme . Assignation tPV
+    4          | Programme . tPRINT tPO tVAR tPF tPV
+    7          | Programme . tIF tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite
+   10          | Programme . tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF
+   13 IFsuite: tELSE $@5 tAO Programme . tAF
+
+    tAF     shift, and go to state 81
+    tINT    shift, and go to state 8
+    tCONST  shift, and go to state 9
+    tPRINT  shift, and go to state 10
+    tVAR    shift, and go to state 11
+    tIF     shift, and go to state 12
+    tWHILE  shift, and go to state 13
+
+    Declaration  go to state 14
+    Assignation  go to state 15
+
+
+State 81
+
+   13 IFsuite: tELSE $@5 tAO Programme tAF .
+
+    $default  reduce using rule 13 (IFsuite)

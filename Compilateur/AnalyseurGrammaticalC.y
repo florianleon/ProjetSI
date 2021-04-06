@@ -30,6 +30,18 @@ FILE *fdClair;
 %token<nombre> tNB 
 %token tEXP 
 %token<variable> tVAR 
+
+
+%token tET;
+%token tNE;
+%token tSE;
+%token tIE;
+%token tST;
+%token tIT;
+%token tIF;
+%token tELSE;
+%token tWHILE;
+
 %token tMUL
 
 
@@ -39,7 +51,7 @@ FILE *fdClair;
 %left tDIV
 
 
-%type<nombre> Expression
+%type<nombre> Expression Condition
 
 
 %%
@@ -50,14 +62,42 @@ Main : tINT tMAIN tAO Programme tAF
             exit(0);}
      ;
 
-Programme : Programme Declaration tPV 
+Programme : Programme Declaration tPV
           | Programme Assignation tPV
           | Programme tPRINT tPO tVAR tPF tPV 
                 {printf("Print !\n");
                 printASM(fdClair, fdCode, $4);}
+          | Programme tIF tPO Condition tPF 
+                {ifASM(fdClair, fdCode, $4);
+                 ajouterIndent();}
+            tAO Programme tAF 
+                {enleverIndent();
+                 bifASM(fdClair, fdCode);}
+            IFsuite
+          | Programme tWHILE 
+                {dwhileASM(fdClair, fdCode);}
+            tPO Condition tPF 
+                {ajouterIndent();
+                whileASM(fdClair, fdCode);}
+            tAO Programme tAF 
+                {enleverIndent();
+                fwhileASM(fdClair, fdCode, $5);
+                printf("WHILE\n");}
           |
           ;
 
+IFsuite : tELSE 
+                {ajouterIndent();
+                elseASM(fdClair, fdCode);}
+          tAO Programme tAF
+                {enleverIndent();
+                fifASM(fdClair, fdCode);
+                printf("IF ELSE\n");}
+        |
+                {elseASM(fdClair, fdCode);
+                fifASM(fdClair, fdCode);
+                printf("FIN IF\n");}
+        ;
 
 Declaration : tCONST tINT Variable tEQ Expression
                 {printf("declaration assignation constante\n");
@@ -114,9 +154,22 @@ Expression : Expression tADD Expression
 Assignation : tVAR tEQ Expression 
                 {printf("assignation Var already declared\n");
                 setInit($1);
-                asignerASM(fdClair, fdCode, $1); // TODO verifier que expression et bien dans tmp et à la bonne place
-                }
+                assignerASM(fdClair, fdCode, $1);}
             ;
+
+Condition : Expression tIT Expression
+                {$$ = 0;}
+          | Expression tST Expression
+                {$$ = 1;}
+          | Expression tET Expression
+                {$$ = 2;}
+          | Expression tNE Expression
+                {$$ = 3;}
+          | Expression tIE Expression
+                {$$ = 4;}
+          | Expression tSE Expression
+                {$$ = 5;}
+          ;
 
 
 %%
@@ -132,7 +185,7 @@ int main() {
 
     yyparse();
 
-    fclose(fdCode);
+    fclose(fdCode); // rajouter une ligne vide à la fin ?
     fclose(fdClair);
 
     return 1;

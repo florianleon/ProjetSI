@@ -66,18 +66,20 @@
 
 
 /* First part of user prologue.  */
-#line 1 "AnalyseurGrammaticalASM.y"
+#line 1 "AnalyseurGrammaticalC.y"
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "symbol_table_asm.h"
+#include "symbol_table_c.h"
 
 int yyerror(char*s) ;
 int yylex();
 
+FILE *fdCode;
+FILE *fdClair;
 
 
-#line 81 "y.tab.c"
+#line 83 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -125,26 +127,76 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tCV = 258,
-    tNB = 259,
-    tNL = 260
+    tMAIN = 258,
+    tAO = 259,
+    tAF = 260,
+    tINT = 261,
+    tCONST = 262,
+    tPO = 263,
+    tPF = 264,
+    tESPACE = 265,
+    tV = 266,
+    tPV = 267,
+    tPRINT = 268,
+    tNB = 269,
+    tEXP = 270,
+    tVAR = 271,
+    tET = 272,
+    tNE = 273,
+    tSE = 274,
+    tIE = 275,
+    tST = 276,
+    tIT = 277,
+    tIF = 278,
+    tELSE = 279,
+    tWHILE = 280,
+    tMUL = 281,
+    tEQ = 282,
+    tADD = 283,
+    tSUB = 284,
+    tDIV = 285
   };
 #endif
 /* Tokens.  */
-#define tCV 258
-#define tNB 259
-#define tNL 260
+#define tMAIN 258
+#define tAO 259
+#define tAF 260
+#define tINT 261
+#define tCONST 262
+#define tPO 263
+#define tPF 264
+#define tESPACE 265
+#define tV 266
+#define tPV 267
+#define tPRINT 268
+#define tNB 269
+#define tEXP 270
+#define tVAR 271
+#define tET 272
+#define tNE 273
+#define tSE 274
+#define tIE 275
+#define tST 276
+#define tIT 277
+#define tIF 278
+#define tELSE 279
+#define tWHILE 280
+#define tMUL 281
+#define tEQ 282
+#define tADD 283
+#define tSUB 284
+#define tDIV 285
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 12 "AnalyseurGrammaticalASM.y"
+#line 14 "AnalyseurGrammaticalC.y"
 
-    int adresse;
-    char* codeVar;
+    char *variable;
+    int nombre;
 
-#line 148 "y.tab.c"
+#line 200 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -461,21 +513,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  6
+#define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   13
+#define YYLAST   104
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  6
+#define YYNTOKENS  31
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  5
+#define YYNNTS  14
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  35
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  18
+#define YYNSTATES  82
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   260
+#define YYMAXUTOK   285
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -513,14 +565,19 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27,    26,    32,    31,    37,    36,    42
+       0,    59,    59,    65,    66,    67,    71,    74,    70,    78,
+      80,    77,    86,    90,    89,    97,   102,   106,   110,   114,
+     120,   123,   129,   132,   135,   138,   141,   144,   148,   154,
+     160,   162,   164,   166,   168,   170
 };
 #endif
 
@@ -529,8 +586,12 @@ static const yytype_int8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "tCV", "tNB", "tNL", "$accept", "Code",
-  "$@1", "$@2", "$@3", YY_NULLPTR
+  "$end", "error", "$undefined", "tMAIN", "tAO", "tAF", "tINT", "tCONST",
+  "tPO", "tPF", "tESPACE", "tV", "tPV", "tPRINT", "tNB", "tEXP", "tVAR",
+  "tET", "tNE", "tSE", "tIE", "tST", "tIT", "tIF", "tELSE", "tWHILE",
+  "tMUL", "tEQ", "tADD", "tSUB", "tDIV", "$accept", "Main", "Programme",
+  "$@1", "$@2", "$@3", "$@4", "IFsuite", "$@5", "Declaration", "Variable",
+  "Expression", "Assignation", "Condition", YY_NULLPTR
 };
 #endif
 
@@ -539,11 +600,14 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_int16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285
 };
 # endif
 
-#define YYPACT_NINF (-10)
+#define YYPACT_NINF (-68)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -557,8 +621,15 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,     3,     4,     9,     5,     7,   -10,   -10,    -1,    -2,
-       8,   -10,   -10,   -10,    -2,    -2,   -10,   -10
+      -1,     8,    15,    12,   -68,   -68,    31,   -68,     1,    13,
+      24,    16,    37,   -68,    27,    40,    42,    28,     1,    41,
+      -6,    -6,    51,   -68,   -68,     1,    -6,    43,    55,    -6,
+     -68,   -68,    74,    69,    59,    -6,   -68,    74,    -6,    62,
+       5,    -6,    -6,    -6,    -6,    -6,    -6,    -6,    -6,    -6,
+      -6,   -68,    66,    74,   -68,   -68,    74,    20,   -23,    45,
+      74,    74,    74,    74,    74,    74,    73,   -68,   -68,    76,
+      35,   -68,   -68,    56,    54,   -68,   -68,   -68,    78,   -68,
+      60,   -68
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -566,20 +637,29 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       8,     0,     0,     0,     0,     0,     1,     6,     0,     8,
-       0,     2,     7,     4,     8,     8,     3,     5
+       0,     0,     0,     0,     1,    12,     0,     2,     0,     0,
+       0,     0,     0,     9,     0,     0,    21,    19,     0,     0,
+       0,     0,     0,     3,     4,     0,     0,    17,     0,     0,
+      27,    28,    29,     0,     0,     0,    20,    18,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     6,     0,    16,     5,    26,    23,    22,    24,    25,
+      32,    33,    35,    34,    31,    30,     0,    10,    12,     0,
+       0,    12,     7,     0,    15,    11,    13,     8,     0,    12,
+       0,    14
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -10,    -9,   -10,   -10,   -10
+     -68,   -68,   -67,   -68,   -68,   -68,   -68,   -68,   -68,   -68,
+      -5,   -20,   -68,    49
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     3,    14,    15,     9
+      -1,     2,     6,    66,    74,    22,    69,    77,    78,    14,
+      17,    33,    15,    34
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -587,34 +667,65 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      12,     1,     2,    10,    11,    16,    17,     4,     5,     6,
-       7,     8,     0,    13
+      32,    70,    29,    41,    73,     1,    37,    44,    30,    40,
+      31,     3,    80,    27,    55,     4,     5,    16,    53,    18,
+      36,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    41,    19,    42,    43,    44,     7,     8,     9,    23,
+      72,     8,     9,    20,    10,    21,    41,    11,    10,    43,
+      44,    11,    24,    25,    12,    26,    13,    28,    12,    35,
+      13,    75,     8,     9,    39,    81,     8,     9,    51,    10,
+      38,    41,    11,    10,    54,    67,    11,    68,    76,    12,
+      71,    13,    79,    12,    52,    13,    45,    46,    47,    48,
+      49,    50,     0,     0,     0,    41,     0,    42,    43,    44,
+      41,     0,    42,    43,    44
 };
 
 static const yytype_int8 yycheck[] =
 {
-       9,     3,     4,     4,     5,    14,    15,     4,     4,     0,
-       5,     4,    -1,     5
+      20,    68,     8,    26,    71,     6,    26,    30,    14,    29,
+      16,     3,    79,    18,     9,     0,     4,    16,    38,     6,
+      25,    41,    42,    43,    44,    45,    46,    47,    48,    49,
+      50,    26,     8,    28,    29,    30,     5,     6,     7,    12,
+       5,     6,     7,    27,    13,     8,    26,    16,    13,    29,
+      30,    16,    12,    11,    23,    27,    25,    16,    23,     8,
+      25,     5,     6,     7,     9,     5,     6,     7,     9,    13,
+      27,    26,    16,    13,    12,     9,    16,     4,    24,    23,
+       4,    25,     4,    23,    35,    25,    17,    18,    19,    20,
+      21,    22,    -1,    -1,    -1,    26,    -1,    28,    29,    30,
+      26,    -1,    28,    29,    30
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     4,     7,     4,     4,     0,     5,     4,    10,
-       4,     5,     7,     5,     8,     9,     7,     7
+       0,     6,    32,     3,     0,     4,    33,     5,     6,     7,
+      13,    16,    23,    25,    40,    43,    16,    41,     6,     8,
+      27,     8,    36,    12,    12,    11,    27,    41,    16,     8,
+      14,    16,    42,    42,    44,     8,    41,    42,    27,     9,
+      42,    26,    28,    29,    30,    17,    18,    19,    20,    21,
+      22,     9,    44,    42,    12,     9,    42,    42,    42,    42,
+      42,    42,    42,    42,    42,    42,    34,     9,     4,    37,
+      33,     4,     5,    33,    35,     5,    24,    38,    39,     4,
+      33,     5
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     6,     8,     7,     9,     7,    10,     7,     7
+       0,    31,    32,    33,    33,    33,    34,    35,    33,    36,
+      37,    33,    33,    39,    38,    38,    40,    40,    40,    40,
+      41,    41,    42,    42,    42,    42,    42,    42,    42,    43,
+      44,    44,    44,    44,    44,    44
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0,     6,     0,     7,     0,     5,     0
+       0,     2,     5,     3,     3,     6,     0,     0,    11,     0,
+       0,    10,     0,     0,     5,     0,     5,     3,     4,     2,
+       3,     1,     3,     3,     3,     3,     3,     1,     1,     3,
+       3,     3,     3,     3,     3,     3
 };
 
 
@@ -1310,38 +1421,221 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 27 "AnalyseurGrammaticalASM.y"
-        {
-            tripleOrdre((yyvsp[-3].adresse), (yyvsp[-2].adresse), (yyvsp[-1].adresse));
-        }
-#line 1318 "y.tab.c"
+#line 60 "AnalyseurGrammaticalC.y"
+            {printf("Fin Main\n");
+            afficher();
+            exit(0);}
+#line 1429 "y.tab.c"
     break;
 
-  case 4:
-#line 32 "AnalyseurGrammaticalASM.y"
-        {
-            quadrupleOrdre((yyvsp[-4].adresse), (yyvsp[-3].adresse), (yyvsp[-2].adresse), (yyvsp[-1].adresse));
-        }
-#line 1326 "y.tab.c"
+  case 5:
+#line 68 "AnalyseurGrammaticalC.y"
+                {printf("Print !\n");
+                printASM(fdClair, fdCode, (yyvsp[-2].variable));}
+#line 1436 "y.tab.c"
     break;
 
   case 6:
-#line 37 "AnalyseurGrammaticalASM.y"
-        {
-            doubleVar((yyvsp[-2].codeVar), (yyvsp[-1].adresse));
-        }
-#line 1334 "y.tab.c"
+#line 71 "AnalyseurGrammaticalC.y"
+                {ifASM(fdClair, fdCode, (yyvsp[-1].nombre));
+                 ajouterIndent();}
+#line 1443 "y.tab.c"
     break;
 
-  case 8:
-#line 42 "AnalyseurGrammaticalASM.y"
-        {printf("Fin Code\n");
-        exit(0);}
-#line 1341 "y.tab.c"
+  case 7:
+#line 74 "AnalyseurGrammaticalC.y"
+                {enleverIndent();
+                 bifASM(fdClair, fdCode);}
+#line 1450 "y.tab.c"
+    break;
+
+  case 9:
+#line 78 "AnalyseurGrammaticalC.y"
+                {dwhileASM(fdClair, fdCode);}
+#line 1456 "y.tab.c"
+    break;
+
+  case 10:
+#line 80 "AnalyseurGrammaticalC.y"
+                {ajouterIndent();
+                whileASM(fdClair, fdCode);}
+#line 1463 "y.tab.c"
+    break;
+
+  case 11:
+#line 83 "AnalyseurGrammaticalC.y"
+                {enleverIndent();
+                fwhileASM(fdClair, fdCode, (yyvsp[-5].nombre));
+                printf("WHILE\n");}
+#line 1471 "y.tab.c"
+    break;
+
+  case 13:
+#line 90 "AnalyseurGrammaticalC.y"
+                {ajouterIndent();
+                elseASM(fdClair, fdCode);}
+#line 1478 "y.tab.c"
+    break;
+
+  case 14:
+#line 93 "AnalyseurGrammaticalC.y"
+                {enleverIndent();
+                fifASM(fdClair, fdCode);
+                printf("IF ELSE\n");}
+#line 1486 "y.tab.c"
+    break;
+
+  case 15:
+#line 97 "AnalyseurGrammaticalC.y"
+                {elseASM(fdClair, fdCode);
+                fifASM(fdClair, fdCode);
+                printf("FIN IF\n");}
+#line 1494 "y.tab.c"
+    break;
+
+  case 16:
+#line 103 "AnalyseurGrammaticalC.y"
+                {printf("declaration assignation constante\n");
+                ajouter(1, 1, fdClair, fdCode, (yyvsp[0].nombre));
+                }
+#line 1502 "y.tab.c"
+    break;
+
+  case 17:
+#line 107 "AnalyseurGrammaticalC.y"
+                {printf("declaration constante\n");
+                ajouter(1, 0, fdClair, fdCode, 0);
+                }
+#line 1510 "y.tab.c"
+    break;
+
+  case 18:
+#line 111 "AnalyseurGrammaticalC.y"
+                {printf("declaration assignation\n");
+                ajouter(0, 1, fdClair, fdCode, (yyvsp[0].nombre));
+                afficher();}
+#line 1518 "y.tab.c"
+    break;
+
+  case 19:
+#line 115 "AnalyseurGrammaticalC.y"
+                {printf("declaration \n");
+                ajouter(0, 0, fdClair, fdCode, 0);
+                afficher();}
+#line 1526 "y.tab.c"
+    break;
+
+  case 20:
+#line 121 "AnalyseurGrammaticalC.y"
+            {ajouterListe((yyvsp[-2].variable));
+            printf("declaration Var+\n");}
+#line 1533 "y.tab.c"
+    break;
+
+  case 21:
+#line 124 "AnalyseurGrammaticalC.y"
+            {ajouterListe((yyvsp[0].variable));
+            printf("declaration Var\n");}
+#line 1540 "y.tab.c"
+    break;
+
+  case 22:
+#line 130 "AnalyseurGrammaticalC.y"
+                {printf("Addition\n");
+                ecrireOperationASM(fdClair, fdCode, 1, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
+#line 1547 "y.tab.c"
+    break;
+
+  case 23:
+#line 133 "AnalyseurGrammaticalC.y"
+                {printf("Multiplication\n");
+                ecrireOperationASM(fdClair, fdCode, 2, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
+#line 1554 "y.tab.c"
+    break;
+
+  case 24:
+#line 136 "AnalyseurGrammaticalC.y"
+                {printf("Soustraction\n");
+                ecrireOperationASM(fdClair, fdCode, 3, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
+#line 1561 "y.tab.c"
+    break;
+
+  case 25:
+#line 139 "AnalyseurGrammaticalC.y"
+                {printf("Division\n");
+                ecrireOperationASM(fdClair, fdCode, 4, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
+#line 1568 "y.tab.c"
+    break;
+
+  case 26:
+#line 142 "AnalyseurGrammaticalC.y"
+                {printf("(Expr)\n");
+                (yyval.nombre) = derniereTmp();}
+#line 1575 "y.tab.c"
+    break;
+
+  case 27:
+#line 145 "AnalyseurGrammaticalC.y"
+                {printf("Nombre !\n");
+                nbASM(fdClair, fdCode, (yyvsp[0].nombre));
+                (yyval.nombre) = derniereTmp();}
+#line 1583 "y.tab.c"
+    break;
+
+  case 28:
+#line 149 "AnalyseurGrammaticalC.y"
+                {printf("Variable !\n");
+                varASM(fdClair, fdCode, (yyvsp[0].variable));
+                (yyval.nombre) = derniereTmp();}
+#line 1591 "y.tab.c"
+    break;
+
+  case 29:
+#line 155 "AnalyseurGrammaticalC.y"
+                {printf("assignation Var already declared\n");
+                setInit((yyvsp[-2].variable));
+                assignerASM(fdClair, fdCode, (yyvsp[-2].variable));}
+#line 1599 "y.tab.c"
+    break;
+
+  case 30:
+#line 161 "AnalyseurGrammaticalC.y"
+                {(yyval.nombre) = 0;}
+#line 1605 "y.tab.c"
+    break;
+
+  case 31:
+#line 163 "AnalyseurGrammaticalC.y"
+                {(yyval.nombre) = 1;}
+#line 1611 "y.tab.c"
+    break;
+
+  case 32:
+#line 165 "AnalyseurGrammaticalC.y"
+                {(yyval.nombre) = 2;}
+#line 1617 "y.tab.c"
+    break;
+
+  case 33:
+#line 167 "AnalyseurGrammaticalC.y"
+                {(yyval.nombre) = 3;}
+#line 1623 "y.tab.c"
+    break;
+
+  case 34:
+#line 169 "AnalyseurGrammaticalC.y"
+                {(yyval.nombre) = 4;}
+#line 1629 "y.tab.c"
+    break;
+
+  case 35:
+#line 171 "AnalyseurGrammaticalC.y"
+                {(yyval.nombre) = 5;}
+#line 1635 "y.tab.c"
     break;
 
 
-#line 1345 "y.tab.c"
+#line 1639 "y.tab.c"
 
       default: break;
     }
@@ -1573,17 +1867,22 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 48 "AnalyseurGrammaticalASM.y"
+#line 175 "AnalyseurGrammaticalC.y"
 
 
 
 int yyerror(char*s) {
-    printf("Erreur yyerror : %s\n", s);
+    printf("Erreur : %s\n", s);
 }
 
 int main() {
-    printf("Debut Interpreteur :\n");
+    fdClair = fopen("codeasm.s", "w");
+    fdCode = fopen("code.s", "w");
+
     yyparse();
+
+    fclose(fdCode); // rajouter une ligne vide à la fin ?
+    fclose(fdClair);
 
     return 1;
 }

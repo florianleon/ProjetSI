@@ -21,7 +21,16 @@
 [ \t\n]+ ;
 "," return tV;
 ";" return tPV;
+"==" return tET;
+"!=" return tNE;
+">=" return tSE;
+"<=" return tIE;
+">" return tST;
+"<" return tIT;
 "printf" return tPRINT;
+"if" return tIF;
+"else" return tELSE;
+"while" return tWHILE;
 [0-9]+ {yylval.nombre = atoi(yytext); return tNB;}
 ([0-9]*[.])?[0-9]+([eE][-+]?\d+)? return tEXP;
 [a-zA-Z][a-zA-Z0-9_]* {yylval.variable = strdup(yytext); return tVAR;}
