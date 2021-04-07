@@ -19,3 +19,4 @@ final : AnalyseurGrammaticalC.y AnalyseurLexicalC.lex symbol_table_c.c code.c An
 	lex AnalyseurLexicalASM.lex
 	gcc y.tab.c lex.yy.c symbol_table_asm.c -o interp
 	./interp < code.s
+

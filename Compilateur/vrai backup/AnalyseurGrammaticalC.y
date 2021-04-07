@@ -30,7 +30,6 @@ FILE *fdClair;
 %token<nombre> tNB 
 %token tEXP 
 %token<variable> tVAR 
-%token<nombre> tIF
 
 aleur constantealeur constante
 %token tIF;
@@ -46,7 +45,7 @@ aleur constantealeur constante
 %left tDIV
 
 
-%type<nombre> Expression Condition 
+%type<nombre> Expression Condition
 
 
 %%
@@ -63,9 +62,8 @@ Programme : Programme Declaration tPV
                 {printf("Print !\n");
                 printASM(fdClair, fdCode, $4);}
           | Programme tIF tPO Condition tPF 
-                {$2 = indexIf();
-                ifASM(fdClair, fdCode, $4);
-                ajouterIndent();}
+                {ifASM(fdClair, fdCode, $4);
+                 ajouterIndent();}
             tAO Programme tAF 
                 {enleverIndent();
                  bifASM(fdClair, fdCode);}

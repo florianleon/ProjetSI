@@ -2,6 +2,7 @@
 #define TAILLE_TABLE_VARIABLE 10        // nombre max de declaration parallèle
 #define MAX_INDENT 10                   // nombre max de "niveau de tabulation" (if dans for dans for dans if ...)
 #define TAILLE_JUMP 100                 // nombre max de jump (while/if/else) dans le programme
+#define TAILLE_PRGM 1000
 
 typedef struct {
     char * variable;
@@ -10,16 +11,14 @@ typedef struct {
 } ligne;
 
 typedef struct {
-    int ligne;
     char* nom;   // else ; fif ; cloup ; floop ; loop
     int ouvert; // 1 -> ouvert ; 0 -> fermé
 } jump;
 
-typedef struct {
-    char* nom;
-    int addrG;
-    int addrD;
-} labelC;
+typedef struct{
+    char instruct[30];
+    int addr;
+} instruction;
 
 
 // rajoute une variable déclarée sur une seul ligne à la liste
@@ -70,17 +69,6 @@ void varASM(FILE* fdClair, FILE* fdCode, char* v);
 // Ecrit la ligne print en ASM
 void printASM(FILE* fdClair, FILE* fdCode, char* v);
 
-// met la condition et le saut sur else si non respecté, en ASM (if 0)
-void ifASM(FILE* fdClair, FILE* fdCode, int cmp);
-
-// // Met la balise else en ASM (if 2)
-void elseASM(FILE* fdClair, FILE* fdCode);
-
-// Fait sauté le else (si on est rentré dans le if), en ASM (if 1)
-void bifASM(FILE* fdClair, FILE* fdCode);
-
-// Met la balise de fin du block if, en ASM (if 3)
-void fifASM(FILE* fdClair, FILE* fdCode);
 
 // ecrit la ligne de comparaison en ASM
 void compareASM(FILE* fdClair, FILE* fdCode, int cmp);

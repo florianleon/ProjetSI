@@ -45,77 +45,46 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tMAIN = 258,
-    tAO = 259,
-    tAF = 260,
-    tINT = 261,
-    tCONST = 262,
-    tPO = 263,
-    tPF = 264,
-    tESPACE = 265,
-    tV = 266,
-    tPV = 267,
-    tPRINT = 268,
-    tNB = 269,
-    tEXP = 270,
-    tVAR = 271,
-    tET = 272,
-    tNE = 273,
-    tSE = 274,
-    tIE = 275,
-    tST = 276,
-    tIT = 277,
-    tIF = 278,
-    tELSE = 279,
-    tWHILE = 280,
-    tMUL = 281,
-    tEQ = 282,
-    tADD = 283,
-    tSUB = 284,
-    tDIV = 285
+    tADD = 258,
+    tMUL = 259,
+    tSOU = 260,
+    tDIV = 261,
+    tCOP = 262,
+    tAFC = 263,
+    tJMP = 264,
+    tJMF = 265,
+    tINF = 266,
+    tSUP = 267,
+    tEQU = 268,
+    tPRI = 269,
+    tNB = 270
   };
 #endif
 /* Tokens.  */
-#define tMAIN 258
-#define tAO 259
-#define tAF 260
-#define tINT 261
-#define tCONST 262
-#define tPO 263
-#define tPF 264
-#define tESPACE 265
-#define tV 266
-#define tPV 267
-#define tPRINT 268
-#define tNB 269
-#define tEXP 270
-#define tVAR 271
-#define tET 272
-#define tNE 273
-#define tSE 274
-#define tIE 275
-#define tST 276
-#define tIT 277
-#define tIF 278
-#define tELSE 279
-#define tWHILE 280
-#define tMUL 281
-#define tEQ 282
-#define tADD 283
-#define tSUB 284
-#define tDIV 285
+#define tADD 258
+#define tMUL 259
+#define tSOU 260
+#define tDIV 261
+#define tCOP 262
+#define tAFC 263
+#define tJMP 264
+#define tJMF 265
+#define tINF 266
+#define tSUP 267
+#define tEQU 268
+#define tPRI 269
+#define tNB 270
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 14 "AnalyseurGrammaticalC.y" /* yacc.c:1909  */
+#line 11 "./src/interpreter.y" /* yacc.c:1909  */
 
-    char *variable;
-    int nombre;
+    int nb;
 
-#line 119 "y.tab.h" /* yacc.c:1909  */
+#line 88 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

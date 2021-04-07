@@ -14,7 +14,10 @@ int main(){
         while( a<11 ){
             if(b > 0){
                 int e = 6;
+                printf(e);
+                printf(b);
             }
+
         }
     }
 

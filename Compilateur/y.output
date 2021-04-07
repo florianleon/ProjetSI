@@ -1,16 +1,16 @@
-Terminals unused in grammar
+Terminaux inutilisés dans la grammaire
 
-    tESPACE
-    tEXP
-
-
-State 56 conflicts: 4 shift/reduce
-State 57 conflicts: 1 shift/reduce
-State 58 conflicts: 1 shift/reduce
-State 59 conflicts: 1 shift/reduce
+   tESPACE
+   tEXP
 
 
-Grammar
+État 56 conflits: 4 décalage/réduction
+État 57 conflits: 1 décalage/réduction
+État 58 conflits: 1 décalage/réduction
+État 59 conflits: 1 décalage/réduction
+
+
+Grammaire
 
     0 $accept: Main $end
 
@@ -64,132 +64,120 @@ Grammar
    34          | Expression tSE Expression
 
 
-Terminals, with rules where they appear
+Terminaux, suivis des règles où ils apparaissent
 
-    $end (0) 0
-    error (256)
-    tMAIN (258) 1
-    tAO (259) 1 7 10 13
-    tAF (260) 1 7 10 13
-    tINT (261) 1 15 16 17 18
-    tCONST (262) 15 16
-    tPO (263) 4 7 10 25
-    tPF (264) 4 7 10 25
-    tESPACE (265)
-    tV (266) 19
-    tPV (267) 2 3 4
-    tPRINT (268) 4
-    tNB <nombre> (269) 26
-    tEXP (270)
-    tVAR <variable> (271) 4 19 20 27 28
-    tET (272) 31
-    tNE (273) 32
-    tSE (274) 34
-    tIE (275) 33
-    tST (276) 30
-    tIT (277) 29
-    tIF (278) 7
-    tELSE (279) 13
-    tWHILE (280) 10
-    tMUL (281) 22
-    tEQ (282) 15 17 28
-    tADD (283) 21
-    tSUB (284) 23
-    tDIV (285) 24
-
-
-Nonterminals, with rules where they appear
-
-    $accept (31)
-        on left: 0
-    Main (32)
-        on left: 1
-        on right: 0
-    Programme (33)
-        on left: 2 3 4 7 10 11
-        on right: 1 2 3 4 7 10 13
-    $@1 (34)
-        on left: 5
-        on right: 7
-    $@2 (35)
-        on left: 6
-        on right: 7
-    $@3 (36)
-        on left: 8
-        on right: 10
-    $@4 (37)
-        on left: 9
-        on right: 10
-    IFsuite (38)
-        on left: 13 14
-        on right: 7
-    $@5 (39)
-        on left: 12
-        on right: 13
-    Declaration (40)
-        on left: 15 16 17 18
-        on right: 2
-    Variable (41)
-        on left: 19 20
-        on right: 15 16 17 18 19
-    Expression <nombre> (42)
-        on left: 21 22 23 24 25 26 27
-        on right: 15 17 21 22 23 24 25 28 29 30 31 32 33 34
-    Assignation (43)
-        on left: 28
-        on right: 3
-    Condition <nombre> (44)
-        on left: 29 30 31 32 33 34
-        on right: 7 10
+$end (0) 0
+error (256)
+tMAIN (258) 1
+tAO (259) 1 7 10 13
+tAF (260) 1 7 10 13
+tINT (261) 1 15 16 17 18
+tCONST (262) 15 16
+tPO (263) 4 7 10 25
+tPF (264) 4 7 10 25
+tESPACE (265)
+tV (266) 19
+tPV (267) 2 3 4
+tPRINT (268) 4
+tNB (269) 26
+tEXP (270)
+tVAR (271) 4 19 20 27 28
+tET (272) 31
+tNE (273) 32
+tSE (274) 34
+tIE (275) 33
+tST (276) 30
+tIT (277) 29
+tIF (278) 7
+tELSE (279) 13
+tWHILE (280) 10
+tMUL (281) 22
+tEQ (282) 15 17 28
+tADD (283) 21
+tSUB (284) 23
+tDIV (285) 24
 
 
-State 0
+Non-terminaux, suivis des règles où ils apparaissent
+
+$accept (31)
+    à gauche: 0
+Main (32)
+    à gauche: 1, à droite: 0
+Programme (33)
+    à gauche: 2 3 4 7 10 11, à droite: 1 2 3 4 7 10 13
+$@1 (34)
+    à gauche: 5, à droite: 7
+$@2 (35)
+    à gauche: 6, à droite: 7
+$@3 (36)
+    à gauche: 8, à droite: 10
+$@4 (37)
+    à gauche: 9, à droite: 10
+IFsuite (38)
+    à gauche: 13 14, à droite: 7
+$@5 (39)
+    à gauche: 12, à droite: 13
+Declaration (40)
+    à gauche: 15 16 17 18, à droite: 2
+Variable (41)
+    à gauche: 19 20, à droite: 15 16 17 18 19
+Expression (42)
+    à gauche: 21 22 23 24 25 26 27, à droite: 15 17 21 22 23 24 25
+    28 29 30 31 32 33 34
+Assignation (43)
+    à gauche: 28, à droite: 3
+Condition (44)
+    à gauche: 29 30 31 32 33 34, à droite: 7 10
+
+
+État 0
 
     0 $accept: . Main $end
 
-    tINT  shift, and go to state 1
+    tINT  décalage et aller à l'état 1
 
-    Main  go to state 2
+    Main  aller à l'état 2
 
 
-State 1
+État 1
 
     1 Main: tINT . tMAIN tAO Programme tAF
 
-    tMAIN  shift, and go to state 3
+    tMAIN  décalage et aller à l'état 3
 
 
-State 2
+État 2
 
     0 $accept: Main . $end
 
-    $end  shift, and go to state 4
+    $end  décalage et aller à l'état 4
 
 
-State 3
+État 3
 
     1 Main: tINT tMAIN . tAO Programme tAF
 
-    tAO  shift, and go to state 5
+    tAO  décalage et aller à l'état 5
 
 
-State 4
+État 4
 
     0 $accept: Main $end .
 
-    $default  accept
+    $défaut  accepter
 
 
-State 5
+État 5
 
     1 Main: tINT tMAIN tAO . Programme tAF
 
-    $default  reduce using rule 11 (Programme)
+    $défaut  réduction par utilisation de la règle 11 (Programme)
 
-    Programme  go to state 6
+    Programme  aller à l'état 6
 
 
-State 6
+État 6
 
     1 Main: tINT tMAIN tAO Programme . tAF
     2 Programme: Programme . Declaration tPV
@@ -198,231 +186,231 @@ State 6
     7          | Programme . tIF tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite
    10          | Programme . tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF
 
-    tAF     shift, and go to state 7
-    tINT    shift, and go to state 8
-    tCONST  shift, and go to state 9
-    tPRINT  shift, and go to state 10
-    tVAR    shift, and go to state 11
-    tIF     shift, and go to state 12
-    tWHILE  shift, and go to state 13
+    tAF     décalage et aller à l'état 7
+    tINT    décalage et aller à l'état 8
+    tCONST  décalage et aller à l'état 9
+    tPRINT  décalage et aller à l'état 10
+    tVAR    décalage et aller à l'état 11
+    tIF     décalage et aller à l'état 12
+    tWHILE  décalage et aller à l'état 13
 
-    Declaration  go to state 14
-    Assignation  go to state 15
+    Declaration  aller à l'état 14
+    Assignation  aller à l'état 15
 
 
-State 7
+État 7
 
     1 Main: tINT tMAIN tAO Programme tAF .
 
-    $default  reduce using rule 1 (Main)
+    $défaut  réduction par utilisation de la règle 1 (Main)
 
 
-State 8
+État 8
 
    17 Declaration: tINT . Variable tEQ Expression
    18            | tINT . Variable
 
-    tVAR  shift, and go to state 16
+    tVAR  décalage et aller à l'état 16
 
-    Variable  go to state 17
+    Variable  aller à l'état 17
 
 
-State 9
+État 9
 
    15 Declaration: tCONST . tINT Variable tEQ Expression
    16            | tCONST . tINT Variable
 
-    tINT  shift, and go to state 18
+    tINT  décalage et aller à l'état 18
 
 
-State 10
+État 10
 
     4 Programme: Programme tPRINT . tPO tVAR tPF tPV
 
-    tPO  shift, and go to state 19
+    tPO  décalage et aller à l'état 19
 
 
-State 11
+État 11
 
    28 Assignation: tVAR . tEQ Expression
 
-    tEQ  shift, and go to state 20
+    tEQ  décalage et aller à l'état 20
 
 
-State 12
+État 12
 
     7 Programme: Programme tIF . tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite
 
-    tPO  shift, and go to state 21
+    tPO  décalage et aller à l'état 21
 
 
-State 13
+État 13
 
    10 Programme: Programme tWHILE . $@3 tPO Condition tPF $@4 tAO Programme tAF
 
-    $default  reduce using rule 8 ($@3)
+    $défaut  réduction par utilisation de la règle 8 ($@3)
 
-    $@3  go to state 22
+    $@3  aller à l'état 22
 
 
-State 14
+État 14
 
     2 Programme: Programme Declaration . tPV
 
-    tPV  shift, and go to state 23
+    tPV  décalage et aller à l'état 23
 
 
-State 15
+État 15
 
     3 Programme: Programme Assignation . tPV
 
-    tPV  shift, and go to state 24
+    tPV  décalage et aller à l'état 24
 
 
-State 16
+État 16
 
    19 Variable: tVAR . tV Variable
    20         | tVAR .
 
-    tV  shift, and go to state 25
+    tV  décalage et aller à l'état 25
 
-    $default  reduce using rule 20 (Variable)
+    $défaut  réduction par utilisation de la règle 20 (Variable)
 
 
-State 17
+État 17
 
    17 Declaration: tINT Variable . tEQ Expression
    18            | tINT Variable .
 
-    tEQ  shift, and go to state 26
+    tEQ  décalage et aller à l'état 26
 
-    $default  reduce using rule 18 (Declaration)
+    $défaut  réduction par utilisation de la règle 18 (Declaration)
 
 
-State 18
+État 18
 
    15 Declaration: tCONST tINT . Variable tEQ Expression
    16            | tCONST tINT . Variable
 
-    tVAR  shift, and go to state 16
+    tVAR  décalage et aller à l'état 16
 
-    Variable  go to state 27
+    Variable  aller à l'état 27
 
 
-State 19
+État 19
 
     4 Programme: Programme tPRINT tPO . tVAR tPF tPV
 
-    tVAR  shift, and go to state 28
+    tVAR  décalage et aller à l'état 28
 
 
-State 20
+État 20
 
    28 Assignation: tVAR tEQ . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 32
+    Expression  aller à l'état 32
 
 
-State 21
+État 21
 
     7 Programme: Programme tIF tPO . Condition tPF $@1 tAO Programme tAF $@2 IFsuite
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 33
-    Condition   go to state 34
+    Expression  aller à l'état 33
+    Condition   aller à l'état 34
 
 
-State 22
+État 22
 
    10 Programme: Programme tWHILE $@3 . tPO Condition tPF $@4 tAO Programme tAF
 
-    tPO  shift, and go to state 35
+    tPO  décalage et aller à l'état 35
 
 
-State 23
+État 23
 
     2 Programme: Programme Declaration tPV .
 
-    $default  reduce using rule 2 (Programme)
+    $défaut  réduction par utilisation de la règle 2 (Programme)
 
 
-State 24
+État 24
 
     3 Programme: Programme Assignation tPV .
 
-    $default  reduce using rule 3 (Programme)
+    $défaut  réduction par utilisation de la règle 3 (Programme)
 
 
-State 25
+État 25
 
    19 Variable: tVAR tV . Variable
 
-    tVAR  shift, and go to state 16
+    tVAR  décalage et aller à l'état 16
 
-    Variable  go to state 36
+    Variable  aller à l'état 36
 
 
-State 26
+État 26
 
    17 Declaration: tINT Variable tEQ . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 37
+    Expression  aller à l'état 37
 
 
-State 27
+État 27
 
    15 Declaration: tCONST tINT Variable . tEQ Expression
    16            | tCONST tINT Variable .
 
-    tEQ  shift, and go to state 38
+    tEQ  décalage et aller à l'état 38
 
-    $default  reduce using rule 16 (Declaration)
+    $défaut  réduction par utilisation de la règle 16 (Declaration)
 
 
-State 28
+État 28
 
     4 Programme: Programme tPRINT tPO tVAR . tPF tPV
 
-    tPF  shift, and go to state 39
+    tPF  décalage et aller à l'état 39
 
 
-State 29
+État 29
 
    25 Expression: tPO . Expression tPF
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 40
+    Expression  aller à l'état 40
 
 
-State 30
+État 30
 
    26 Expression: tNB .
 
-    $default  reduce using rule 26 (Expression)
+    $défaut  réduction par utilisation de la règle 26 (Expression)
 
 
-State 31
+État 31
 
    27 Expression: tVAR .
 
-    $default  reduce using rule 27 (Expression)
+    $défaut  réduction par utilisation de la règle 27 (Expression)
 
 
-State 32
+État 32
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -430,15 +418,15 @@ State 32
    24           | Expression . tDIV Expression
    28 Assignation: tVAR tEQ Expression .
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    $default  reduce using rule 28 (Assignation)
+    $défaut  réduction par utilisation de la règle 28 (Assignation)
 
 
-State 33
+État 33
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -451,45 +439,45 @@ State 33
    33          | Expression . tIE Expression
    34          | Expression . tSE Expression
 
-    tET   shift, and go to state 45
-    tNE   shift, and go to state 46
-    tSE   shift, and go to state 47
-    tIE   shift, and go to state 48
-    tST   shift, and go to state 49
-    tIT   shift, and go to state 50
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tET   décalage et aller à l'état 45
+    tNE   décalage et aller à l'état 46
+    tSE   décalage et aller à l'état 47
+    tIE   décalage et aller à l'état 48
+    tST   décalage et aller à l'état 49
+    tIT   décalage et aller à l'état 50
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
 
-State 34
+État 34
 
     7 Programme: Programme tIF tPO Condition . tPF $@1 tAO Programme tAF $@2 IFsuite
 
-    tPF  shift, and go to state 51
+    tPF  décalage et aller à l'état 51
 
 
-State 35
+État 35
 
    10 Programme: Programme tWHILE $@3 tPO . Condition tPF $@4 tAO Programme tAF
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 33
-    Condition   go to state 52
+    Expression  aller à l'état 33
+    Condition   aller à l'état 52
 
 
-State 36
+État 36
 
    19 Variable: tVAR tV Variable .
 
-    $default  reduce using rule 19 (Variable)
+    $défaut  réduction par utilisation de la règle 19 (Variable)
 
 
-State 37
+État 37
 
    17 Declaration: tINT Variable tEQ Expression .
    21 Expression: Expression . tADD Expression
@@ -497,33 +485,33 @@ State 37
    23           | Expression . tSUB Expression
    24           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    $default  reduce using rule 17 (Declaration)
+    $défaut  réduction par utilisation de la règle 17 (Declaration)
 
 
-State 38
+État 38
 
    15 Declaration: tCONST tINT Variable tEQ . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 53
+    Expression  aller à l'état 53
 
 
-State 39
+État 39
 
     4 Programme: Programme tPRINT tPO tVAR tPF . tPV
 
-    tPV  shift, and go to state 54
+    tPV  décalage et aller à l'état 54
 
 
-State 40
+État 40
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -531,140 +519,140 @@ State 40
    24           | Expression . tDIV Expression
    25           | tPO Expression . tPF
 
-    tPF   shift, and go to state 55
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tPF   décalage et aller à l'état 55
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
 
-State 41
+État 41
 
    22 Expression: Expression tMUL . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 56
+    Expression  aller à l'état 56
 
 
-State 42
+État 42
 
    21 Expression: Expression tADD . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 57
+    Expression  aller à l'état 57
 
 
-State 43
+État 43
 
    23 Expression: Expression tSUB . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 58
+    Expression  aller à l'état 58
 
 
-State 44
+État 44
 
    24 Expression: Expression tDIV . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 59
+    Expression  aller à l'état 59
 
 
-State 45
+État 45
 
    31 Condition: Expression tET . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 60
+    Expression  aller à l'état 60
 
 
-State 46
+État 46
 
    32 Condition: Expression tNE . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 61
+    Expression  aller à l'état 61
 
 
-State 47
+État 47
 
    34 Condition: Expression tSE . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 62
+    Expression  aller à l'état 62
 
 
-State 48
+État 48
 
    33 Condition: Expression tIE . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 63
+    Expression  aller à l'état 63
 
 
-State 49
+État 49
 
    30 Condition: Expression tST . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 64
+    Expression  aller à l'état 64
 
 
-State 50
+État 50
 
    29 Condition: Expression tIT . Expression
 
-    tPO   shift, and go to state 29
-    tNB   shift, and go to state 30
-    tVAR  shift, and go to state 31
+    tPO   décalage et aller à l'état 29
+    tNB   décalage et aller à l'état 30
+    tVAR  décalage et aller à l'état 31
 
-    Expression  go to state 65
+    Expression  aller à l'état 65
 
 
-State 51
+État 51
 
     7 Programme: Programme tIF tPO Condition tPF . $@1 tAO Programme tAF $@2 IFsuite
 
-    $default  reduce using rule 5 ($@1)
+    $défaut  réduction par utilisation de la règle 5 ($@1)
 
-    $@1  go to state 66
+    $@1  aller à l'état 66
 
 
-State 52
+État 52
 
    10 Programme: Programme tWHILE $@3 tPO Condition . tPF $@4 tAO Programme tAF
 
-    tPF  shift, and go to state 67
+    tPF  décalage et aller à l'état 67
 
 
-State 53
+État 53
 
    15 Declaration: tCONST tINT Variable tEQ Expression .
    21 Expression: Expression . tADD Expression
@@ -672,29 +660,29 @@ State 53
    23           | Expression . tSUB Expression
    24           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    $default  reduce using rule 15 (Declaration)
+    $défaut  réduction par utilisation de la règle 15 (Declaration)
 
 
-State 54
+État 54
 
     4 Programme: Programme tPRINT tPO tVAR tPF tPV .
 
-    $default  reduce using rule 4 (Programme)
+    $défaut  réduction par utilisation de la règle 4 (Programme)
 
 
-State 55
+État 55
 
    25 Expression: tPO Expression tPF .
 
-    $default  reduce using rule 25 (Expression)
+    $défaut  réduction par utilisation de la règle 25 (Expression)
 
 
-State 56
+État 56
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -702,19 +690,19 @@ State 56
    23           | Expression . tSUB Expression
    24           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    tMUL      [reduce using rule 22 (Expression)]
-    tADD      [reduce using rule 22 (Expression)]
-    tSUB      [reduce using rule 22 (Expression)]
-    tDIV      [reduce using rule 22 (Expression)]
-    $default  reduce using rule 22 (Expression)
+    tMUL      [réduction par utilisation de la règle 22 (Expression)]
+    tADD      [réduction par utilisation de la règle 22 (Expression)]
+    tSUB      [réduction par utilisation de la règle 22 (Expression)]
+    tDIV      [réduction par utilisation de la règle 22 (Expression)]
+    $défaut  réduction par utilisation de la règle 22 (Expression)
 
 
-State 57
+État 57
 
    21 Expression: Expression . tADD Expression
    21           | Expression tADD Expression .
@@ -722,15 +710,15 @@ State 57
    23           | Expression . tSUB Expression
    24           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 41
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    tMUL      [reduce using rule 21 (Expression)]
-    $default  reduce using rule 21 (Expression)
+    tMUL      [réduction par utilisation de la règle 21 (Expression)]
+    $défaut  réduction par utilisation de la règle 21 (Expression)
 
 
-State 58
+État 58
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -738,14 +726,14 @@ State 58
    23           | Expression tSUB Expression .
    24           | Expression . tDIV Expression
 
-    tMUL  shift, and go to state 41
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tDIV  décalage et aller à l'état 44
 
-    tMUL      [reduce using rule 23 (Expression)]
-    $default  reduce using rule 23 (Expression)
+    tMUL      [réduction par utilisation de la règle 23 (Expression)]
+    $défaut  réduction par utilisation de la règle 23 (Expression)
 
 
-State 59
+État 59
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -753,13 +741,13 @@ State 59
    24           | Expression . tDIV Expression
    24           | Expression tDIV Expression .
 
-    tMUL  shift, and go to state 41
+    tMUL  décalage et aller à l'état 41
 
-    tMUL      [reduce using rule 24 (Expression)]
-    $default  reduce using rule 24 (Expression)
+    tMUL      [réduction par utilisation de la règle 24 (Expression)]
+    $défaut  réduction par utilisation de la règle 24 (Expression)
 
 
-State 60
+État 60
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -767,15 +755,15 @@ State 60
    24           | Expression . tDIV Expression
    31 Condition: Expression tET Expression .
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    $default  reduce using rule 31 (Condition)
+    $défaut  réduction par utilisation de la règle 31 (Condition)
 
 
-State 61
+État 61
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -783,15 +771,15 @@ State 61
    24           | Expression . tDIV Expression
    32 Condition: Expression tNE Expression .
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    $default  reduce using rule 32 (Condition)
+    $défaut  réduction par utilisation de la règle 32 (Condition)
 
 
-State 62
+État 62
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -799,15 +787,15 @@ State 62
    24           | Expression . tDIV Expression
    34 Condition: Expression tSE Expression .
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    $default  reduce using rule 34 (Condition)
+    $défaut  réduction par utilisation de la règle 34 (Condition)
 
 
-State 63
+État 63
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -815,15 +803,15 @@ State 63
    24           | Expression . tDIV Expression
    33 Condition: Expression tIE Expression .
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    $default  reduce using rule 33 (Condition)
+    $défaut  réduction par utilisation de la règle 33 (Condition)
 
 
-State 64
+État 64
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -831,15 +819,15 @@ State 64
    24           | Expression . tDIV Expression
    30 Condition: Expression tST Expression .
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    $default  reduce using rule 30 (Condition)
+    $défaut  réduction par utilisation de la règle 30 (Condition)
 
 
-State 65
+État 65
 
    21 Expression: Expression . tADD Expression
    22           | Expression . tMUL Expression
@@ -847,47 +835,47 @@ State 65
    24           | Expression . tDIV Expression
    29 Condition: Expression tIT Expression .
 
-    tMUL  shift, and go to state 41
-    tADD  shift, and go to state 42
-    tSUB  shift, and go to state 43
-    tDIV  shift, and go to state 44
+    tMUL  décalage et aller à l'état 41
+    tADD  décalage et aller à l'état 42
+    tSUB  décalage et aller à l'état 43
+    tDIV  décalage et aller à l'état 44
 
-    $default  reduce using rule 29 (Condition)
+    $défaut  réduction par utilisation de la règle 29 (Condition)
 
 
-State 66
+État 66
 
     7 Programme: Programme tIF tPO Condition tPF $@1 . tAO Programme tAF $@2 IFsuite
 
-    tAO  shift, and go to state 68
+    tAO  décalage et aller à l'état 68
 
 
-State 67
+État 67
 
    10 Programme: Programme tWHILE $@3 tPO Condition tPF . $@4 tAO Programme tAF
 
-    $default  reduce using rule 9 ($@4)
+    $défaut  réduction par utilisation de la règle 9 ($@4)
 
-    $@4  go to state 69
+    $@4  aller à l'état 69
 
 
-State 68
+État 68
 
     7 Programme: Programme tIF tPO Condition tPF $@1 tAO . Programme tAF $@2 IFsuite
 
-    $default  reduce using rule 11 (Programme)
+    $défaut  réduction par utilisation de la règle 11 (Programme)
 
-    Programme  go to state 70
+    Programme  aller à l'état 70
 
 
-State 69
+État 69
 
    10 Programme: Programme tWHILE $@3 tPO Condition tPF $@4 . tAO Programme tAF
 
-    tAO  shift, and go to state 71
+    tAO  décalage et aller à l'état 71
 
 
-State 70
+État 70
 
     2 Programme: Programme . Declaration tPV
     3          | Programme . Assignation tPV
@@ -896,37 +884,37 @@ State 70
     7          | Programme tIF tPO Condition tPF $@1 tAO Programme . tAF $@2 IFsuite
    10          | Programme . tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF
 
-    tAF     shift, and go to state 72
-    tINT    shift, and go to state 8
-    tCONST  shift, and go to state 9
-    tPRINT  shift, and go to state 10
-    tVAR    shift, and go to state 11
-    tIF     shift, and go to state 12
-    tWHILE  shift, and go to state 13
+    tAF     décalage et aller à l'état 72
+    tINT    décalage et aller à l'état 8
+    tCONST  décalage et aller à l'état 9
+    tPRINT  décalage et aller à l'état 10
+    tVAR    décalage et aller à l'état 11
+    tIF     décalage et aller à l'état 12
+    tWHILE  décalage et aller à l'état 13
 
-    Declaration  go to state 14
-    Assignation  go to state 15
+    Declaration  aller à l'état 14
+    Assignation  aller à l'état 15
 
 
-State 71
+État 71
 
    10 Programme: Programme tWHILE $@3 tPO Condition tPF $@4 tAO . Programme tAF
 
-    $default  reduce using rule 11 (Programme)
+    $défaut  réduction par utilisation de la règle 11 (Programme)
 
-    Programme  go to state 73
+    Programme  aller à l'état 73
 
 
-State 72
+État 72
 
     7 Programme: Programme tIF tPO Condition tPF $@1 tAO Programme tAF . $@2 IFsuite
 
-    $default  reduce using rule 6 ($@2)
+    $défaut  réduction par utilisation de la règle 6 ($@2)
 
-    $@2  go to state 74
+    $@2  aller à l'état 74
 
 
-State 73
+État 73
 
     2 Programme: Programme . Declaration tPV
     3          | Programme . Assignation tPV
@@ -935,69 +923,69 @@ State 73
    10          | Programme . tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF
    10          | Programme tWHILE $@3 tPO Condition tPF $@4 tAO Programme . tAF
 
-    tAF     shift, and go to state 75
-    tINT    shift, and go to state 8
-    tCONST  shift, and go to state 9
-    tPRINT  shift, and go to state 10
-    tVAR    shift, and go to state 11
-    tIF     shift, and go to state 12
-    tWHILE  shift, and go to state 13
+    tAF     décalage et aller à l'état 75
+    tINT    décalage et aller à l'état 8
+    tCONST  décalage et aller à l'état 9
+    tPRINT  décalage et aller à l'état 10
+    tVAR    décalage et aller à l'état 11
+    tIF     décalage et aller à l'état 12
+    tWHILE  décalage et aller à l'état 13
 
-    Declaration  go to state 14
-    Assignation  go to state 15
+    Declaration  aller à l'état 14
+    Assignation  aller à l'état 15
 
 
-State 74
+État 74
 
     7 Programme: Programme tIF tPO Condition tPF $@1 tAO Programme tAF $@2 . IFsuite
 
-    tELSE  shift, and go to state 76
+    tELSE  décalage et aller à l'état 76
 
-    $default  reduce using rule 14 (IFsuite)
+    $défaut  réduction par utilisation de la règle 14 (IFsuite)
 
-    IFsuite  go to state 77
+    IFsuite  aller à l'état 77
 
 
-State 75
+État 75
 
    10 Programme: Programme tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF .
 
-    $default  reduce using rule 10 (Programme)
+    $défaut  réduction par utilisation de la règle 10 (Programme)
 
 
-State 76
+État 76
 
    13 IFsuite: tELSE . $@5 tAO Programme tAF
 
-    $default  reduce using rule 12 ($@5)
+    $défaut  réduction par utilisation de la règle 12 ($@5)
 
-    $@5  go to state 78
+    $@5  aller à l'état 78
 
 
-State 77
+État 77
 
     7 Programme: Programme tIF tPO Condition tPF $@1 tAO Programme tAF $@2 IFsuite .
 
-    $default  reduce using rule 7 (Programme)
+    $défaut  réduction par utilisation de la règle 7 (Programme)
 
 
-State 78
+État 78
 
    13 IFsuite: tELSE $@5 . tAO Programme tAF
 
-    tAO  shift, and go to state 79
+    tAO  décalage et aller à l'état 79
 
 
-State 79
+État 79
 
    13 IFsuite: tELSE $@5 tAO . Programme tAF
 
-    $default  reduce using rule 11 (Programme)
+    $défaut  réduction par utilisation de la règle 11 (Programme)
 
-    Programme  go to state 80
+    Programme  aller à l'état 80
 
 
-State 80
+État 80
 
     2 Programme: Programme . Declaration tPV
     3          | Programme . Assignation tPV
@@ -1006,20 +994,20 @@ State 80
    10          | Programme . tWHILE $@3 tPO Condition tPF $@4 tAO Programme tAF
    13 IFsuite: tELSE $@5 tAO Programme . tAF
 
-    tAF     shift, and go to state 81
-    tINT    shift, and go to state 8
-    tCONST  shift, and go to state 9
-    tPRINT  shift, and go to state 10
-    tVAR    shift, and go to state 11
-    tIF     shift, and go to state 12
-    tWHILE  shift, and go to state 13
+    tAF     décalage et aller à l'état 81
+    tINT    décalage et aller à l'état 8
+    tCONST  décalage et aller à l'état 9
+    tPRINT  décalage et aller à l'état 10
+    tVAR    décalage et aller à l'état 11
+    tIF     décalage et aller à l'état 12
+    tWHILE  décalage et aller à l'état 13
 
-    Declaration  go to state 14
-    Assignation  go to state 15
+    Declaration  aller à l'état 14
+    Assignation  aller à l'état 15
 
 
-State 81
+État 81
 
    13 IFsuite: tELSE $@5 tAO Programme tAF .
 
-    $default  reduce using rule 13 (IFsuite)
+    $défaut  réduction par utilisation de la règle 13 (IFsuite)

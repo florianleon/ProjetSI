@@ -37,6 +37,8 @@ loop7
 	8 else8
 	6 251 6
 	5 2 251
+	C 2
+	C 1
 	7 fif9
 
 else8

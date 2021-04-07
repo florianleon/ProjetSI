@@ -37,6 +37,8 @@ loop7
 	JMF else8
 	AFC 251 6
 	COP 2 251
+	PRI 2
+	PRI 1
 	JMP fif9
 
 else8

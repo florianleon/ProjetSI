@@ -10,16 +10,9 @@ typedef struct {
 } ligne;
 
 typedef struct {
-    int ligne;
     char* nom;   // else ; fif ; cloup ; floop ; loop
     int ouvert; // 1 -> ouvert ; 0 -> fermé
 } jump;
-
-typedef struct {
-    char* nom;
-    int addrG;
-    int addrD;
-} labelC;
 
 
 // rajoute une variable déclarée sur une seul ligne à la liste
