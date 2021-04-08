@@ -1,0 +1,8 @@
+Release 13.4 Drc O.87xd (lin64)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+Thu Apr  8 08:39:14 2021
+
+drc -z moduleCPT8.ncd moduleCPT8.pcf
+
+DRC detected 0 errors and 0 warnings.

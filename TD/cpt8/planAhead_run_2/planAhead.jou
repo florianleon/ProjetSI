@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# PlanAhead v13.4 (64-bit)
+# Build 157570 by hdbuild on Fri Dec 16 12:49:33 MST 2011
+# Start of session at: Thu Apr  8 08:42:57 2021
+# Process ID: 6520
+# Log file: /home/fleon/Bureau/ProjetSI/TD/cpt8/planAhead_run_2/planAhead.log
+# Journal file: /home/fleon/Bureau/ProjetSI/TD/cpt8/planAhead_run_2/planAhead.jou
+#-----------------------------------------------------------
+start_gui
+source /home/fleon/Bureau/ProjetSI/TD/cpt8/pa.fromNcd.tcl
+exit
+stop_gui

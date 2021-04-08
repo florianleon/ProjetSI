@@ -1,0 +1,74 @@
+#-----------------------------------------------------------
+# PlanAhead v13.4 (64-bit)
+# Build 157570 by hdbuild on Fri Dec 16 12:49:33 MST 2011
+# Start of session at: Thu Apr  8 08:22:11 2021
+# Process ID: 5988
+# Log file: /home/fleon/Bureau/ProjetSI/TD/cpt8/planAhead_run_1/planAhead.log
+# Journal file: /home/fleon/Bureau/ProjetSI/TD/cpt8/planAhead_run_1/planAhead.jou
+#-----------------------------------------------------------
+start_gui
+source /home/fleon/Bureau/ProjetSI/TD/cpt8/pa.fromNcd.tcl
+startgroup
+set_property loc PAD154 [get_ports {Din[0]}]
+endgroup
+startgroup
+set_property loc PAD159 [get_ports {Din[1]}]
+endgroup
+startgroup
+set_property loc PAD160 [get_ports {Din[2]}]
+endgroup
+startgroup
+set_property loc PAD161 [get_ports {Din[3]}]
+endgroup
+startgroup
+set_property loc PAD162 [get_ports {Din[4]}]
+endgroup
+startgroup
+set_property loc PAD163 [get_ports {Din[5]}]
+endgroup
+startgroup
+set_property loc PAD164 [get_ports {Din[6]}]
+endgroup
+startgroup
+set_property loc PAD178 [get_ports {Din[7]}]
+endgroup
+startgroup
+set_property loc PAD125 [get_ports {Dout[0]}]
+endgroup
+startgroup
+set_property loc PAD126 [get_ports {Dout[1]}]
+endgroup
+startgroup
+set_property loc PAD129 [get_ports {Dout[2]}]
+endgroup
+startgroup
+set_property loc PAD130 [get_ports {Dout[3]}]
+endgroup
+startgroup
+set_property loc PAD176 [get_ports {Dout[5]}]
+endgroup
+startgroup
+set_property loc PAD139 [get_ports {Dout[4]}]
+endgroup
+startgroup
+set_property loc PAD140 [get_ports {Dout[5]}]
+endgroup
+startgroup
+set_property loc PAD141 [get_ports {Dout[6]}]
+endgroup
+startgroup
+set_property loc PAD142 [get_ports {Dout[7]}]
+endgroup
+startgroup
+set_property loc PAD29 [get_ports CK]
+endgroup
+startgroup
+set_property loc PAD2 [get_ports EN]
+endgroup
+startgroup
+set_property loc PAD28 [get_ports LOAD]
+endgroup
+startgroup
+set_property loc PAD27 [get_ports RST]
+endgroup
+save_design

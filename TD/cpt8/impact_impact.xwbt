@@ -1,0 +1,8 @@
+INTSTYLE=impact
+INFILE=/home/fleon/Bureau/ProjetSI/TD/cpt8/impact.xsl
+OUTFILE=/home/fleon/Bureau/ProjetSI/TD/cpt8/impact.xsl
+FAMILY=Single
+PART=Single
+WORKINGDIR=/home/fleon/Bureau/ProjetSI/TD/cpt8
+LICENSE=iMPACT
+USER_INFO=iMPACT

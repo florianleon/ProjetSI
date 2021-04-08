@@ -1,0 +1,16 @@
+xst -intstyle ise -ifn "/home/fleon/Bureau/ProjetSI/TD/cpt8/moduleCPT8.xst" -ofn "/home/fleon/Bureau/ProjetSI/TD/cpt8/moduleCPT8.syr" 
+xst -intstyle ise -ifn "/home/fleon/Bureau/ProjetSI/TD/cpt8/moduleCPT8.xst" -ofn "/home/fleon/Bureau/ProjetSI/TD/cpt8/moduleCPT8.syr" 
+xst -intstyle ise -ifn "/home/fleon/Bureau/ProjetSI/TD/cpt8/moduleCPT8.xst" -ofn "/home/fleon/Bureau/ProjetSI/TD/cpt8/moduleCPT8.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -i -p xc6slx16-csg324-3 moduleCPT8.ngc moduleCPT8.ngd  
+map -intstyle ise -p xc6slx16-csg324-3 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o moduleCPT8_map.ncd moduleCPT8.ngd moduleCPT8.pcf 
+par -w -intstyle ise -ol high -mt off moduleCPT8_map.ncd moduleCPT8.ncd moduleCPT8.pcf 
+trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml moduleCPT8.twx moduleCPT8.ncd -o moduleCPT8.twr moduleCPT8.pcf 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc moduleCPT8.ucf -p xc6slx16-csg324-3 moduleCPT8.ngc moduleCPT8.ngd  
+map -intstyle ise -p xc6slx16-csg324-3 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o moduleCPT8_map.ncd moduleCPT8.ngd moduleCPT8.pcf 
+par -w -intstyle ise -ol high -mt off moduleCPT8_map.ncd moduleCPT8.ncd moduleCPT8.pcf 
+trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml moduleCPT8.twx moduleCPT8.ncd -o moduleCPT8.twr moduleCPT8.pcf -ucf moduleCPT8.ucf 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc moduleCPT8.ucf -p xc6slx16-csg324-3 moduleCPT8.ngc moduleCPT8.ngd  
+map -intstyle ise -p xc6slx16-csg324-3 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o moduleCPT8_map.ncd moduleCPT8.ngd moduleCPT8.pcf 
+par -w -intstyle ise -ol high -mt off moduleCPT8_map.ncd moduleCPT8.ncd moduleCPT8.pcf 
+trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml moduleCPT8.twx moduleCPT8.ncd -o moduleCPT8.twr moduleCPT8.pcf -ucf moduleCPT8.ucf 
+bitgen -intstyle ise -f moduleCPT8.ut moduleCPT8.ncd 

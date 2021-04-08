@@ -1,0 +1,23 @@
+
+# PlanAhead Generated physical constraints 
+
+NET "CK" LOC = D9;
+NET "Din[0]" LOC = T10;
+NET "Din[1]" LOC = T9;
+NET "Din[2]" LOC = V9;
+NET "Din[3]" LOC = M8;
+NET "Din[4]" LOC = N8;
+NET "Din[5]" LOC = U8;
+NET "Din[6]" LOC = V8;
+NET "Din[7]" LOC = T5;
+NET "Dout[0]" LOC = U16;
+NET "Dout[1]" LOC = V16;
+NET "Dout[2]" LOC = U15;
+NET "Dout[3]" LOC = V15;
+NET "Dout[4]" LOC = M11;
+NET "Dout[5]" LOC = N11;
+NET "Dout[6]" LOC = R11;
+NET "Dout[7]" LOC = T11;
+NET "EN" LOC = C4;
+NET "LOAD" LOC = A8;
+NET "RST" LOC = B8;
