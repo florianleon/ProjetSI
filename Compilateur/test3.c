@@ -10,15 +10,13 @@ int main(){
         int d = 7;
     }
 
-    while( a<10 ){
-        while( a<11 ){
-            if(b > 0){
-                int e = 6;
-                printf(e);
-                printf(b);
-            }
-
+    while( a>10 ){
+        if(b > 0){
+            int e = 6;
+            printf(e);
+            printf(b);
         }
+
     }
 
     int rrr = 3;

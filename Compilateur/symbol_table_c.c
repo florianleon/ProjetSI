@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "symbol_table_c.h"
 
 
@@ -18,10 +19,12 @@ int indexJump = 0;
 
 char buf[10]; // bufer des labels
 
-int indexIf = 0;
+int indexIf = 0; // TODO supr
 
 labelC tableLabel[TAILLE_JUMP];
 int indexLabel = 0;
+
+int cntLigne = 0;
 
 // début des fct //
 
@@ -59,6 +62,8 @@ void ajouter(int c, int i, FILE* fdClair, FILE* fdCode, int valAddr){
             if (i == 1) {
                 fprintf(fdClair, "COP %d %d\n", tableIndex[indexIndex], valAddr);
                 fprintf(fdCode, "5 %d %d\n", tableIndex[indexIndex], valAddr);
+
+                cntLigne++;
             }
             tableIndex[indexIndex] = tableIndex[indexIndex] + 1;
         }
@@ -206,11 +211,11 @@ int adresse(char* s){
 // affiche le tableau
 void afficher(){
     // On affiche un entête au tableau
-    printf("indexnomconstinit\n");
+    printf("index\tnom\tconst\tinit\n");
 
     // On affiche chaque élément du tableau
     for(int i = 0; i<tableIndex[indexIndex]; i++){
-        printf("%d%s%d%d\n", i, table[i].variable, table[i].constante, table[i].init);
+        printf("%d\t%s\t%d\t%d\n", i, table[i].variable, table[i].constante, table[i].init);
     }
 }
 
@@ -236,6 +241,8 @@ void ecrireOperationASM(FILE* fdClair, FILE* fdCode, int op, int tmp1, int tmp2)
 
     // on décrémente l'indice des variable temporaire de 1
     enleverTmp();
+
+    cntLigne++;
 }
 
 // Assignation une variable temporaire à un nombre en asm
@@ -252,7 +259,9 @@ void assignerASM(FILE* fdClair, FILE* fdCode, char* v){
         // on écrit la ligne d'assignation
         fprintf(fdClair, "COP %d %d\n", addr, tmpIndex+1);
         fprintf(fdCode, "5 %d %d\n", addr, tmpIndex+1);
+
         enleverTmp();
+        cntLigne++;
     }
     else{
         printf("ERROR : Assignation before declaration : %s\n", v);
@@ -264,7 +273,9 @@ void assignerASM(FILE* fdClair, FILE* fdCode, char* v){
 void nbASM(FILE* fdClair, FILE* fdCode, int nb){
     fprintf(fdClair, "AFC %d %d\n", tmpIndex, nb);
     fprintf(fdCode, "6 %d %d\n", tmpIndex, nb);
+
     ajouterTmp();
+    cntLigne++;
 
 }
 
@@ -281,7 +292,9 @@ void varASM(FILE* fdClair, FILE* fdCode, char* v){
     }
     fprintf(fdClair, "COP %d %d\n", tmpIndex, addr);
     fprintf(fdCode, "5 %d %d\n", tmpIndex, addr);
+
     ajouterTmp();
+    cntLigne++;
 }
 
 // Print en ASM
@@ -301,6 +314,8 @@ void printASM(FILE* fdClair, FILE* fdCode, char* v){
     else{
         fprintf(fdClair, "PRI %d\n", addr);
         fprintf(fdCode, "C %d\n", addr);
+
+        cntLigne++;
     }
 }
 
@@ -312,128 +327,199 @@ void compareASM(FILE* fdClair, FILE* fdCode, int cmp){ //TODO cas composé avec 
     }
     else if(cmp == 1){ // sup
         fprintf(fdClair, "SUP %d %d %d\n", tmpIndex + 2, tmpIndex + 2, tmpIndex + 1);
-        fprintf(fdCode, "A %d %d\n", tmpIndex + 2, tmpIndex + 2, tmpIndex + 1);
+        fprintf(fdCode, "A %d %d %d\n", tmpIndex + 2, tmpIndex + 2, tmpIndex + 1);
     }
-    else if(cmp == 2){ // égale
+    else { //if(cmp == 2){ // égale
         fprintf(fdClair, "EQU %d %d %d\n", tmpIndex + 2, tmpIndex + 2, tmpIndex + 1);
         fprintf(fdCode, "B %d %d %d\n", tmpIndex + 2, tmpIndex + 2, tmpIndex + 1);
     }
     
 
     enleverTmp();
+    cntLigne++;
 }
 
 // IF
 
-int indexIff(){
-    return indexIf++;
-}
 
 // met la condition et le saut sur else si non respecté, en ASM (if 0)
 void ifASM(FILE* fdClair, FILE* fdCode, int cmp){
     compareASM(fdClair, fdCode, cmp);
-condi
 
-    enleverTmp();
+    char* label = ajouterJump("else", tableLabel[indexLabel].nom);
+
+    fprintf(fdClair, "JMF %d ", derniereTmp());
+    fprintf(fdCode, "8 %d ", derniereTmp());
+
+    int addr = ftell(fdClair);
+    ajouterLabel(label, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");
+    fprintf(fdCode, "\t\t\n");
+
+    cntLigne++;
 }
 
 // Met la balise else en ASM (if 2)
 void elseASM(FILE* fdClair, FILE* fdCode){
-    char* label = supprimerJump("else");
-    fprintf(fdClair, "\n%s\n", label);
-    fprintf(fdCode, "\n%s\n", label);
+    char* label = supprimerJump("else", buf);
+
+    int addr = ftell(fdClair);
+    completerLabel(label, 0, addr);
+
+    //fprintf(fdClair, "\n%s\n", label);
+    //fprintf(fdCode, "\n%s\n", label);
+
+    //cntLigne++;
 }
 
 // Fait sauté le else (si on est rentré dans le if), en ASM (if 1)
 void bifASM(FILE* fdClair, FILE* fdCode){
-    char* label = ajouterJump("fif");
-    fprintf(fdClair, "JMP %s\n", label);
-    fprintf(fdCode, "7 %s\n", label);
+    char* label = ajouterJump("fif", tableLabel[indexLabel].nom);
+
+    fprintf(fdClair, "JMP ");
+    fprintf(fdCode, "7 ");
+
+    int addr = ftell(fdClair);
+    ajouterLabel(label, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");  // TODO moche à refaire, pareil au dessus
+    fprintf(fdCode, "\t\t\n");
+
+    cntLigne++;
 }
 
 // Met la balise de fin du block if, en ASM (if 3)
 void fifASM(FILE* fdClair, FILE* fdCode){
-    char* label = supprimerJump("fif");
-    fprintf(fdClair, "%s\n", label);
-    fprintf(fdCode, "%s\n", label);
+    char* label = supprimerJump("fif", buf);
+
+    int addr = ftell(fdClair);
+    completerLabel(label, 0, addr);
+
+    //fprintf(fdClair, "%s\n", label);
+    //fprintf(fdCode, "%s\n", label);
+
+    //cntLigne++;
 }
 
 // WHILE
 
 // met la balise de debut du while en ASM (while 0)
 void dwhileASM(FILE* fdClair, FILE* fdCode){
-    char* label = ajouterJump("dloop");
-    fprintf(fdClair, "\n%s\n", label);
-    fprintf(fdCode, "\n%s\n", label);
+    char* label = ajouterJump("dloop", tableLabel[indexLabel].nom);
+    //fprintf(fdClair, "\n%s\n", label);
+    //fprintf(fdCode, "\n%s\n", label);
+
+    int addr = ftell(fdClair);
+    ajouterLabel(label, 0, addr);
+
 }
 
 // Fait sauté à la condition et met la balise de début de programme, en ASM (while 1)
 void whileASM(FILE* fdClair, FILE* fdCode){
     // Saute à la condition
-    char* label = ajouterJump("cloop");
-    fprintf(fdClair, "JMP %s\n", label);
-    fprintf(fdCode, "7 %s\n", label);
+    char* label = ajouterJump("cloop", tableLabel[indexLabel].nom);
+    fprintf(fdClair, "JMP ");
+    fprintf(fdCode, "7 ");
+
+    int addr = ftell(fdClair);
+    ajouterLabel(label, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");
+    fprintf(fdCode, "\t\t\n");
+
+    cntLigne++;
 
     // met le label de début de programme interne
-    char* label2 = ajouterJump("loop");
+    char* label2 = ajouterJump("loop", tableLabel[indexLabel].nom);
 
-    fprintf(fdClair, "\n%s\n", label2);
-    fprintf(fdCode, "\n%s\n", label2);
+    //fprintf(fdClair, "\n%s\n", label2);
+    //fprintf(fdCode, "\n%s\n", label2);
 
-}
-
-
-
-
-reecriture(FILE* fd){
+    addr = ftell(fdClair);
+    ajouterLabel(label2, 0, addr);
 
 }
+
 
 // Met la balise de condition, la condition et les sauts necessaires, en ASM (while 2)
 void fwhileASM(FILE* fdClair, FILE* fdCode, int cmp){
     // Saute au début du while, pour raffrachir les valeurs temporaires
-    char* label = supprimerJump("dloop");
-    fprintf(fdClair, "JMP %s\n", label);
-    fprintf(fdCode, "7 %s\n", label);
+    char* label = supprimerJump("dloop", buf);
+    fprintf(fdClair, "JMP ");
+    fprintf(fdCode, "7 ");
+
+    int addr = ftell(fdClair);
+    completerLabel(label, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");
+    fprintf(fdCode, "\t\t\n");
+
+    cntLigne++;
 
     // met le label de début de condition
-    char* label1 = supprimerJump("cloop");
-    fprintf(fdClair, "\n%s\n", label1);
-    fprintf(fdCode, "\n%s\n", label1);
+    char* label1 = supprimerJump("cloop", buf);
+    //fprintf(fdClair, "\n%s\n", label1);
+    //fprintf(fdCode, "\n%s\n", label1);
+
+    addr = ftell(fdClair);
+    completerLabel(label1, 0, addr);
+
+    //cntLigne++;
 
     // ecrit la condition
     compareASM(fdClair, fdCode, cmp);
 
     // si non respecté on sort du loop
-    char* label2 = ajouterJump("floop");
-    fprintf(fdClair, "JMF %d %s\n", derniereTmp(), label2);
-    fprintf(fdCode, "8 %d %s\n", derniereTmp(), label2);
+    char* label2 = ajouterJump("floop", tableLabel[indexLabel].nom);
+    fprintf(fdClair, "JMF %d ", derniereTmp());
+    fprintf(fdCode, "8 %d ", derniereTmp());
+
+    addr = ftell(fdClair);
+    ajouterLabel(label, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");
+    fprintf(fdCode, "\t\t\n");
 
     enleverTmp();
+    cntLigne++;
 
     // si respecté on retourne y retourne
-    char* label3 = supprimerJump("loop");
-    fprintf(fdClair, "JMP %s\n", label3);
-    fprintf(fdCode, "7 %s\n", label3);
+    char* label3 = supprimerJump("loop", buf);
+    fprintf(fdClair, "JMP ");
+    fprintf(fdCode, "7 ");
+
+    addr = ftell(fdClair);
+    completerLabel(label3, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");
+    fprintf(fdCode, "\t\t\n");
+
+    cntLigne++;
 
     // met la balise de fin de while
-    char* label4 = supprimerJump("floop");
-    fprintf(fdClair, "%s\n", label4);
-    fprintf(fdCode, "%s\n", label4);
+    char* label4 = supprimerJump("floop", buf);
+    //fprintf(fdClair, "%s\n", label4);
+    //fprintf(fdCode, "%s\n", label4);
+
+    addr = ftell(fdClair);
+    completerLabel(label4, 0, addr);
+
+    //cntLigne++;
 }
 
 // JUMP
 
 // ajoute un jump au tableau
-char* ajouterJump(char* nom, FILE* fd){
+char* ajouterJump(char* nom, char* buf){
     jump j;
-    j.ligne = ftell(fd);
+    //j.ligne = ftell(fdClair);
     j.nom = nom;
     j.ouvert = 1;
 
     tableJump[indexJump] = j;
-    
     snprintf(buf, 10, "%s%d", nom, indexJump);
+
 
     indexJump++;
 
@@ -441,7 +527,7 @@ char* ajouterJump(char* nom, FILE* fd){
 }
 
 //supprime un jump au tableau
-char* supprimerJump(char* nom){
+char* supprimerJump(char* nom, char* buf){
 
     for(int i = 0; i<indexJump; i++){
         if( (strcmp(tableJump[indexJump - 1 - i].nom, nom) == 0) && (tableJump[indexJump - 1 - i].ouvert == 1) ){
@@ -458,27 +544,42 @@ char* supprimerJump(char* nom){
 
 void ajouterLabel(char* nom, int droite, int addr){
 
-    tableLabel[indexLabel].nom = nom;
+    // tableLabel[indexLabel].nom = nom;
 
     if(droite == 1){
         tableLabel[indexLabel].addrD = addr;
     }
     else{
-        tableLabel[indexLabel].addrG = addr;
+        tableLabel[indexLabel].addrG = cntLigne;
     }
+
+    indexLabel++; //TODO protection
 }
 
 void completerLabel(char* nom, int droite, int addr){
-
     for(int i = 0; i < indexLabel; i++){
-        if(strcmp(tableLabel[indexLabel].nom, nom) == 0){
+        if(strcmp(tableLabel[i].nom, nom) == 0){
             if(droite == 1){
-                tableLabel[indexLabel].addrD = addr;
+                tableLabel[i].addrD = addr;
             }
             else{
-                tableLabel[indexLabel].addrG = addr;
+                tableLabel[i].addrG = cntLigne;
             }
             break;
         }
     }
+}
+
+
+void reecriture(FILE* fd){
+    printf("\n\n");
+    char str[12];
+    for(int i = 0; i < indexLabel; i++){
+        sprintf(str, "%d", tableLabel[i].addrG);
+
+        printf("%d\t%s\t%d\t%d\n", i, tableLabel[i].nom, tableLabel[i].addrD, tableLabel[i].addrG);
+        fseek(fd, tableLabel[i].addrD, SEEK_SET);
+        fwrite(str , sizeof(char), strlen(str), fd);
+    }
+
 }

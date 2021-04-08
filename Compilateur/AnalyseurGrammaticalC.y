@@ -1,4 +1,4 @@
-aleur constantealeur constante%{
+%{
 #include <stdlib.h>
 #include <stdio.h>
 #include "symbol_table_c.h"
@@ -20,7 +20,7 @@ FILE *fdClair;
 %token tAO 
 %token tAF 
 %token tINT 
-%token tCONST  aleur constante
+%token tCONST  
 %token tPO 
 %token tPF 
 %token tESPACE
@@ -30,9 +30,14 @@ FILE *fdClair;
 %token<nombre> tNB 
 %token tEXP 
 %token<variable> tVAR 
-%token<nombre> tIF
 
-aleur constantealeur constante
+
+%token tET;
+%token tNE;
+%token tSE;
+%token tIE;
+%token tST;
+%token tIT;
 %token tIF;
 %token tELSE;
 %token tWHILE;
@@ -46,7 +51,7 @@ aleur constantealeur constante
 %left tDIV
 
 
-%type<nombre> Expression Condition 
+%type<nombre> Expression Condition
 
 
 %%
@@ -54,6 +59,7 @@ aleur constantealeur constante
 Main : tINT tMAIN tAO Programme tAF 
             {printf("Fin Main\n");
             afficher();
+            reecriture(fdClair);
             exit(0);}
      ;
 
@@ -63,9 +69,8 @@ Programme : Programme Declaration tPV
                 {printf("Print !\n");
                 printASM(fdClair, fdCode, $4);}
           | Programme tIF tPO Condition tPF 
-                {$2 = indexIf();
-                ifASM(fdClair, fdCode, $4);
-                ajouterIndent();}
+                {ifASM(fdClair, fdCode, $4);
+                 ajouterIndent();}
             tAO Programme tAF 
                 {enleverIndent();
                  bifASM(fdClair, fdCode);}
@@ -176,8 +181,8 @@ int yyerror(char*s) {
 }
 
 int main() {
-    fdClair = fopen("codeasm.s", "w");
-    fdCode = fopen("code.s", "w");
+    fdClair = fopen("codeasm.s", "wr");
+    fdCode = fopen("code.s", "wr");
 
     yyparse();
 
@@ -186,5 +191,3 @@ int main() {
 
     return 1;
 }
-
-

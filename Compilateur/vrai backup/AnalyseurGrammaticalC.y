@@ -1,4 +1,4 @@
-aleur constantealeur constante%{
+%{
 #include <stdlib.h>
 #include <stdio.h>
 #include "symbol_table_c.h"
@@ -20,7 +20,7 @@ FILE *fdClair;
 %token tAO 
 %token tAF 
 %token tINT 
-%token tCONST  aleur constante
+%token tCONST  
 %token tPO 
 %token tPF 
 %token tESPACE
@@ -31,7 +31,13 @@ FILE *fdClair;
 %token tEXP 
 %token<variable> tVAR 
 
-aleur constantealeur constante
+
+%token tET;
+%token tNE;
+%token tSE;
+%token tIE;
+%token tST;
+%token tIT;
 %token tIF;
 %token tELSE;
 %token tWHILE;
@@ -53,6 +59,7 @@ aleur constantealeur constante
 Main : tINT tMAIN tAO Programme tAF 
             {printf("Fin Main\n");
             afficher();
+            reecriture(fdClair);
             exit(0);}
      ;
 
@@ -174,8 +181,8 @@ int yyerror(char*s) {
 }
 
 int main() {
-    fdClair = fopen("codeasm.s", "w");
-    fdCode = fopen("code.s", "w");
+    fdClair = fopen("codeasm.s", "wr");
+    fdCode = fopen("code.s", "wr");
 
     yyparse();
 
@@ -184,5 +191,3 @@ int main() {
 
     return 1;
 }
-
-

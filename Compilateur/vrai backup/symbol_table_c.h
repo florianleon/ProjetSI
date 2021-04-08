@@ -10,9 +10,16 @@ typedef struct {
 } ligne;
 
 typedef struct {
+    int ligne;
     char* nom;   // else ; fif ; cloup ; floop ; loop
     int ouvert; // 1 -> ouvert ; 0 -> fermé
 } jump;
+
+typedef struct {
+    char nom[10];
+    int addrG;
+    int addrD;
+} labelC;
 
 
 // rajoute une variable déclarée sur une seul ligne à la liste
@@ -90,7 +97,15 @@ void fwhileASM(FILE* fdClair, FILE* fdCode, int cmp);
 // JUMP
 
 // ajoute un jump au tableau
-char* ajouterJump(char* nom);
+char* ajouterJump(char* nom, char* buf);
 
 //supprime un jump au tableau
-char* supprimerJump(char* nom);
+char* supprimerJump(char* nom, char* buf);
+
+
+
+void reecriture(FILE* fd);
+
+void ajouterLabel(char* nom, int droite, int addr);
+
+void completerLabel(char* nom, int droite, int addr);
