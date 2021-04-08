@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Compat Version="1" Minor="4">
+	<CompatParts>
+	</CompatParts>
+	<ConfigModes>
+		<Mode Id="JTAG"/>
+	</ConfigModes>
+	<PortProps>
+		<Port Name="Din[7]" OffChipTerm="NONE"/>
+		<Port Name="Din[6]" OffChipTerm="NONE"/>
+		<Port Name="Din[5]" OffChipTerm="NONE"/>
+		<Port Name="Din[4]" OffChipTerm="NONE"/>
+		<Port Name="Din[3]" OffChipTerm="NONE"/>
+		<Port Name="Din[2]" OffChipTerm="NONE"/>
+		<Port Name="Din[1]" OffChipTerm="NONE"/>
+		<Port Name="Din[0]" OffChipTerm="NONE"/>
+		<Port Name="Dout[7]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="Dout[6]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="Dout[5]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="Dout[4]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="Dout[3]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="Dout[2]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="Dout[1]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="Dout[0]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="CK" OffChipTerm="NONE"/>
+		<Port Name="RST" OffChipTerm="NONE"/>
+		<Port Name="SENS" OffChipTerm="NONE"/>
+		<Port Name="LOAD" OffChipTerm="NONE"/>
+		<Port Name="EN" OffChipTerm="NONE"/>
+	</PortProps>
+</Compat>
+

@@ -66,26 +66,3 @@ begin
 
 end Behavioral;
 
-
-
-entity test_cpt8 is
-end test_cpt8;
-
-architecture bench of test_cpt8 is
-	COMPONENT moduleCPT8 is
-		Port ( CK : in  STD_LOGIC;
-           RST : in  STD_LOGIC;
-           SENS : in  STD_LOGIC;
-           LOAD : in  STD_LOGIC;
-           EN : in  STD_LOGIC;
-           Din : in  STD_LOGIC_VECTOR (7 downto 0);
-           Dout : out  STD_LOGIC_VECTOR (7 downto 0));
-	END COMPONENT;
-		
-	For all : moduleCPT8 use entity work.adder(bebehavioral);
-		
-	SIGNAL CK, SENS, RST, LOAD, EN : STD_LOGIC;
-	SIGNAL Din, Dout : STD_LOGIC_VECTOR (7 downto 0);
-		
-	BEGIN
-	END bench;

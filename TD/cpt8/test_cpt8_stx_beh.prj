@@ -1,0 +1,2 @@
+vhdl isim_temp "moduleCPT8.vhd"
+vhdl isim_temp "test_cpt8.vhd"

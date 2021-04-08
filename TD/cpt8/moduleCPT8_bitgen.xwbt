@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=/home/fleon/Bureau/ProjetSI/TD/cpt8/moduleCPT8.ncd
+OUTFILE=/home/fleon/Bureau/ProjetSI/TD/cpt8/moduleCPT8.bit
+FAMILY=Spartan6
+PART=xc6slx16-3csg324
+WORKINGDIR=/home/fleon/Bureau/ProjetSI/TD/cpt8
+LICENSE=WebPack
+USER_INFO=176114439_0_0_839
