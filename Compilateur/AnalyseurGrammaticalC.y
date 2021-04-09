@@ -56,11 +56,9 @@ FILE *fdClair;
 
 %%
 
-Main : tINT tMAIN tAO Programme tAF 
+Main : tINT tMAIN tAO Programme tAF
             {printf("Fin Main\n");
-            afficher();
-            reecriture(fdClair);
-            exit(0);}
+            afficher();}
      ;
 
 Programme : Programme Declaration tPV
@@ -185,6 +183,8 @@ int main() {
     fdCode = fopen("code.s", "wr");
 
     yyparse();
+
+    reecriture(fdClair);
 
     fclose(fdCode); // rajouter une ligne vide à la fin ?
     fclose(fdClair);

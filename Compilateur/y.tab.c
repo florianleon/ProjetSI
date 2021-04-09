@@ -497,10 +497,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    59,    59,    66,    67,    68,    72,    75,    71,    79,
-      81,    78,    87,    91,    90,    98,   103,   107,   111,   115,
-     121,   124,   130,   133,   136,   139,   142,   145,   149,   155,
-     161,   163,   165,   167,   169,   171
+       0,    59,    59,    64,    65,    66,    70,    73,    69,    77,
+      79,    76,    85,    89,    88,    96,   101,   105,   109,   113,
+     119,   122,   128,   131,   134,   137,   140,   143,   147,   153,
+     159,   161,   163,   165,   167,   169
 };
 #endif
 
@@ -1327,220 +1327,218 @@ yyreduce:
         case 2:
 #line 60 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("Fin Main\n");
-            afficher();
-            reecriture(fdClair);
-            exit(0);}
-#line 1334 "y.tab.c" /* yacc.c:1646  */
+            afficher();}
+#line 1332 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 69 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 67 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("Print !\n");
                 printASM(fdClair, fdCode, (yyvsp[-2].variable));}
-#line 1341 "y.tab.c" /* yacc.c:1646  */
+#line 1339 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 72 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 70 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {ifASM(fdClair, fdCode, (yyvsp[-1].nombre));
                  ajouterIndent();}
-#line 1348 "y.tab.c" /* yacc.c:1646  */
+#line 1346 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 75 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 73 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {enleverIndent();
                  bifASM(fdClair, fdCode);}
-#line 1355 "y.tab.c" /* yacc.c:1646  */
+#line 1353 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 79 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 77 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {dwhileASM(fdClair, fdCode);}
-#line 1361 "y.tab.c" /* yacc.c:1646  */
+#line 1359 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 81 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 79 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {ajouterIndent();
                 whileASM(fdClair, fdCode);}
-#line 1368 "y.tab.c" /* yacc.c:1646  */
+#line 1366 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 84 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 82 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {enleverIndent();
                 fwhileASM(fdClair, fdCode, (yyvsp[-5].nombre));
                 printf("WHILE\n");}
-#line 1376 "y.tab.c" /* yacc.c:1646  */
+#line 1374 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 91 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 89 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {ajouterIndent();
                 elseASM(fdClair, fdCode);}
-#line 1383 "y.tab.c" /* yacc.c:1646  */
+#line 1381 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 94 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 92 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {enleverIndent();
                 fifASM(fdClair, fdCode);
                 printf("IF ELSE\n");}
-#line 1391 "y.tab.c" /* yacc.c:1646  */
+#line 1389 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 98 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 96 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {elseASM(fdClair, fdCode);
                 fifASM(fdClair, fdCode);
                 printf("FIN IF\n");}
-#line 1399 "y.tab.c" /* yacc.c:1646  */
+#line 1397 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 104 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 102 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("declaration assignation constante\n");
                 ajouter(1, 1, fdClair, fdCode, (yyvsp[0].nombre));
                 }
-#line 1407 "y.tab.c" /* yacc.c:1646  */
+#line 1405 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 108 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 106 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("declaration constante\n");
                 ajouter(1, 0, fdClair, fdCode, 0);
                 }
-#line 1415 "y.tab.c" /* yacc.c:1646  */
+#line 1413 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 112 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 110 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("declaration assignation\n");
                 ajouter(0, 1, fdClair, fdCode, (yyvsp[0].nombre));
                 afficher();}
-#line 1423 "y.tab.c" /* yacc.c:1646  */
+#line 1421 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 116 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 114 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("declaration \n");
                 ajouter(0, 0, fdClair, fdCode, 0);
                 afficher();}
-#line 1431 "y.tab.c" /* yacc.c:1646  */
+#line 1429 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 122 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 120 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {ajouterListe((yyvsp[-2].variable));
             printf("declaration Var+\n");}
-#line 1438 "y.tab.c" /* yacc.c:1646  */
+#line 1436 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 125 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 123 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {ajouterListe((yyvsp[0].variable));
             printf("declaration Var\n");}
-#line 1445 "y.tab.c" /* yacc.c:1646  */
+#line 1443 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 131 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 129 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("Addition\n");
                 ecrireOperationASM(fdClair, fdCode, 1, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
-#line 1452 "y.tab.c" /* yacc.c:1646  */
+#line 1450 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 134 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 132 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("Multiplication\n");
                 ecrireOperationASM(fdClair, fdCode, 2, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
-#line 1459 "y.tab.c" /* yacc.c:1646  */
+#line 1457 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 137 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 135 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("Soustraction\n");
                 ecrireOperationASM(fdClair, fdCode, 3, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
-#line 1466 "y.tab.c" /* yacc.c:1646  */
+#line 1464 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 140 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 138 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("Division\n");
                 ecrireOperationASM(fdClair, fdCode, 4, (yyvsp[-2].nombre), (yyvsp[0].nombre));}
-#line 1473 "y.tab.c" /* yacc.c:1646  */
+#line 1471 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 143 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 141 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("(Expr)\n");
                 (yyval.nombre) = derniereTmp();}
-#line 1480 "y.tab.c" /* yacc.c:1646  */
+#line 1478 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 146 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 144 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("Nombre !\n");
                 nbASM(fdClair, fdCode, (yyvsp[0].nombre));
                 (yyval.nombre) = derniereTmp();}
-#line 1488 "y.tab.c" /* yacc.c:1646  */
+#line 1486 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 150 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 148 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("Variable !\n");
                 varASM(fdClair, fdCode, (yyvsp[0].variable));
                 (yyval.nombre) = derniereTmp();}
-#line 1496 "y.tab.c" /* yacc.c:1646  */
+#line 1494 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 156 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 154 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {printf("assignation Var already declared\n");
                 setInit((yyvsp[-2].variable));
                 assignerASM(fdClair, fdCode, (yyvsp[-2].variable));}
-#line 1504 "y.tab.c" /* yacc.c:1646  */
+#line 1502 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 162 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 160 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {(yyval.nombre) = 0;}
-#line 1510 "y.tab.c" /* yacc.c:1646  */
+#line 1508 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 164 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 162 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {(yyval.nombre) = 1;}
-#line 1516 "y.tab.c" /* yacc.c:1646  */
+#line 1514 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 166 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 164 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {(yyval.nombre) = 2;}
-#line 1522 "y.tab.c" /* yacc.c:1646  */
+#line 1520 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 168 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 166 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {(yyval.nombre) = 3;}
-#line 1528 "y.tab.c" /* yacc.c:1646  */
+#line 1526 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 170 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 168 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {(yyval.nombre) = 4;}
-#line 1534 "y.tab.c" /* yacc.c:1646  */
+#line 1532 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 172 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
+#line 170 "AnalyseurGrammaticalC.y" /* yacc.c:1646  */
     {(yyval.nombre) = 5;}
-#line 1540 "y.tab.c" /* yacc.c:1646  */
+#line 1538 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1544 "y.tab.c" /* yacc.c:1646  */
+#line 1542 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1768,7 +1766,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 176 "AnalyseurGrammaticalC.y" /* yacc.c:1906  */
+#line 174 "AnalyseurGrammaticalC.y" /* yacc.c:1906  */
 
 
 
@@ -1781,6 +1779,8 @@ int main() {
     fdCode = fopen("code.s", "wr");
 
     yyparse();
+
+    reecriture(fdClair);
 
     fclose(fdCode); // rajouter une ligne vide à la fin ?
     fclose(fdClair);

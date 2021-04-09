@@ -3,19 +3,18 @@
 #define MAX_INDENT 10                   // nombre max de "niveau de tabulation" (if dans for dans for dans if ...)
 #define TAILLE_JUMP 100                 // nombre max de jump (while/if/else) dans le programme
 
-typedef struct {
+typedef struct {  // struct de la table de variable
     char * variable;
     int constante;
     int init;
 } ligne;
 
-typedef struct {
-    int ligne;
+typedef struct { // gere l'ouverture/fermeture des label de renvoie unique (if, else,while)
     char* nom;   // else ; fif ; cloup ; floop ; loop
     int ouvert; // 1 -> ouvert ; 0 -> fermé
 } jump;
 
-typedef struct {
+typedef struct { // gere les jumps
     char nom[10];
     int addrG;
     int addrD;
@@ -49,7 +48,7 @@ void setInit(char* s);
 // renvoie 1 si une variable donnée est initialisée
 int isInit(char* s);
 
-// renvoie l'index d'une varaible dans le tableau
+// renvoie l'index d'une varaible dans le tableau, -1 sinon
 int adresse(char* s);
 
 // affiche le tableau
@@ -58,7 +57,7 @@ void afficher();
 // Ecrit une opération donnée en asm
 void ecrireOperationASM(FILE* fdClair, FILE* fdCode, int op, int tmp1, int tmp2);
 
-// Assignation une variable temporaire à un nombre en asm
+// Assignation une variable temporaire à un variable en asm
 void assignerASM(FILE* fdClair, FILE* fdCode, char* v);
 
 // assigne un nombre à une variable temporaire
@@ -69,6 +68,8 @@ void varASM(FILE* fdClair, FILE* fdCode, char* v);
 
 // Ecrit la ligne print en ASM
 void printASM(FILE* fdClair, FILE* fdCode, char* v);
+
+
 
 // met la condition et le saut sur else si non respecté, en ASM (if 0)
 void ifASM(FILE* fdClair, FILE* fdCode, int cmp);
@@ -93,6 +94,7 @@ void whileASM(FILE* fdClair, FILE* fdCode);
 
 // Met la balise de condition, la condition et les sauts necessaires, en ASM (while 2)
 void fwhileASM(FILE* fdClair, FILE* fdCode, int cmp);
+
 
 // JUMP
 
