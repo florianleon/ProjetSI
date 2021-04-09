@@ -10,12 +10,14 @@ int main(){
         int d = 7;
     }
 
-    while( a>10 ){
+    while( a<10 ){
         if(b > 0){
             int e = 6;
             printf(e);
-            printf(b);
+            printf(a);
         }
+
+        a = a + 1;
 
     }
 

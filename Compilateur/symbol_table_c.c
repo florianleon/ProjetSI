@@ -146,7 +146,7 @@ void ajouterTmp(){
     }
 }
 
-// retourne l'index de la dernière varibale temporaire
+// retourne l'index de la dernière varibale temporaire //TODO if ...
 int derniereTmp(){
     return tmpIndex+1;
 }
@@ -252,10 +252,10 @@ void assignerASM(FILE* fdClair, FILE* fdCode, char* v){
     // on l'assigne si c'est le cas
     if( (addr != -1) ){
         // on arrête tout 
-        if(tmpIndex != TAILLE-2){
+        /*if(tmpIndex != TAILLE-2){
             printf("ERROR : variable temporaire mal désempiler : %d\n", TAILLE - tmpIndex);
             exit(1);
-        }
+        }*/
         // on écrit la ligne d'assignation
         fprintf(fdClair, "COP %d %d\n", addr, tmpIndex+1);
         fprintf(fdCode, "5 %d %d\n", addr, tmpIndex+1);
@@ -357,6 +357,7 @@ void ifASM(FILE* fdClair, FILE* fdCode, int cmp){
     fprintf(fdClair, "\t\t\n");
     fprintf(fdCode, "\t\t\n");
 
+    enleverTmp();
     cntLigne++;
 }
 
