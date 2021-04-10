@@ -31,16 +31,19 @@ FILE *fdClair;
 %token tEXP 
 %token<variable> tVAR 
 
+%token tESP
+ /* %token tAST pareil que tMUL */
 
-%token tET;
-%token tNE;
-%token tSE;
-%token tIE;
-%token tST;
-%token tIT;
-%token tIF;
-%token tELSE;
-%token tWHILE;
+
+%token tET
+%token tNE
+%token tSE
+%token tIE
+%token tST
+%token tIT
+%token tIF
+%token tELSE
+%token tWHILE
 
 %token tMUL
 

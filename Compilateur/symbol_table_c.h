@@ -2,6 +2,8 @@
 #define TAILLE_TABLE_VARIABLE 10        // nombre max de declaration parallèle
 #define MAX_INDENT 10                   // nombre max de "niveau de tabulation" (if dans for dans for dans if ...)
 #define TAILLE_JUMP 100                 // nombre max de jump (while/if/else) dans le programme
+#define TAILLE_BUF 25                   // taille max des buffers de label et digit
+#define NB_ARG 5                        // nombre max d'argument que peut contenir une fonction
 
 typedef struct {  // struct de la table de variable
     char * variable;
@@ -14,11 +16,20 @@ typedef struct { // gere l'ouverture/fermeture des label de renvoie unique (if, 
     int ouvert; // 1 -> ouvert ; 0 -> fermé
 } jump;
 
-typedef struct { // gere les jumps
-    char nom[10];
+typedef struct { // gere les jumps unique (//TODO peut remplacer entièrement celui d'au dessus ?)
+    char nom[TAILLE_BUF];
     int addrG;
     int addrD;
 } labelC;
+
+
+typedef struct { // gere les jump multiple (fct) (//TODO peut remplcaer celui d'au dessus ?)
+    char nom[TAILLE_BUF];
+    int nbArg;
+    int argu[NB_ARG];
+    int retourne; // 1 --> int ; 0 --> void
+    int addr;
+} fonction;
 
 
 // rajoute une variable déclarée sur une seul ligne à la liste

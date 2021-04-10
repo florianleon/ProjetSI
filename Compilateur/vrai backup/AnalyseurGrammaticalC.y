@@ -31,16 +31,19 @@ FILE *fdClair;
 %token tEXP 
 %token<variable> tVAR 
 
+%token tESP
+ /* %token tAST pareil que tMUL */
 
-%token tET;
-%token tNE;
-%token tSE;
-%token tIE;
-%token tST;
-%token tIT;
-%token tIF;
-%token tELSE;
-%token tWHILE;
+
+%token tET
+%token tNE
+%token tSE
+%token tIE
+%token tST
+%token tIT
+%token tIF
+%token tELSE
+%token tWHILE
 
 %token tMUL
 
@@ -56,11 +59,9 @@ FILE *fdClair;
 
 %%
 
-Main : tINT tMAIN tAO Programme tAF 
+Main : tINT tMAIN tAO Programme tAF
             {printf("Fin Main\n");
-            afficher();
-            reecriture(fdClair);
-            exit(0);}
+            afficher();}
      ;
 
 Programme : Programme Declaration tPV
@@ -185,6 +186,8 @@ int main() {
     fdCode = fopen("code.s", "wr");
 
     yyparse();
+
+    reecriture(fdClair);
 
     fclose(fdCode); // rajouter une ligne vide à la fin ?
     fclose(fdClair);

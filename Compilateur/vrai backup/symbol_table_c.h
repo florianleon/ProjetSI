@@ -2,24 +2,34 @@
 #define TAILLE_TABLE_VARIABLE 10        // nombre max de declaration parallèle
 #define MAX_INDENT 10                   // nombre max de "niveau de tabulation" (if dans for dans for dans if ...)
 #define TAILLE_JUMP 100                 // nombre max de jump (while/if/else) dans le programme
+#define TAILLE_BUF 25                   // taille max des buffers de label et digit
+#define NB_ARG 5                        // nombre max d'argument que peut contenir une fonction
 
-typedef struct {
+typedef struct {  // struct de la table de variable
     char * variable;
     int constante;
     int init;
 } ligne;
 
-typedef struct {
-    int ligne;
+typedef struct { // gere l'ouverture/fermeture des label de renvoie unique (if, else,while)
     char* nom;   // else ; fif ; cloup ; floop ; loop
     int ouvert; // 1 -> ouvert ; 0 -> fermé
 } jump;
 
-typedef struct {
-    char nom[10];
+typedef struct { // gere les jumps unique (//TODO peut remplacer entièrement celui d'au dessus ?)
+    char nom[TAILLE_BUF];
     int addrG;
     int addrD;
 } labelC;
+
+
+typedef struct { // gere les jump multiple (fct) (//TODO peut remplcaer celui d'au dessus ?)
+    char nom[TAILLE_BUF];
+    int nbArg;
+    int argu[NB_ARG];
+    int retourne; // 1 --> int ; 0 --> void
+    int addr;
+} fonction;
 
 
 // rajoute une variable déclarée sur une seul ligne à la liste
@@ -49,7 +59,7 @@ void setInit(char* s);
 // renvoie 1 si une variable donnée est initialisée
 int isInit(char* s);
 
-// renvoie l'index d'une varaible dans le tableau
+// renvoie l'index d'une varaible dans le tableau, -1 sinon
 int adresse(char* s);
 
 // affiche le tableau
@@ -58,7 +68,7 @@ void afficher();
 // Ecrit une opération donnée en asm
 void ecrireOperationASM(FILE* fdClair, FILE* fdCode, int op, int tmp1, int tmp2);
 
-// Assignation une variable temporaire à un nombre en asm
+// Assignation une variable temporaire à un variable en asm
 void assignerASM(FILE* fdClair, FILE* fdCode, char* v);
 
 // assigne un nombre à une variable temporaire
@@ -69,6 +79,8 @@ void varASM(FILE* fdClair, FILE* fdCode, char* v);
 
 // Ecrit la ligne print en ASM
 void printASM(FILE* fdClair, FILE* fdCode, char* v);
+
+
 
 // met la condition et le saut sur else si non respecté, en ASM (if 0)
 void ifASM(FILE* fdClair, FILE* fdCode, int cmp);
@@ -93,6 +105,7 @@ void whileASM(FILE* fdClair, FILE* fdCode);
 
 // Met la balise de condition, la condition et les sauts necessaires, en ASM (while 2)
 void fwhileASM(FILE* fdClair, FILE* fdCode, int cmp);
+
 
 // JUMP
 

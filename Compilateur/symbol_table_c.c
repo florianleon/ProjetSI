@@ -22,7 +22,7 @@ int indexLabel = 0;
 
 int cntLigne = 0;
 
-char buf[10]; // bufer des labels
+char buf[TAILLE_BUF]; // bufer des labels
 
 
 
@@ -519,7 +519,7 @@ char* ajouterJump(char* nom, char* buf){
     j.ouvert = 1;
 
     tableJump[indexJump] = j;
-    snprintf(buf, 10, "%s%d", nom, indexJump);
+    snprintf(buf, TAILLE_BUF, "%s%d", nom, indexJump);
 
     indexJump++;
 
@@ -531,7 +531,7 @@ char* supprimerJump(char* nom, char* buf){
 
     for(int i = 0; i<indexJump; i++){
         if( (strcmp(tableJump[indexJump - 1 - i].nom, nom) == 0) && (tableJump[indexJump - 1 - i].ouvert == 1) ){
-            snprintf(buf, 10, "%s%d", nom, indexJump - 1 - i);
+            snprintf(buf, TAILLE_BUF, "%s%d", nom, indexJump - 1 - i);
             tableJump[indexJump - 1 - i].ouvert = 0;
             return buf;
         }
@@ -576,12 +576,11 @@ void completerLabel(char* nom, int droite, int addr){
 
 
 void reecriture(FILE* fd){
-    printf("\n\n");
-    char str[12];
+
+    char str[TAILLE_BUF];
     for(int i = 0; i < indexLabel; i++){
         sprintf(str, "%d", tableLabel[i].addrG);
 
-        printf("%d\t%s\t%d\t%d\n", i, tableLabel[i].nom, tableLabel[i].addrD, tableLabel[i].addrG);
         fseek(fd, tableLabel[i].addrD, SEEK_SET);
         fwrite(str , sizeof(char), strlen(str), fd);
     }
