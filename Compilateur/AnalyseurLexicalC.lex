@@ -7,10 +7,22 @@
 %%
 
 "main()" return tMAIN;
-\{ return tAO;
-\} return tAF;
+
 "int" return tINT;
 "const" return tCONST;
+"void" return tVOID;
+"return" return tRET;
+
+"printf" return tPRINT;
+"if" return tIF;
+"else" return tELSE;
+"while" return tWHILE;
+
+\{ return tAO;
+\} return tAF;
+"," return tV;
+";" return tPV;
+
 "+" return tADD;
 "-" return tSUB;
 "*" return tMUL;
@@ -18,10 +30,6 @@
 "=" return tEQ;
 "(" return tPO;
 ")" return tPF;
-[ \t\n]+ ;
-"," return tV;
-";" return tPV;
-"&" return tESP;
 
 "==" return tET;
 "!=" return tNE;
@@ -29,13 +37,14 @@
 "<=" return tIE;
 ">" return tST;
 "<" return tIT;
-"printf" return tPRINT;
-"if" return tIF;
-"else" return tELSE;
-"while" return tWHILE;
+
+"&" return tESP;
+
 [0-9]+ {yylval.nombre = atoi(yytext); return tNB;}
 ([0-9]*[.])?[0-9]+([eE][-+]?\d+)? return tEXP;
 [a-zA-Z][a-zA-Z0-9_]* {yylval.variable = strdup(yytext); return tVAR;}
+
+[ \t\n]+ ;
 
 %%
 

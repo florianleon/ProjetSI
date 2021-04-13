@@ -5,7 +5,7 @@
 #include "symbol_table_c.h"
 
 
-ligne table[TAILLE];
+ligne table[TAILLE + 1 + 1 + MAX_RECURSION]; // var-> <-tmp (TAILLE) @ret indexRecur @retRec->/non utilisé encore
 int tmpIndex = TAILLE - 1;
 
 int tableIndex[MAX_INDENT];
@@ -24,7 +24,17 @@ int cntLigne = 0;
 
 char buf[TAILLE_BUF]; // bufer des labels
 
+int tableAddrFunc[MAX_RECURSION]; //adresses de retour
+int indexAddrFunc = 0;
 
+fonction tableFonction[MAX_FONCTION];
+int indexFonction = 0;
+
+char * listeArg[NB_ARG];
+int indexListeArg = 0;
+
+int variableMaxAtteinte = 0; // permet d'éviter les effets de bors lié aux "indentations" et fin de fct.
+int precVariableMaxAtteinte = 0;
 
 // début des fct //
 
@@ -56,8 +66,9 @@ void ajouter(int c, int i, FILE* fdClair, FILE* fdCode, int valAddr){
         l.init = i;
         // on regarde si la varianle existe déjà
         int addr = adresse(tableVariable[j]);
+        
         // on l'ajoute si elle n'exsite pas encore
-        if( (tableIndex[indexIndex] < tmpIndex) && ( (indexIndex == 0) || (addr < tableIndex[indexIndex - 1]) ) ){
+        if( (tableIndex[indexIndex] < tmpIndex) && ( ( (indexIndex == 0) && (addr < variableMaxAtteinte) ) || ( (indexIndex != 0) && (addr < tableIndex[indexIndex - 1]) ) ) ){
             table[tableIndex[indexIndex]] = l;
             if (i == 1) {
                 fprintf(fdClair, "COP %d %d\n", tableIndex[indexIndex], valAddr);
@@ -68,7 +79,7 @@ void ajouter(int c, int i, FILE* fdClair, FILE* fdCode, int valAddr){
             tableIndex[indexIndex] = tableIndex[indexIndex] + 1;
         }
         // on change sa déclaration sinon (ou on arrête tout ?)
-        else if( (tableIndex[indexIndex] < tmpIndex) && ( ( (indexIndex == 0) && (addr >= 0) ) || ( (indexIndex !=0) && (addr >= tableIndex[indexIndex - 1]) ) ) ){
+        else if( (tableIndex[indexIndex] < tmpIndex) && ( ( (indexIndex == 0) && (addr >= variableMaxAtteinte) ) || ( (indexIndex !=0) && (addr >= tableIndex[indexIndex - 1]) && (addr >= variableMaxAtteinte) ) ) ){
             table[addr] = l;
             printf("ERROR : Variable already declared : %s\n", l.variable);
             exit(1);
@@ -109,7 +120,9 @@ void enleverIndent(){
         exit(1);
     }
 
+    maxVariableMAJ();
     indexIndex--;
+    
 }
 
 
@@ -117,8 +130,8 @@ void enleverIndent(){
 
 // enlève la dernière variable temporaire
 void enleverTmp(){
-    if(tmpIndex == TAILLE){
-        printf("ERROR : Plus de variable temporaire à enlever");
+    if(tmpIndex >= TAILLE){
+        printf("ERROR : No temporary variables to remove\n");
         exit(1);
     }
     tmpIndex++;
@@ -141,7 +154,7 @@ void ajouterTmp(){
 
     // on vérifie que la pile est toujours de la place
     if(tmpIndex <= tableIndex[indexIndex]){
-        printf("ERROR : Pile pleine, Trop de variable temporaire\n");
+        printf("ERROR : Too many temporary variables\n");
         exit(1);
     }
 }
@@ -149,7 +162,7 @@ void ajouterTmp(){
 // retourne l'index de la dernière varibale temporaire
 int derniereTmp(){
 	if( tmpIndex == TAILLE-1 ){
-		printf("ERROR : No temporary variable declared\n");
+		printf("ERROR : No temporary variables declared\n");
 		exit(1);
 	}
 
@@ -199,16 +212,15 @@ int isInit(char* s){
 
 // renvoie l'index d'une varaible dans le tableau
 int adresse(char* s){
-
     // On parcours le tableau initialisé
-    for(int i=0; i<tableIndex[indexIndex]; i++){
-        char* symbole = table[tableIndex[indexIndex] - 1 - i].variable;
+    for(int i=tableIndex[indexIndex]-1; i>=precVariableMaxAtteinte; i--){
+        char* symbole = table[i].variable;
         // Si on rencontre la variable on retourne son index
         if(strcmp(s, symbole) == 0){
-            return tableIndex[indexIndex] - 1 - i;
+            return i;
         }
     }
-
+    
     // Sinon, on retourne -1
     return (-1);
 
@@ -322,6 +334,11 @@ void printASM(FILE* fdClair, FILE* fdCode, char* v){
 
 // ecrit la ligne de comparaison en ASM
 void compareASM(FILE* fdClair, FILE* fdCode, int cmp){ //TODO cas composé avec jmp
+
+    // on réaligne les tmp avec celle à comparer
+    ajouterTmp();
+    ajouterTmp();
+    
     if(cmp == 0){ // inf
         fprintf(fdClair, "INF %d %d %d\n", tmpIndex + 2, tmpIndex + 2, tmpIndex + 1);
         fprintf(fdCode, "9 %d %d %d\n", tmpIndex + 2, tmpIndex + 2, tmpIndex + 1);
@@ -356,11 +373,18 @@ void bifASM(FILE* fdClair, FILE* fdCode){
     fprintf(fdClair, "\t\t\n");  // TODO moche à refaire, pareil au dessus
     fprintf(fdCode, "\t\t\n");
 
+
     cntLigne++;
 }
 
 // met la condition et le saut sur else si non respecté, en ASM (if 0)
 void ifASM(FILE* fdClair, FILE* fdCode, int cmp){
+
+    // on réaligne les tmp avec celle à comparer
+    enleverTmp();
+    enleverTmp();
+
+
     compareASM(fdClair, fdCode, cmp);
 
     char* label = ajouterJump("else", tableLabel[indexLabel].nom);
@@ -437,6 +461,12 @@ void whileASM(FILE* fdClair, FILE* fdCode){
 
     addr = ftell(fdClair);
     ajouterLabel(label2, 0, addr);
+
+    // on réaligne les tmp avec celle à comparer
+    enleverTmp();
+    enleverTmp();
+
+
 
     //fprintf(fdClair, "\n%s\n", label2);
     //fprintf(fdCode, "\n%s\n", label2);
@@ -521,6 +551,10 @@ char* ajouterJump(char* nom, char* buf){
     tableJump[indexJump] = j;
     snprintf(buf, TAILLE_BUF, "%s%d", nom, indexJump);
 
+    if( indexJump >= TAILLE_JUMP ){
+        printf("ERROR : Too many jump");
+        exit(1);
+    }
     indexJump++;
 
     return buf;
@@ -553,7 +587,7 @@ void ajouterLabel(char* nom, int droite, int addr){
 
     indexLabel++;
 
-    if( indexLabel == TAILLE_JUMP ){
+    if( indexLabel >= TAILLE_JUMP ){
         printf("ERROR : Jump limit reached\n");
         exit(1);
     }
@@ -585,4 +619,149 @@ void reecriture(FILE* fd){
         fwrite(str , sizeof(char), strlen(str), fd);
     }
 
+}
+
+
+// FCT
+
+// Met à jour le nombre max de variables rencontrées
+void maxVariableMAJ(){
+
+    if(variableMaxAtteinte < tableIndex[indexIndex]){
+        variableMaxAtteinte = tableIndex[indexIndex];
+    }
+
+}
+
+// Gere la position des variables lors de changement de fonction
+void jumpMaxVariable(){
+    
+    if(variableMaxAtteinte >= tableIndex[indexIndex]){
+        tableIndex[indexIndex] = variableMaxAtteinte;
+    }
+
+    // On met à jour le max que l'on a atteint afin de ne pas écrire dessus lors des changements de fct
+    precVariableMaxAtteinte = variableMaxAtteinte;
+}
+
+void ajouterListeArg(char * argu){
+
+    if(indexListeArg == NB_ARG){
+        printf("ERROR : max arguments reached\n");
+        exit(1);
+    }
+    
+    listeArg[indexListeArg] = argu;
+    indexListeArg++;
+}
+
+void ajouterFct(FILE* fdClair, FILE* fdCode, char* nom, int retourne){
+
+    int addrFct = adresseFct(nom);
+
+    if( addrFct != -1 ){
+        printf("ERROR : Function already declared : %s", nom);
+        exit(1);
+    }
+
+    fonction fct;
+    fct.nom = nom;
+    fct.nbArg = indexListeArg;
+    fct.retourne = retourne;
+    fct.addr = cntLigne;
+
+    tableFonction[indexFonction] = fct;
+    indexFonction++;
+
+    if( indexFonction == MAX_FONCTION ){
+        printf("ERROR : Max number of function reached\n");
+        exit(1);
+    }
+
+    // on déclare les arguments
+    enterFct(fdClair, fdCode);
+
+    // on remet à 0 l'index
+    indexListeArg = 0;
+}
+
+// Gere les arguments de la fonction (déclaration/initiation)
+void enterFct(FILE* fdClair, FILE* fdCode){ //TODO pour recursion besoin d'une fct de gestion directement en asm (9 au dessus avec le 1 déjà utiliser ici ?)
+    // on déclare les arguments;
+    // Pour chaque variable de la liste
+    for(int j = 0; j < indexListeArg; j++){
+        // on crée la ligne a ajouter
+        ligne l;
+        l.variable = listeArg[j];
+        l.constante = 0;
+        l.init = 1;
+ 
+        // on regarde si la varianle existe déjà
+        int addr = adresse(listeArg[j]);
+
+        // on l'ajoute si elle n'exsite pas encore
+        if( (tableIndex[indexIndex] < tmpIndex) && ( ( (indexIndex == 0) && (addr < variableMaxAtteinte) ) || ( (indexIndex != 0) && (addr < tableIndex[indexIndex - 1]) ) ) ){
+            table[tableIndex[indexIndex]] = l;
+
+            tableIndex[indexIndex] += 1;
+        }
+        // on change sa déclaration sinon (ou on arrête tout ?)
+        else if( (tableIndex[indexIndex] < tmpIndex) && ( ( (indexIndex == 0) && (addr >= variableMaxAtteinte) ) || ( (indexIndex !=0) && (addr >= tableIndex[indexIndex - 1]) && (addr >= variableMaxAtteinte) ) ) ){
+            table[addr] = l;
+            printf("ERROR : Variable already declared : %s\n", l.variable);
+            exit(1);
+        }
+        // Sinon (si le tableau est plein) on arrête tout
+        else{
+            perror("Heap full\n");
+            exit(1);
+        }
+    }
+
+
+    // on réserve des var tmp 
+    for(int i = 0; i < indexListeArg; i++){
+        ajouterTmp();
+    }
+    afficher();
+    // on initie les arguments
+    for(int i = 0; i < indexListeArg; i++){
+        assignerASM(fdClair, fdCode, listeArg[i]);
+    }
+    
+}
+
+// renvoie l'adresse de déclaration d'une fonction, ou (-1) si elle n'existe pas
+int adresseFct(char* nom){
+    int addrFct = -1;
+    for(int i = 0; i < indexFonction; i++){
+        if( strcmp(tableFonction[i].nom, nom) == 0){
+            addrFct = tableFonction[i].addr;
+        }
+    }
+
+    return addrFct;
+}
+
+// Fait le jump à la fonction
+void jumpFct(FILE* fdClair, FILE* fdCode, char* nom){
+
+    int addrFct = adresseFct(nom);
+
+    //TODO stocké adresse de retour
+
+    if( addrFct == -1 ){
+        printf("ERROR : Undeclared function : %s\n", nom);
+        exit(1);
+    }
+
+    fprintf(fdClair, "JMP %d\n", addrFct);
+    fprintf(fdCode, "7 %d\n", addrFct);
+
+}
+
+// ecrit le jump lié au return, en asm
+void retourFct(FILE* fdClair, FILE* fdCode){
+    fprintf(fdClair, "JMP %d", TAILLE); // TODO pas @taille mais son contenu ... simulé ret ?
+    fprintf(fdCode, "7 %d", TAILLE);
 }

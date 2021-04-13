@@ -17,23 +17,29 @@ FILE *fdClair;
 }
 
 %token tMAIN 
-%token tAO 
-%token tAF 
+
 %token tINT 
-%token tCONST  
+%token tCONST
+%token tVOID
+%token tRET
+
+%token tPRINT 
+%token tIF
+%token tELSE
+%token tWHILE
+
+%token tAO 
+%token tAF
+%token tV 
+%token tPV
+
+%token tMUL
+%left tADD 
+%left tSUB 
+%left tDIV
+%right tEQ 
 %token tPO 
 %token tPF 
-%token tESPACE
-%token tV 
-%token tPV 
-%token tPRINT 
-%token<nombre> tNB 
-%token tEXP 
-%token<variable> tVAR 
-
-%token tESP
- /* %token tAST pareil que tMUL */
-
 
 %token tET
 %token tNE
@@ -41,17 +47,15 @@ FILE *fdClair;
 %token tIE
 %token tST
 %token tIT
-%token tIF
-%token tELSE
-%token tWHILE
 
-%token tMUL
+%token tESP
+     /* %token tAST pareil que tMUL */
 
 
-%right tEQ 
-%left tADD 
-%left tSUB 
-%left tDIV
+%token<nombre> tNB 
+%token<nombre> tEXP 
+%token<variable> tVAR 
+
 
 
 %type<nombre> Expression Condition
@@ -59,24 +63,51 @@ FILE *fdClair;
 
 %%
 
-Main : tINT tMAIN tAO Programme tAF
+S : S DecFonction 
+  | S Main
+  | 
+  ;
+
+DecFonction : tINT tVAR tPO DecArguments tPF 
+                    {ajouterFct(fdClair, fdCode, $2, 1);}
+              tAO Programme tAF
+                    {printf("Fin Fct\n");
+                    maxVariableMAJ();
+                    jumpMaxVariable();}
+            | tVOID tVAR tPO DecArguments tPF 
+                    {ajouterFct(fdClair, fdCode, $2, 0);}
+              tAO Programme tAF
+                    {maxVariableMAJ();
+                    jumpMaxVariable();}
+            ;
+
+DecArguments : tINT tVAR tV DecArguments
+                    {ajouterListeArg($2);}
+             | tINT tVAR
+                    {ajouterListeArg($2);}
+             |
+             ;
+
+Main : tINT tMAIN tAO Programme tAF                             /* MAIN */
             {printf("Fin Main\n");
-            afficher();}
+            afficher();
+            maxVariableMAJ();
+            jumpMaxVariable();}
      ;
 
-Programme : Programme Declaration tPV
-          | Programme Assignation tPV
+Programme : Programme Declaration tPV                           /* ASSIGNATION */
+          | Programme Assignation tPV                           /* DECLARATION */
           | Programme tPRINT tPO tVAR tPF tPV 
                 {printf("Print !\n");
                 printASM(fdClair, fdCode, $4);}
-          | Programme tIF tPO Condition tPF 
+          | Programme tIF tPO Condition tPF                     /* IF */
                 {ifASM(fdClair, fdCode, $4);
                  ajouterIndent();}
             tAO Programme tAF 
                 {enleverIndent();
                  bifASM(fdClair, fdCode);}
             IFsuite
-          | Programme tWHILE 
+          | Programme tWHILE                                    /* WHILE */
                 {dwhileASM(fdClair, fdCode);}
             tPO Condition tPF 
                 {ajouterIndent();
@@ -85,35 +116,47 @@ Programme : Programme Declaration tPV
                 {enleverIndent();
                 fwhileASM(fdClair, fdCode, $5);
                 printf("WHILE\n");}
+          | Programme AppFonction tPV                           /* APPELLE FONCTION */
+          | tRET Variable tPV                                   /* RETURN */
           |
           ;
 
-IFsuite : tELSE 
+AppFonction : tVAR tPO AppArguments {printf("ici\n");} tPF
+                  {jumpFct(fdClair, fdCode, $1);}
+            ;
+
+AppArguments : Expression tV AppArguments
+             | Expression
+             | 
+             ;
+
+
+IFsuite : tELSE                                                 /* IF-ELSE */
                 {ajouterIndent();
                 elseASM(fdClair, fdCode);}
           tAO Programme tAF
                 {enleverIndent();
                 fifASM(fdClair, fdCode);
                 printf("IF ELSE\n");}
-        |
+        |                                                       /* IF */
                 {elseASM(fdClair, fdCode);
                 fifASM(fdClair, fdCode);
                 printf("FIN IF\n");}
         ;
 
-Declaration : tCONST tINT Variable tEQ Expression
+Declaration : tCONST tINT Variable tEQ Expression               /* CONST INT = */
                 {printf("declaration assignation constante\n");
                 ajouter(1, 1, fdClair, fdCode, $5);
                 }
-            | tCONST tINT Variable
+            | tCONST tINT Variable                              /* CONT INT */
                 {printf("declaration constante\n");
                 ajouter(1, 0, fdClair, fdCode, 0);
                 }
-            | tINT Variable tEQ Expression
+            | tINT Variable tEQ Expression                      /* INT = */
                 {printf("declaration assignation\n");
                 ajouter(0, 1, fdClair, fdCode, $4);
                 afficher();}
-            | tINT Variable
+            | tINT Variable                                     /* INT */
                 {printf("declaration \n");
                 ajouter(0, 0, fdClair, fdCode, 0);
                 afficher();}
@@ -128,48 +171,52 @@ Variable : tVAR tV Variable
          ;
 
 
-Expression : Expression tADD Expression 
+Expression : Expression tADD Expression                         /* ADD */
                 {printf("Addition\n");
                 ecrireOperationASM(fdClair, fdCode, 1, $1, $3);}
-            | Expression tMUL Expression 
+            | Expression tMUL Expression                        /* MUL */
                 {printf("Multiplication\n");
                 ecrireOperationASM(fdClair, fdCode, 2, $1, $3);}
-           | Expression tSUB Expression 
+           | Expression tSUB Expression                         /* SUB */
                 {printf("Soustraction\n");
                 ecrireOperationASM(fdClair, fdCode, 3, $1, $3);}
-           | Expression tDIV Expression 
+           | Expression tDIV Expression                         /* DIV */
                 {printf("Division\n");
                 ecrireOperationASM(fdClair, fdCode, 4, $1, $3);}
-           | tPO Expression tPF 
+           | tPO Expression tPF                                 /* ( ) */
                 {printf("(Expr)\n");
                 $$ = derniereTmp();}
-           | tNB 
+           | tNB                                                /* NB */
                 {printf("Nombre !\n");
                 nbASM(fdClair, fdCode, $1);
                 $$ = derniereTmp();}
-           | tVAR 
+           | tVAR                                               /* VAR */
                 {printf("Variable !\n");
                 varASM(fdClair, fdCode, $1);
                 $$ = derniereTmp();}
            ;
 
-Assignation : tVAR tEQ Expression 
+Assignation : tVAR tEQ Expression                               /* VAR = EXPR */
                 {printf("assignation Var already declared\n");
+                setInit($1);
+                assignerASM(fdClair, fdCode, $1);}
+            | tVAR tEQ AppFonction                              /* VAR = FCT */
+                {printf("assignation by fct\n");
                 setInit($1);
                 assignerASM(fdClair, fdCode, $1);}
             ;
 
-Condition : Expression tIT Expression
+Condition : Expression tIT Expression                           /* < */
                 {$$ = 0;}
-          | Expression tST Expression
+          | Expression tST Expression                           /* > */
                 {$$ = 1;}
-          | Expression tET Expression
+          | Expression tET Expression                           /* == */
                 {$$ = 2;}
-          | Expression tNE Expression
+          | Expression tNE Expression                           /* != */
                 {$$ = 3;}
-          | Expression tIE Expression
+          | Expression tIE Expression                           /* <= */
                 {$$ = 4;}
-          | Expression tSE Expression
+          | Expression tSE Expression                           /* >= */
                 {$$ = 5;}
           ;
 

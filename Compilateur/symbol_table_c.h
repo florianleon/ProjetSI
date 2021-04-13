@@ -1,9 +1,11 @@
-#define TAILLE 256                      // nombre max de variable 
+#define TAILLE 256                      // nombre max de variable  // TAILLE_GLOBALE = TAILLE + 1 + 1 + MAX_RECURSION
 #define TAILLE_TABLE_VARIABLE 10        // nombre max de declaration parallèle
 #define MAX_INDENT 10                   // nombre max de "niveau de tabulation" (if dans for dans for dans if ...)
 #define TAILLE_JUMP 100                 // nombre max de jump (while/if/else) dans le programme
 #define TAILLE_BUF 25                   // taille max des buffers de label et digit
 #define NB_ARG 5                        // nombre max d'argument que peut contenir une fonction
+#define MAX_RECURSION 9
+#define MAX_FONCTION 20
 
 typedef struct {  // struct de la table de variable
     char * variable;
@@ -16,17 +18,16 @@ typedef struct { // gere l'ouverture/fermeture des label de renvoie unique (if, 
     int ouvert; // 1 -> ouvert ; 0 -> fermé
 } jump;
 
-typedef struct { // gere les jumps unique (//TODO peut remplacer entièrement celui d'au dessus ?)
+typedef struct { // gere les jumps uniques (//TODO peut remplacer entièrement celui d'au dessus ?)
     char nom[TAILLE_BUF];
     int addrG;
     int addrD;
 } labelC;
 
 
-typedef struct { // gere les jump multiple (fct) (//TODO peut remplcaer celui d'au dessus ?)
-    char nom[TAILLE_BUF];
+typedef struct { // gere les jump multiples (fct) (//TODO peut remplacer celui d'au dessus ? Dans encore un autre ??? (plus général ??))
+    char * nom;
     int nbArg;
-    int argu[NB_ARG];
     int retourne; // 1 --> int ; 0 --> void
     int addr;
 } fonction;
@@ -122,3 +123,33 @@ void reecriture(FILE* fd);
 void ajouterLabel(char* nom, int droite, int addr);
 
 void completerLabel(char* nom, int droite, int addr);
+
+// FCT
+
+// Met à jour le nombre max de variables rencontrées
+void maxVariableMAJ();
+
+// Gere la position des variables lors de changement de fonction
+void jumpMaxVariable();
+
+void ajouterListeArg(char * argu);
+
+void ajouterFct(FILE* fdClair, FILE* fdCode, char* nom, int retourne);
+
+void enterFct(FILE* fdClair, FILE* fdCode);
+
+// renvoie l'adresse de déclaration d'une fonction, ou (-1) si elle n'existe pas
+int adresseFct(char* nom);
+
+// Fait le jump à la fonction
+void jumpFct(FILE* fdClair, FILE* fdCode, char* nom);
+
+// ecrit le jump lié au return, en asm
+void retourFct(FILE* fdClair, FILE* fdCode);
+
+
+
+
+// IDEE
+
+void ecritFctASMGestRec();
