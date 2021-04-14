@@ -1,0 +1,23 @@
+Running: /usr/local/insa/Xilinx.ISE/13.4/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/fleon/Bureau/ProjetSI/FPGA/ALU/ALU_test_isim_beh.exe" -prj "/home/fleon/Bureau/ProjetSI/FPGA/ALU/ALU_test_beh.prj" "work.ALU_test" 
+ISim O.87xd (signature 0x8ddf5b5d)
+Number of CPUs detected in this system: 12
+Turning on mult-threading, number of parallel sub-compilation jobs: 24 
+Determining compilation order of HDL files
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/ALU/ALU_Module.vhd" into library work
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/ALU/ALU_test.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 96828 KB
+Fuse CPU Usage: 700 ms
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling architecture behavioral of entity ALU_Module [alu_module_default]
+Compiling architecture behavior of entity alu_test
+Time Resolution for simulation is 1ps.
+Compiled 7 VHDL Units
+Built simulation executable /home/fleon/Bureau/ProjetSI/FPGA/ALU/ALU_test_isim_beh.exe
+Fuse Memory Usage: 1717688 KB
+Fuse CPU Usage: 750 ms
+GCC CPU Usage: 110 ms

@@ -1,0 +1,2 @@
+vhdl work "ALU_Module.vhd"
+vhdl work "ALU_test.vhd"
