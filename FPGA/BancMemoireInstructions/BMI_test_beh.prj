@@ -1,0 +1,2 @@
+vhdl work "BMI_module.vhd"
+vhdl work "BMI_test.vhd"

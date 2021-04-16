@@ -1,0 +1,2 @@
+vhdl isim_temp "BMD_module.vhd"
+vhdl isim_temp "BMD_test.vhd"
