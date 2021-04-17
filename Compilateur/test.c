@@ -2,17 +2,18 @@ int fct1(int z, int y){
     int krrr;
     krrr = 7778;
     int a, b = 78;
+    a = b + z;
 }
 
 int main(){
-    krrr = 78;
     int a = 3;
     int b, c, d = 78;
     d = (d * a) + 7;
     int e, f, g;
 
     if(a==3){
-        g = a;
+        int dfg;
+        fct1(3,4);
     }
     else{
         g = 0;
@@ -27,8 +28,12 @@ int main(){
             int h;
             c = c-1;
         }
-        c = 78;
+        
         a = a + 1;
     }
+}
+
+int fct3(int a){
+    a = 789;
 }
 

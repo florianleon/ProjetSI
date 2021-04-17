@@ -594,6 +594,7 @@ void ajouterLabel(char* nom, int droite, int addr){
 }
 
 void completerLabel(char* nom, int droite, int addr){
+    
     for(int i = 0; i < indexLabel; i++){
         if( strcmp(tableLabel[i].nom, nom) == 0 ){
             if(droite == 1){
@@ -602,7 +603,6 @@ void completerLabel(char* nom, int droite, int addr){
             else{
                 tableLabel[i].addrG = cntLigne;
             }
-
             break;
         }
     }
@@ -617,6 +617,7 @@ void reecriture(FILE* fd){
 
         fseek(fd, tableLabel[i].addrD, SEEK_SET);
         fwrite(str , sizeof(char), strlen(str), fd);
+
     }
 
 }
@@ -696,7 +697,7 @@ void enterFct(FILE* fdClair, FILE* fdCode){ //TODO pour recursion besoin d'une f
         l.constante = 0;
         l.init = 1;
  
-        // on regarde si la varianle existe déjà
+        // on regarde si la variable existe déjà
         int addr = adresse(listeArg[j]);
 
         // on l'ajoute si elle n'exsite pas encore
@@ -723,7 +724,7 @@ void enterFct(FILE* fdClair, FILE* fdCode){ //TODO pour recursion besoin d'une f
     for(int i = 0; i < indexListeArg; i++){
         ajouterTmp();
     }
-    afficher();
+    
     // on initie les arguments
     for(int i = 0; i < indexListeArg; i++){
         assignerASM(fdClair, fdCode, listeArg[i]);
@@ -744,7 +745,7 @@ int adresseFct(char* nom){
 }
 
 // Fait le jump à la fonction
-void jumpFct(FILE* fdClair, FILE* fdCode, char* nom){
+void callASM(FILE* fdClair, FILE* fdCode, char* nom){
 
     int addrFct = adresseFct(nom);
 
@@ -755,13 +756,68 @@ void jumpFct(FILE* fdClair, FILE* fdCode, char* nom){
         exit(1);
     }
 
-    fprintf(fdClair, "JMP %d\n", addrFct);
-    fprintf(fdCode, "7 %d\n", addrFct);
+    fprintf(fdClair, "CALL %d\n", addrFct);
+    fprintf(fdCode, "D %d\n", addrFct);
+
+    cntLigne++;
 
 }
 
 // ecrit le jump lié au return, en asm
-void retourFct(FILE* fdClair, FILE* fdCode){
-    fprintf(fdClair, "JMP %d", TAILLE); // TODO pas @taille mais son contenu ... simulé ret ?
-    fprintf(fdCode, "7 %d", TAILLE);
+void retASM(FILE* fdClair, FILE* fdCode){
+    fprintf(fdClair, "RET\n"); // TODO pas @taille mais son contenu ... simulé ret ?
+    fprintf(fdCode, "E\n");
+
+    cntLigne++;
+}
+
+// met le label du main
+void labelMain(FILE* fdClair, FILE* fdCode){
+    char* label = supprimerJump("main", buf);
+    int addr = ftell(fdClair);
+
+    completerLabel(label, 0, addr);
+}
+
+// Saute au main au début de programme
+void jumpToMain(FILE* fdClair, FILE* fdCode){
+    char* label = ajouterJump("main", tableLabel[indexLabel].nom);
+
+    fprintf(fdClair, "JMP ");
+    fprintf(fdCode, "7 ");
+
+    int addr = ftell(fdClair);
+    ajouterLabel(label, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");  // TODO moche à refaire, pareil au dessus
+    fprintf(fdCode, "\t\t\n");
+
+    cntLigne++;
+}
+
+// met le label EOF
+void labelEOF(FILE* fdClair, FILE* fdCode){
+
+    cntLigne += 10;
+
+    char* label = supprimerJump("eof", buf);
+    int addr = ftell(fdClair);
+
+    completerLabel(label, 0, addr);
+}
+
+// Saut EOF
+void jumpToEOF(FILE* fdClair, FILE* fdCode){
+    char* label = ajouterJump("eof", tableLabel[indexLabel].nom);
+
+    fprintf(fdClair, "JMP ");
+    fprintf(fdCode, "7 ");
+
+    int addr = ftell(fdClair);
+    ajouterLabel(label, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");  // TODO moche à refaire, pareil au dessus
+    fprintf(fdCode, "\t\t\n");
+
+    cntLigne++;
 }

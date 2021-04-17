@@ -61,7 +61,9 @@ extern int yydebug;
     tSUP = 267,
     tEQU = 268,
     tPRI = 269,
-    tNB = 270
+    tCALL = 270,
+    tRET = 271,
+    tNB = 272
   };
 #endif
 /* Tokens.  */
@@ -77,7 +79,9 @@ extern int yydebug;
 #define tSUP 267
 #define tEQU 268
 #define tPRI 269
-#define tNB 270
+#define tCALL 270
+#define tRET 271
+#define tNB 272
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -87,7 +91,7 @@ union YYSTYPE
 
     int nb;
 
-#line 91 "y.tab.h"
+#line 95 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -142,14 +142,19 @@ void enterFct(FILE* fdClair, FILE* fdCode);
 int adresseFct(char* nom);
 
 // Fait le jump à la fonction
-void jumpFct(FILE* fdClair, FILE* fdCode, char* nom);
+void callASM(FILE* fdClair, FILE* fdCode, char* nom);
 
 // ecrit le jump lié au return, en asm
-void retourFct(FILE* fdClair, FILE* fdCode);
+void retASM(FILE* fdClair, FILE* fdCode);
 
+// met le label du main
+void labelMain(FILE* fdClair, FILE* fdCode);
 
+// Saute au main au début de programme
+void jumpToMain(FILE* fdClair, FILE* fdCode);
 
+// met le label EOF
+void labelEOF(FILE* fdClair, FILE* fdCode);
 
-// IDEE
-
-void ecritFctASMGestRec();
+// Saut EOF
+void jumpToEOF(FILE* fdClair, FILE* fdCode);

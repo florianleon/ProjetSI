@@ -1,8 +1,13 @@
+int fct3(){
+    int a = 0;
+}
+
 int fct1(int z, int y){
     int krrr;
     krrr = 7778;
     int a, b = 78;
     a = b + z;
+    fct3();
 }
 
 int main(){
@@ -13,14 +18,14 @@ int main(){
 
     if(a==3){
         int dfg;
-        g = a;
+        fct1(3,4);
     }
     else{
         g = 0;
     }
 
     while(a<5){
-        int a = 330;
+        a = 330;
         printf(a);
         while(c > 75){
             int bbbb;
@@ -28,12 +33,12 @@ int main(){
             int h;
             c = c-1;
         }
-        c = 78;
+        
         a = a + 1;
     }
 }
 
-int fct3(int a){
+int fcttt(int a){
     a = 789;
 }
 

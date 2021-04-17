@@ -73,12 +73,14 @@ DecFonction : tINT tVAR tPO DecArguments tPF
               tAO Programme tAF
                     {printf("Fin Fct\n");
                     maxVariableMAJ();
-                    jumpMaxVariable();}
+                    jumpMaxVariable();
+                    retASM(fdClair, fdCode);}
             | tVOID tVAR tPO DecArguments tPF 
                     {ajouterFct(fdClair, fdCode, $2, 0);}
               tAO Programme tAF
                     {maxVariableMAJ();
-                    jumpMaxVariable();}
+                    jumpMaxVariable();
+                    retASM(fdClair, fdCode);}
             ;
 
 DecArguments : tINT tVAR tV DecArguments
@@ -88,11 +90,14 @@ DecArguments : tINT tVAR tV DecArguments
              |
              ;
 
-Main : tINT tMAIN tAO Programme tAF                             /* MAIN */
+Main : tINT tMAIN 
+                {labelMain(fdClair, fdCode);}
+            tAO Programme tAF                             /* MAIN */
             {printf("Fin Main\n");
             afficher();
             maxVariableMAJ();
-            jumpMaxVariable();}
+            jumpMaxVariable();
+            jumpToEOF(fdClair, fdCode);}
      ;
 
 Programme : Programme Declaration tPV                           /* ASSIGNATION */
@@ -122,7 +127,7 @@ Programme : Programme Declaration tPV                           /* ASSIGNATION *
           ;
 
 AppFonction : tVAR tPO AppArguments {printf("ici\n");} tPF
-                  {jumpFct(fdClair, fdCode, $1);}
+                  {callASM(fdClair, fdCode, $1);}
             ;
 
 AppArguments : Expression tV AppArguments
@@ -232,8 +237,11 @@ int main() {
     fdClair = fopen("codeasm.s", "wr");
     fdCode = fopen("code.s", "wr");
 
+    jumpToMain(fdClair, fdCode);
+
     yyparse();
 
+    labelEOF(fdClair, fdCode);
     reecriture(fdClair);
 
     fclose(fdCode); // rajouter une ligne vide à la fin ?
