@@ -1,10 +1,9 @@
-#define TAILLE 256                      // nombre max de variable  // TAILLE_GLOBALE = TAILLE + 1 + 1 + MAX_RECURSION
+#define TAILLE 256                      // nombre max de variable
 #define TAILLE_TABLE_VARIABLE 10        // nombre max de declaration parallèle
 #define MAX_INDENT 10                   // nombre max de "niveau de tabulation" (if dans for dans for dans if ...)
 #define TAILLE_JUMP 100                 // nombre max de jump (while/if/else) dans le programme
 #define TAILLE_BUF 25                   // taille max des buffers de label et digit
 #define NB_ARG 5                        // nombre max d'argument que peut contenir une fonction
-#define MAX_RECURSION 9
 #define MAX_FONCTION 20
 
 typedef struct {  // struct de la table de variable
@@ -158,3 +157,15 @@ void labelEOF(FILE* fdClair, FILE* fdCode);
 
 // Saut EOF
 void jumpToEOF(FILE* fdClair, FILE* fdCode);
+
+// return une valeur dans une tmp
+void returnASM(FILE* fdClair, FILE* fdCode);
+
+// affecte un return à une variable
+void a(FILE* fdClair, FILE* fdCode); // déjà fait ??? //TODO
+
+// incrémente le compteur de return
+void incRet();
+
+// compare le compteur de return
+void compareRet(int ret);

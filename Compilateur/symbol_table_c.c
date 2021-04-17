@@ -5,7 +5,7 @@
 #include "symbol_table_c.h"
 
 
-ligne table[TAILLE + 1 + 1 + MAX_RECURSION]; // var-> <-tmp (TAILLE) @ret indexRecur @retRec->/non utilisé encore
+ligne table[TAILLE]; // var-> <-tmp
 int tmpIndex = TAILLE - 1;
 
 int tableIndex[MAX_INDENT];
@@ -22,10 +22,9 @@ int indexLabel = 0;
 
 int cntLigne = 0;
 
-char buf[TAILLE_BUF]; // bufer des labels
+int cntRet = 0;
 
-int tableAddrFunc[MAX_RECURSION]; //adresses de retour
-int indexAddrFunc = 0;
+char buf[TAILLE_BUF]; // bufer des labels
 
 fonction tableFonction[MAX_FONCTION];
 int indexFonction = 0;
@@ -761,6 +760,19 @@ void callASM(FILE* fdClair, FILE* fdCode, char* nom){
 
     cntLigne++;
 
+    // trouvé index fct TODO
+    int addr = -1;
+    for(int i = 0; i < indexFonction; i++){
+        if( strcmp(tableFonction[i].nom, nom) == 0){
+            addr = i;
+            break;
+        }
+    }
+
+    for(int i = 0; i < tableFonction[addr].nbArg; i++){
+        enleverTmp();
+    }
+
 }
 
 // ecrit le jump lié au return, en asm
@@ -820,4 +832,32 @@ void jumpToEOF(FILE* fdClair, FILE* fdCode){
     fprintf(fdCode, "\t\t\n");
 
     cntLigne++;
+}
+
+// return une valeur dans une tmp
+void returnASM(FILE* fdClair, FILE* fdCode){
+    // valeur en tmp
+    // déjà fait
+
+    // on décrément tmp
+    enleverTmp();
+}
+
+// incrémente le compteur de return
+void incRet(){
+    cntRet++;
+}
+
+// compare le compteur de return
+void compareRet(int ret){
+    if( (ret == 1) && (cntRet == 0) ){
+        printf("ERROR : Missing return\n");
+        exit(1);
+    }
+    else if( (ret == 0) && (cntRet != 0) ){
+        printf("ERROR : No return \"declared\" for this function\n");
+        exit(1);
+    }
+
+    cntRet = 0;
 }

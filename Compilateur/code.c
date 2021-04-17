@@ -1,4 +1,4 @@
-int fct3(){
+void fct3(){
     int a = 0;
 }
 
@@ -8,6 +8,8 @@ int fct1(int z, int y){
     int a, b = 78;
     a = b + z;
     fct3();
+
+    return krrr;
 }
 
 int main(){
@@ -18,7 +20,8 @@ int main(){
 
     if(a==3){
         int dfg;
-        fct1(3,4);
+        int b = fct1(3,4);
+        printf(b);
     }
     else{
         g = 0;
@@ -32,13 +35,15 @@ int main(){
             bbbb = 888;
             int h;
             c = c-1;
+            int b = fct1(3,4);
+            printf(b);
         }
         
         a = a + 1;
     }
 }
 
-int fcttt(int a){
+void fcttt(int a){
     a = 789;
 }
 
