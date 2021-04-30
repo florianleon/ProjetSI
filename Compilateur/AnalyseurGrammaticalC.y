@@ -179,6 +179,19 @@ Declaration : tCONST tINT Variable tEQ Expression               /* CONST INT = *
                 {printf("declaration \n");
                 ajouter(0, 0, fdClair, fdCode, 0);
                 afficher();}
+            | tINT tMUL Variable tEQ Expression                      /* INT * = */
+                {printf("declaration assignation\n");
+                ajouter(2, 1, fdClair, fdCode, $5);
+                afficher();}
+            | tINT tMUL Variable tEQ AppFonction                      /* INT * = FCT */
+                {printf("declaration assignation by fct\n");
+                ajouterTmp();
+                ajouter(2, 1, fdClair, fdCode, derniereTmp());
+                afficher();}
+            | tINT tMUL Variable                                     /* INT * */
+                {printf("declaration \n");
+                ajouter(2, 0, fdClair, fdCode, 0);
+                afficher();}
             ;
 
 Variable : tVAR tV Variable
@@ -212,6 +225,14 @@ Expression : Expression tADD Expression                         /* ADD */
            | tVAR                                               /* VAR */
                 {printf("Variable !\n");
                 varASM(fdClair, fdCode, $1);
+                $$ = derniereTmp();}
+           | tMUL tVAR                                               /* * VAR */
+                {printf("Variable !\n");
+                valPointer(fdClair, fdCode, $2);
+                $$ = derniereTmp();}
+           | tESP tVAR                                               /* & VAR */
+                {printf("Variable !\n");
+                addrValeur(fdClair, fdCode, $2);
                 $$ = derniereTmp();}
            ;
 

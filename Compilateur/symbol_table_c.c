@@ -63,21 +63,22 @@ void ajouter(int c, int i, FILE* fdClair, FILE* fdCode, int valAddr){
         l.variable = tableVariable[j];
         l.constante = c;
         l.init = i;
-        // on regarde si la varianle existe déjà
+        // on regarde si la variable existe déjà
         int addr = adresse(tableVariable[j]);
         
-        // on l'ajoute si elle n'exsite pas encore
+        // on l'ajoute si elle n'existe pas encore
         if( (tableIndex[indexIndex] < tmpIndex) && ( ( (indexIndex == 0) && (addr < variableMaxAtteinte) ) || ( (indexIndex != 0) && (addr < tableIndex[indexIndex - 1]) ) ) ){
             table[tableIndex[indexIndex]] = l;
-            if (i == 1) {
+            if ( i == 1 ) {
                 fprintf(fdClair, "COP %d %d\n", tableIndex[indexIndex], valAddr);
                 fprintf(fdCode, "5 %d %d\n", tableIndex[indexIndex], valAddr);
 
                 cntLigne++;
             }
+
             tableIndex[indexIndex] = tableIndex[indexIndex] + 1;
         }
-        // on change sa déclaration sinon (ou on arrête tout ?)
+        // on arrête tout sinon
         else if( (tableIndex[indexIndex] < tmpIndex) && ( ( (indexIndex == 0) && (addr >= variableMaxAtteinte) ) || ( (indexIndex !=0) && (addr >= tableIndex[indexIndex - 1]) && (addr >= variableMaxAtteinte) ) ) ){
             table[addr] = l;
             printf("ERROR : Variable already declared : %s\n", l.variable);
@@ -262,7 +263,7 @@ void ecrireOperationASM(FILE* fdClair, FILE* fdCode, int op, int tmp1, int tmp2)
     cntLigne++;
 }
 
-// Assignation une variable temporaire à un nombre en asm
+// Assignation une variable temporaire à une variable, en asm
 void assignerASM(FILE* fdClair, FILE* fdCode, char* v){
     // on regarde si la variable existe déjà
     int addr = adresse(v);
@@ -860,4 +861,43 @@ void compareRet(int ret){
     }
 
     cntRet = 0;
+}
+
+
+// POINTEUR
+
+// stocke en tmp la valeur pointé par un pointeur (*p) et écrit l'ASM
+void valPointer(FILE* fdClair, FILE* fdCode, char * val){
+    int addr = adresse(val);
+
+    if(addr == -1){
+        printf("ERROR : Usage before declaration : %s\n", val);
+        exit(1);
+    }
+    if( table[addr].init != 1 ){ //TODO à modifier pour que,la sécu soit plus tard ?
+        printf("ERROR : Usage before assignation : %s\n", val);
+        exit(1);
+    }
+
+    fprintf(fdClair, "MOV %d %d\n", tmpIndex, addr);
+    fprintf(fdCode, "F %d %d\n", tmpIndex, addr);
+
+    ajouterTmp();
+    cntLigne++;
+}
+
+// stocke en tmp l'adresse d'une valeur (&val) et écrit l'ASM
+void addrValeur(FILE* fdClair, FILE* fdCode, char * val){
+    int addr = adresse(val);
+
+    if(addr == -1){
+        printf("ERROR : Usage before declaration : %s\n", val);
+        exit(1);
+    }
+    if( table[addr].init != 1 ){
+        printf("ERROR : Usage before assignation : %s\n", val);
+        exit(1);
+    }
+
+    nbASM(fdClair, fdCode, addr);
 }

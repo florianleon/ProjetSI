@@ -63,7 +63,8 @@ extern int yydebug;
     tPRI = 269,
     tCALL = 270,
     tRET = 271,
-    tNB = 272
+    tMOV = 272,
+    tNB = 273
   };
 #endif
 /* Tokens.  */
@@ -81,7 +82,8 @@ extern int yydebug;
 #define tPRI 269
 #define tCALL 270
 #define tRET 271
-#define tNB 272
+#define tMOV 272
+#define tNB 273
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -91,7 +93,7 @@ union YYSTYPE
 
     int nb;
 
-#line 95 "y.tab.h"
+#line 97 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

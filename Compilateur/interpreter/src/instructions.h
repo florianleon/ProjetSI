@@ -17,6 +17,7 @@
 #define PRI 12
 #define CALL 13
 #define RET 14
+#define MOV 15
 
 #define MAX_INSTRUCTIONS_SIZE 256
 #define MAX_MEMORY_SIZE 256

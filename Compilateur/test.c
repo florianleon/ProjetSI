@@ -21,6 +21,7 @@ int main(){
     if(a==3){
         int dfg;
         int b = fct1(3,4);
+        printf(b);
     }
     else{
         g = 0;
@@ -34,6 +35,8 @@ int main(){
             bbbb = 888;
             int h;
             c = c-1;
+            int b = fct1(3,4);
+            printf(b);
         }
         
         a = a + 1;

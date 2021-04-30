@@ -20,6 +20,7 @@ EQU {return tEQU;}
 PRI {return tPRI;}
 CALL {return tCALL;}
 RET {return tRET;}
+MOV {return tMOV;}
 
 -?[0-9]+  {
         yylval.nb = atoi(yytext);

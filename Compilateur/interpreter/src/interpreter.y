@@ -12,7 +12,7 @@
     int nb;
 }
 
-%token tADD tMUL tSOU tDIV tCOP tAFC tJMP tJMF tINF tSUP tEQU tPRI tCALL tRET
+%token tADD tMUL tSOU tDIV tCOP tAFC tJMP tJMF tINF tSUP tEQU tPRI tCALL tRET tMOV
 
 %token <nb> tNB
 
@@ -57,6 +57,8 @@ Instruction:
         {asm_add_1(CALL, $2);}
     | tRET
         {asm_add_0(RET);}
+    | tMOV tNB tNB
+        {asm_add_2(MOV, $2, $3);}
     ;
 
 

@@ -106,25 +106,32 @@ int exec(int ip) {
     switch (ins) {
     case ADD:
         printf("ADD @%d = @%d[%d] + @%d[%d]\n", arg1, arg2, memory[arg2], arg3, memory[arg3]);
-        memory[arg1] = memory[arg2] + memory[arg3]; break;
+        memory[arg1] = memory[arg2] + memory[arg3];
+        break;
     case MUL:
         printf("MUL @%d = @%d[%d] * @%d[%d]\n", arg1, arg2, memory[arg2], arg3, memory[arg3]);
-        memory[arg1] = memory[arg2] * memory[arg3]; break;
+        memory[arg1] = memory[arg2] * memory[arg3];
+        break;
     case SOU:
         printf("SOU @%d = @%d[%d] - @%d[%d]\n", arg1, arg2, memory[arg2], arg3, memory[arg3]);
-        memory[arg1] = memory[arg2] - memory[arg3]; break;
+        memory[arg1] = memory[arg2] - memory[arg3];
+        break;
     case DIV:
         printf("DIV @%d = @%d[%d] / @%d[%d]\n", arg1, arg2, memory[arg2], arg3, memory[arg3]);
-        memory[arg1] = memory[arg2] / memory[arg3]; break;
+        memory[arg1] = memory[arg2] / memory[arg3];
+        break;
     case COP:
         printf("COP @%d = @%d[%d]\n", arg1, arg2, memory[arg2]);
-        memory[arg1] = memory[arg2]; break;
+        memory[arg1] = memory[arg2];
+        break;
     case AFC:
         printf("AFC @%d = %d\n", arg1, arg2);
-        memory[arg1] = arg2; break;
+        memory[arg1] = arg2;
+        break;
     case JMP:
         printf("JMP to %d\n", arg1);
-        next_ip = arg1; break;
+        next_ip = arg1;
+        break;
     case JMF:
         printf("JMF cond@%d[%d] to %d\n", arg1, memory[arg1], arg2);
         if (memory[arg1] == 0) next_ip = arg2;
@@ -153,6 +160,10 @@ int exec(int ip) {
         printf("RET @%d[%d]\n", arg1, memory[arg1]);
         loadRet();
         next_ip = memory[MAX_MEMORY_SIZE];
+        break;
+    case MOV:
+        printf("MOV @%d = @@%d[@%d[%d]]\n", arg1, arg2, memory[arg2], memory[memory[arg2]]);
+        memory[arg1] = memory[memory[arg2]];
         break;
     default:
         fprintf(stderr, "ERROR run : unknown inst.\n");

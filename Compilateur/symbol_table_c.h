@@ -162,10 +162,23 @@ void jumpToEOF(FILE* fdClair, FILE* fdCode);
 void returnASM(FILE* fdClair, FILE* fdCode);
 
 // affecte un return à une variable
-void a(FILE* fdClair, FILE* fdCode); // déjà fait ??? //TODO
+//void a(FILE* fdClair, FILE* fdCode); // déjà fait ??? //TODO
 
 // incrémente le compteur de return
 void incRet();
 
 // compare le compteur de return
 void compareRet(int ret);
+
+
+//TODO : return main et verif associé
+
+// POINTEUR
+
+// stocke en tmp la valeur pointé par un pointeur (*p) et écrit l'ASM, suivit par assignerASM()
+void valPointer(FILE* fdClair, FILE* fdCode, char * val);
+
+// stocke en tmp l'adresse d'une valeur (&val) et écrit l'ASM, suivit par assignerASM()
+void addrValeur(FILE* fdClair, FILE* fdCode, char * val);
+
+//TODO : faire un type propre
