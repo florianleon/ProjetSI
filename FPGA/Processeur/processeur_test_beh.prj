@@ -1,0 +1,2 @@
+vhdl work "processeur.vhd"
+vhdl work "processeur_test.vhd"

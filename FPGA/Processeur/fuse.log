@@ -1,0 +1,36 @@
+Running: /usr/local/insa/Xilinx.ISE/13.4/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur_test_isim_beh.exe" -prj "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur_test_beh.prj" "work.processeur_test" 
+ISim O.87xd (signature 0x8ddf5b5d)
+Number of CPUs detected in this system: 12
+Turning on mult-threading, number of parallel sub-compilation jobs: 24 
+Determining compilation order of HDL files
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" into library work
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur_test.vhd" into library work
+Starting static elaboration
+WARNING:HDLCompiler:89 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 132: <bmi_module> remains a black-box since it has no binding entity.
+WARNING:HDLCompiler:89 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 139: <pipeline> remains a black-box since it has no binding entity.
+WARNING:HDLCompiler:89 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 151: <pipeline> remains a black-box since it has no binding entity.
+WARNING:HDLCompiler:89 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 163: <pipeline> remains a black-box since it has no binding entity.
+WARNING:HDLCompiler:89 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 175: <pipeline> remains a black-box since it has no binding entity.
+WARNING:HDLCompiler:89 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 188: <br_module> remains a black-box since it has no binding entity.
+Completed static elaboration
+Fuse Memory Usage: 96928 KB
+Fuse CPU Usage: 790 ms
+WARNING:Simulator:648 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 132. Instance bmi_module is unbound
+WARNING:Simulator:648 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 139. Instance pipeline is unbound
+WARNING:Simulator:648 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 151. Instance pipeline is unbound
+WARNING:Simulator:648 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 163. Instance pipeline is unbound
+WARNING:Simulator:648 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 175. Instance pipeline is unbound
+WARNING:Simulator:648 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 188. Instance br_module is unbound
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling architecture behavioral of entity processeur [processeur_default]
+Compiling architecture behavior of entity processeur_test
+Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 7 VHDL Units
+Built simulation executable /home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur_test_isim_beh.exe
+Fuse Memory Usage: 1717792 KB
+Fuse CPU Usage: 970 ms
+GCC CPU Usage: 120 ms

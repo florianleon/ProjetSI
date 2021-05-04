@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    14:21:19 04/16/2021 
+-- Create Date:    10:37:10 05/04/2021 
 -- Design Name: 
--- Module Name:    BMI_module - Behavioral 
+-- Module Name:    pipeline - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -19,8 +19,6 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -31,20 +29,29 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity BMI_module is
-    Port ( addr : in  STD_LOGIC_VECTOR (7 downto 0);
-           CLK : in  STD_LOGIC;
-           Output : out  STD_LOGIC_VECTOR (31 downto 0));
-end BMI_module;
+entity pipeline is
+    Port ( CLK : in  STD_LOGIC;
+			  inA : in  STD_LOGIC_VECTOR (7 downto 0);
+           inB : in  STD_LOGIC_VECTOR (7 downto 0);
+           inOP : in  STD_LOGIC_VECTOR (7 downto 0);
+           inC : in  STD_LOGIC_VECTOR (7 downto 0);
+           outA : out  STD_LOGIC_VECTOR (7 downto 0);
+           outB : out  STD_LOGIC_VECTOR (7 downto 0);
+           outOP : out  STD_LOGIC_VECTOR (7 downto 0);
+           outC : out  STD_LOGIC_VECTOR (7 downto 0));
+end pipeline;
 
-architecture Behavioral of BMI_module is
-	type bmi_reg is array(0 to 255) of STD_LOGIC_VECTOR (31 downto 0);
-	constant BMI : bmi_reg := ( X"06000200", X"06010500", X"06020100", X"06080800", X"05030000", X"05040100", others=> X"00000000");
+architecture Behavioral of pipeline is
+
 begin
-	process
-	begin 
-		WAIT until CLK'event and CLK = '1';
-		Output <= BMI(conv_integer(addr));
+	process 
+	
+	begin
+		wait until CLK'event and CLK ='1';
+		outA <= inA;
+		outB <= inB;
+		outOP <= inOP;
+		outC <= inC;
 	end process;
 
 end Behavioral;
