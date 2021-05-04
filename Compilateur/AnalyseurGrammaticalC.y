@@ -60,7 +60,6 @@ FILE *fdClair;
 
 %type<nombre> Expression Condition
 
-
 %%
 
 S : S DecFonction 
@@ -72,13 +71,17 @@ DecFonction : tINT tVAR tPO DecArguments tPF
                     {ajouterFct(fdClair, fdCode, $2, 1);}
               tAO Programme tAF
                     {printf("Fin Fct\n");
+                    compareRet(1);
                     maxVariableMAJ();
-                    jumpMaxVariable();}
+                    jumpMaxVariable();
+                    retASM(fdClair, fdCode);}
             | tVOID tVAR tPO DecArguments tPF 
                     {ajouterFct(fdClair, fdCode, $2, 0);}
               tAO Programme tAF
-                    {maxVariableMAJ();
-                    jumpMaxVariable();}
+                    {compareRet(0);
+                    maxVariableMAJ();
+                    jumpMaxVariable();
+                    retASM(fdClair, fdCode);}
             ;
 
 DecArguments : tINT tVAR tV DecArguments
@@ -88,11 +91,14 @@ DecArguments : tINT tVAR tV DecArguments
              |
              ;
 
-Main : tINT tMAIN tAO Programme tAF                             /* MAIN */
+Main : tINT tMAIN 
+                {labelMain(fdClair, fdCode);}
+            tAO Programme tAF                             /* MAIN */
             {printf("Fin Main\n");
             afficher();
             maxVariableMAJ();
-            jumpMaxVariable();}
+            jumpMaxVariable();
+            jumpToEOF(fdClair, fdCode);}
      ;
 
 Programme : Programme Declaration tPV                           /* ASSIGNATION */
@@ -117,12 +123,15 @@ Programme : Programme Declaration tPV                           /* ASSIGNATION *
                 fwhileASM(fdClair, fdCode, $5);
                 printf("WHILE\n");}
           | Programme AppFonction tPV                           /* APPELLE FONCTION */
-          | tRET Variable tPV                                   /* RETURN */
+          | Programme tRET Expression tPV                       /* RETURN */
+                {incRet();
+                returnASM(fdClair, fdCode);
+                retASM(fdClair, fdCode);}
           |
           ;
 
-AppFonction : tVAR tPO AppArguments {printf("ici\n");} tPF
-                  {jumpFct(fdClair, fdCode, $1);}
+AppFonction : tVAR tPO AppArguments tPF
+                  {callASM(fdClair, fdCode, $1);}
             ;
 
 AppArguments : Expression tV AppArguments
@@ -148,6 +157,11 @@ Declaration : tCONST tINT Variable tEQ Expression               /* CONST INT = *
                 {printf("declaration assignation constante\n");
                 ajouter(1, 1, fdClair, fdCode, $5);
                 }
+            | tCONST tINT Variable tEQ AppFonction               /* CONST INT = FCT */
+                {printf("declaration assignation constante by fct\n");
+                ajouterTmp();
+                ajouter(1, 1, fdClair, fdCode, derniereTmp());
+                }
             | tCONST tINT Variable                              /* CONT INT */
                 {printf("declaration constante\n");
                 ajouter(1, 0, fdClair, fdCode, 0);
@@ -156,9 +170,27 @@ Declaration : tCONST tINT Variable tEQ Expression               /* CONST INT = *
                 {printf("declaration assignation\n");
                 ajouter(0, 1, fdClair, fdCode, $4);
                 afficher();}
+            | tINT Variable tEQ AppFonction                      /* INT = FCT */
+                {printf("declaration assignation by fct\n");
+                ajouterTmp();
+                ajouter(0, 1, fdClair, fdCode, derniereTmp());
+                afficher();}
             | tINT Variable                                     /* INT */
                 {printf("declaration \n");
                 ajouter(0, 0, fdClair, fdCode, 0);
+                afficher();}
+            | tINT tMUL Variable tEQ Expression                      /* INT * = */
+                {printf("declaration assignation\n");
+                ajouter(2, 1, fdClair, fdCode, $5);
+                afficher();}
+            | tINT tMUL Variable tEQ AppFonction                      /* INT * = FCT */
+                {printf("declaration assignation by fct\n");
+                ajouterTmp();
+                ajouter(2, 1, fdClair, fdCode, derniereTmp());
+                afficher();}
+            | tINT tMUL Variable                                     /* INT * */
+                {printf("declaration \n");
+                ajouter(2, 0, fdClair, fdCode, 0);
                 afficher();}
             ;
 
@@ -194,6 +226,14 @@ Expression : Expression tADD Expression                         /* ADD */
                 {printf("Variable !\n");
                 varASM(fdClair, fdCode, $1);
                 $$ = derniereTmp();}
+           | tMUL tVAR                                               /* * VAR */
+                {printf("Variable !\n");
+                valPointer(fdClair, fdCode, $2);
+                $$ = derniereTmp();}
+           | tESP tVAR                                               /* & VAR */
+                {printf("Variable !\n");
+                addrValeur(fdClair, fdCode, $2);
+                $$ = derniereTmp();}
            ;
 
 Assignation : tVAR tEQ Expression                               /* VAR = EXPR */
@@ -203,6 +243,7 @@ Assignation : tVAR tEQ Expression                               /* VAR = EXPR */
             | tVAR tEQ AppFonction                              /* VAR = FCT */
                 {printf("assignation by fct\n");
                 setInit($1);
+                ajouterTmp();
                 assignerASM(fdClair, fdCode, $1);}
             ;
 
@@ -232,8 +273,11 @@ int main() {
     fdClair = fopen("codeasm.s", "wr");
     fdCode = fopen("code.s", "wr");
 
+    jumpToMain(fdClair, fdCode);
+
     yyparse();
 
+    labelEOF(fdClair, fdCode);
     reecriture(fdClair);
 
     fclose(fdCode); // rajouter une ligne vide à la fin ?

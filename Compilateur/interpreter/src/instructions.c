@@ -12,7 +12,10 @@ struct instruction instructions[MAX_INSTRUCTIONS_SIZE];
 int current_line;
 int has_error;
 
-int memory[MAX_MEMORY_SIZE];
+int memory[MAX_MEMORY_SIZE + 1];
+
+int retour[MAX_FALSE_RECURSION];
+int indexRetour = 0;
 
 int exec(int ip);
 int valid_memory_addr(int address);
@@ -65,6 +68,10 @@ void asm_add_1(char ins, int arg1) {
     asm_add_3(ins, arg1, 0, 0);
 }
 
+void asm_add_0(char ins) {
+    asm_add_3(ins, 0, 0, 0);
+}
+
 void asm_run() {
     int ip = 0;
     if (has_error) {
@@ -99,25 +106,32 @@ int exec(int ip) {
     switch (ins) {
     case ADD:
         printf("ADD @%d = @%d[%d] + @%d[%d]\n", arg1, arg2, memory[arg2], arg3, memory[arg3]);
-        memory[arg1] = memory[arg2] + memory[arg3]; break;
+        memory[arg1] = memory[arg2] + memory[arg3];
+        break;
     case MUL:
         printf("MUL @%d = @%d[%d] * @%d[%d]\n", arg1, arg2, memory[arg2], arg3, memory[arg3]);
-        memory[arg1] = memory[arg2] * memory[arg3]; break;
+        memory[arg1] = memory[arg2] * memory[arg3];
+        break;
     case SOU:
         printf("SOU @%d = @%d[%d] - @%d[%d]\n", arg1, arg2, memory[arg2], arg3, memory[arg3]);
-        memory[arg1] = memory[arg2] - memory[arg3]; break;
+        memory[arg1] = memory[arg2] - memory[arg3];
+        break;
     case DIV:
         printf("DIV @%d = @%d[%d] / @%d[%d]\n", arg1, arg2, memory[arg2], arg3, memory[arg3]);
-        memory[arg1] = memory[arg2] / memory[arg3]; break;
+        memory[arg1] = memory[arg2] / memory[arg3];
+        break;
     case COP:
         printf("COP @%d = @%d[%d]\n", arg1, arg2, memory[arg2]);
-        memory[arg1] = memory[arg2]; break;
+        memory[arg1] = memory[arg2];
+        break;
     case AFC:
         printf("AFC @%d = %d\n", arg1, arg2);
-        memory[arg1] = arg2; break;
+        memory[arg1] = arg2;
+        break;
     case JMP:
         printf("JMP to %d\n", arg1);
-        next_ip = arg1; break;
+        next_ip = arg1;
+        break;
     case JMF:
         printf("JMF cond@%d[%d] to %d\n", arg1, memory[arg1], arg2);
         if (memory[arg1] == 0) next_ip = arg2;
@@ -137,9 +151,48 @@ int exec(int ip) {
     case PRI:
         printf("PRI @%d[%d]\n", arg1, memory[arg1]);
         break;
+    case CALL:
+        printf("CALL @%d[%d]\n", arg1, memory[arg1]);
+        storeRet(next_ip);
+        next_ip = arg1;
+        break;
+    case RET:
+        printf("RET @%d[%d]\n", arg1, memory[arg1]);
+        loadRet();
+        next_ip = memory[MAX_MEMORY_SIZE];
+        break;
+    case MOV:
+        printf("MOV @%d = @@%d[@%d[%d]]\n", arg1, arg2, memory[arg2], memory[memory[arg2]]);
+        memory[arg1] = memory[memory[arg2]];
+        break;
     default:
         fprintf(stderr, "ERROR run : unknown inst.\n");
     }
 
     return next_ip;
+}
+
+// stock l'adresse de retour
+void storeRet(int addr){
+    if( indexRetour + 1 >= MAX_FALSE_RECURSION ){
+        printf("ERROR : Maximum false recursion reached\n");
+        exit(1);
+    }
+
+    retour[indexRetour] = addr;
+    indexRetour++;
+
+}
+
+// renvoie l'adresse de retour la plus récente
+void loadRet(){
+    if( indexRetour <= 0 ){
+        printf("ERROR : No function to return to\n");
+        exit(1);
+    }
+
+    indexRetour--;
+
+    memory[MAX_MEMORY_SIZE] = retour[indexRetour];
+
 }

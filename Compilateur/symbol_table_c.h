@@ -1,10 +1,9 @@
-#define TAILLE 256                      // nombre max de variable  // TAILLE_GLOBALE = TAILLE + 1 + 1 + MAX_RECURSION
+#define TAILLE 256                      // nombre max de variable
 #define TAILLE_TABLE_VARIABLE 10        // nombre max de declaration parallèle
 #define MAX_INDENT 10                   // nombre max de "niveau de tabulation" (if dans for dans for dans if ...)
 #define TAILLE_JUMP 100                 // nombre max de jump (while/if/else) dans le programme
 #define TAILLE_BUF 25                   // taille max des buffers de label et digit
 #define NB_ARG 5                        // nombre max d'argument que peut contenir une fonction
-#define MAX_RECURSION 9
 #define MAX_FONCTION 20
 
 typedef struct {  // struct de la table de variable
@@ -142,14 +141,44 @@ void enterFct(FILE* fdClair, FILE* fdCode);
 int adresseFct(char* nom);
 
 // Fait le jump à la fonction
-void jumpFct(FILE* fdClair, FILE* fdCode, char* nom);
+void callASM(FILE* fdClair, FILE* fdCode, char* nom);
 
 // ecrit le jump lié au return, en asm
-void retourFct(FILE* fdClair, FILE* fdCode);
+void retASM(FILE* fdClair, FILE* fdCode);
+
+// met le label du main
+void labelMain(FILE* fdClair, FILE* fdCode);
+
+// Saute au main au début de programme
+void jumpToMain(FILE* fdClair, FILE* fdCode);
+
+// met le label EOF
+void labelEOF(FILE* fdClair, FILE* fdCode);
+
+// Saut EOF
+void jumpToEOF(FILE* fdClair, FILE* fdCode);
+
+// return une valeur dans une tmp
+void returnASM(FILE* fdClair, FILE* fdCode);
+
+// affecte un return à une variable
+//void a(FILE* fdClair, FILE* fdCode); // déjà fait ??? //TODO
+
+// incrémente le compteur de return
+void incRet();
+
+// compare le compteur de return
+void compareRet(int ret);
 
 
+//TODO : return main et verif associé
 
+// POINTEUR
 
-// IDEE
+// stocke en tmp la valeur pointé par un pointeur (*p) et écrit l'ASM, suivit par assignerASM()
+void valPointer(FILE* fdClair, FILE* fdCode, char * val);
 
-void ecritFctASMGestRec();
+// stocke en tmp l'adresse d'une valeur (&val) et écrit l'ASM, suivit par assignerASM()
+void addrValeur(FILE* fdClair, FILE* fdCode, char * val);
+
+//TODO : faire un type propre

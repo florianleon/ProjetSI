@@ -5,7 +5,7 @@
 #include "symbol_table_c.h"
 
 
-ligne table[TAILLE + 1 + 1 + MAX_RECURSION]; // var-> <-tmp (TAILLE) @ret indexRecur @retRec->/non utilisé encore
+ligne table[TAILLE]; // var-> <-tmp
 int tmpIndex = TAILLE - 1;
 
 int tableIndex[MAX_INDENT];
@@ -22,10 +22,9 @@ int indexLabel = 0;
 
 int cntLigne = 0;
 
-char buf[TAILLE_BUF]; // bufer des labels
+int cntRet = 0;
 
-int tableAddrFunc[MAX_RECURSION]; //adresses de retour
-int indexAddrFunc = 0;
+char buf[TAILLE_BUF]; // bufer des labels
 
 fonction tableFonction[MAX_FONCTION];
 int indexFonction = 0;
@@ -64,21 +63,22 @@ void ajouter(int c, int i, FILE* fdClair, FILE* fdCode, int valAddr){
         l.variable = tableVariable[j];
         l.constante = c;
         l.init = i;
-        // on regarde si la varianle existe déjà
+        // on regarde si la variable existe déjà
         int addr = adresse(tableVariable[j]);
         
-        // on l'ajoute si elle n'exsite pas encore
+        // on l'ajoute si elle n'existe pas encore
         if( (tableIndex[indexIndex] < tmpIndex) && ( ( (indexIndex == 0) && (addr < variableMaxAtteinte) ) || ( (indexIndex != 0) && (addr < tableIndex[indexIndex - 1]) ) ) ){
             table[tableIndex[indexIndex]] = l;
-            if (i == 1) {
+            if ( i == 1 ) {
                 fprintf(fdClair, "COP %d %d\n", tableIndex[indexIndex], valAddr);
                 fprintf(fdCode, "5 %d %d\n", tableIndex[indexIndex], valAddr);
 
                 cntLigne++;
             }
+
             tableIndex[indexIndex] = tableIndex[indexIndex] + 1;
         }
-        // on change sa déclaration sinon (ou on arrête tout ?)
+        // on arrête tout sinon
         else if( (tableIndex[indexIndex] < tmpIndex) && ( ( (indexIndex == 0) && (addr >= variableMaxAtteinte) ) || ( (indexIndex !=0) && (addr >= tableIndex[indexIndex - 1]) && (addr >= variableMaxAtteinte) ) ) ){
             table[addr] = l;
             printf("ERROR : Variable already declared : %s\n", l.variable);
@@ -263,7 +263,7 @@ void ecrireOperationASM(FILE* fdClair, FILE* fdCode, int op, int tmp1, int tmp2)
     cntLigne++;
 }
 
-// Assignation une variable temporaire à un nombre en asm
+// Assignation une variable temporaire à une variable, en asm
 void assignerASM(FILE* fdClair, FILE* fdCode, char* v){
     // on regarde si la variable existe déjà
     int addr = adresse(v);
@@ -594,6 +594,7 @@ void ajouterLabel(char* nom, int droite, int addr){
 }
 
 void completerLabel(char* nom, int droite, int addr){
+    
     for(int i = 0; i < indexLabel; i++){
         if( strcmp(tableLabel[i].nom, nom) == 0 ){
             if(droite == 1){
@@ -602,7 +603,6 @@ void completerLabel(char* nom, int droite, int addr){
             else{
                 tableLabel[i].addrG = cntLigne;
             }
-
             break;
         }
     }
@@ -617,6 +617,7 @@ void reecriture(FILE* fd){
 
         fseek(fd, tableLabel[i].addrD, SEEK_SET);
         fwrite(str , sizeof(char), strlen(str), fd);
+
     }
 
 }
@@ -696,7 +697,7 @@ void enterFct(FILE* fdClair, FILE* fdCode){ //TODO pour recursion besoin d'une f
         l.constante = 0;
         l.init = 1;
  
-        // on regarde si la varianle existe déjà
+        // on regarde si la variable existe déjà
         int addr = adresse(listeArg[j]);
 
         // on l'ajoute si elle n'exsite pas encore
@@ -723,7 +724,7 @@ void enterFct(FILE* fdClair, FILE* fdCode){ //TODO pour recursion besoin d'une f
     for(int i = 0; i < indexListeArg; i++){
         ajouterTmp();
     }
-    afficher();
+    
     // on initie les arguments
     for(int i = 0; i < indexListeArg; i++){
         assignerASM(fdClair, fdCode, listeArg[i]);
@@ -744,7 +745,7 @@ int adresseFct(char* nom){
 }
 
 // Fait le jump à la fonction
-void jumpFct(FILE* fdClair, FILE* fdCode, char* nom){
+void callASM(FILE* fdClair, FILE* fdCode, char* nom){
 
     int addrFct = adresseFct(nom);
 
@@ -755,13 +756,148 @@ void jumpFct(FILE* fdClair, FILE* fdCode, char* nom){
         exit(1);
     }
 
-    fprintf(fdClair, "JMP %d\n", addrFct);
-    fprintf(fdCode, "7 %d\n", addrFct);
+    fprintf(fdClair, "CALL %d\n", addrFct);
+    fprintf(fdCode, "D %d\n", addrFct);
+
+    cntLigne++;
+
+    // trouvé index fct TODO
+    int addr = -1;
+    for(int i = 0; i < indexFonction; i++){
+        if( strcmp(tableFonction[i].nom, nom) == 0){
+            addr = i;
+            break;
+        }
+    }
+
+    for(int i = 0; i < tableFonction[addr].nbArg; i++){
+        enleverTmp();
+    }
 
 }
 
 // ecrit le jump lié au return, en asm
-void retourFct(FILE* fdClair, FILE* fdCode){
-    fprintf(fdClair, "JMP %d", TAILLE); // TODO pas @taille mais son contenu ... simulé ret ?
-    fprintf(fdCode, "7 %d", TAILLE);
+void retASM(FILE* fdClair, FILE* fdCode){
+    fprintf(fdClair, "RET\n"); // TODO pas @taille mais son contenu ... simulé ret ?
+    fprintf(fdCode, "E\n");
+
+    cntLigne++;
+}
+
+// met le label du main
+void labelMain(FILE* fdClair, FILE* fdCode){
+    char* label = supprimerJump("main", buf);
+    int addr = ftell(fdClair);
+
+    completerLabel(label, 0, addr);
+}
+
+// Saute au main au début de programme
+void jumpToMain(FILE* fdClair, FILE* fdCode){
+    char* label = ajouterJump("main", tableLabel[indexLabel].nom);
+
+    fprintf(fdClair, "JMP ");
+    fprintf(fdCode, "7 ");
+
+    int addr = ftell(fdClair);
+    ajouterLabel(label, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");  // TODO moche à refaire, pareil au dessus
+    fprintf(fdCode, "\t\t\n");
+
+    cntLigne++;
+}
+
+// met le label EOF
+void labelEOF(FILE* fdClair, FILE* fdCode){
+
+    cntLigne += 10;
+
+    char* label = supprimerJump("eof", buf);
+    int addr = ftell(fdClair);
+
+    completerLabel(label, 0, addr);
+}
+
+// Saut EOF
+void jumpToEOF(FILE* fdClair, FILE* fdCode){
+    char* label = ajouterJump("eof", tableLabel[indexLabel].nom);
+
+    fprintf(fdClair, "JMP ");
+    fprintf(fdCode, "7 ");
+
+    int addr = ftell(fdClair);
+    ajouterLabel(label, 1, addr);
+
+    fprintf(fdClair, "\t\t\n");  // TODO moche à refaire, pareil au dessus
+    fprintf(fdCode, "\t\t\n");
+
+    cntLigne++;
+}
+
+// return une valeur dans une tmp
+void returnASM(FILE* fdClair, FILE* fdCode){
+    // valeur en tmp
+    // déjà fait
+
+    // on décrément tmp
+    enleverTmp();
+}
+
+// incrémente le compteur de return
+void incRet(){
+    cntRet++;
+}
+
+// compare le compteur de return
+void compareRet(int ret){
+    if( (ret == 1) && (cntRet == 0) ){
+        printf("ERROR : Missing return\n");
+        exit(1);
+    }
+    else if( (ret == 0) && (cntRet != 0) ){
+        printf("ERROR : No return \"declared\" for this function\n");
+        exit(1);
+    }
+
+    cntRet = 0;
+}
+
+
+// POINTEUR
+
+// stocke en tmp la valeur pointé par un pointeur (*p) et écrit l'ASM
+void valPointer(FILE* fdClair, FILE* fdCode, char * val){
+    int addr = adresse(val);
+
+    if(addr == -1){
+        printf("ERROR : Usage before declaration : %s\n", val);
+        exit(1);
+    }
+    if( table[addr].init != 1 ){ //TODO à modifier pour que,la sécu soit plus tard ?
+        printf("ERROR : Usage before assignation : %s\n", val);
+        exit(1);
+    }
+
+    fprintf(fdClair, "MOV %d %d\n", tmpIndex, addr);
+    fprintf(fdCode, "F %d %d\n", tmpIndex, addr);
+
+    ajouterTmp();
+    cntLigne++;
+}
+
+// stocke en tmp l'adresse d'une valeur (&val) et écrit l'ASM
+void addrValeur(FILE* fdClair, FILE* fdCode, char * val){
+    int addr = adresse(val);
+
+    if(addr == -1){
+        printf("ERROR : Usage before declaration : %s\n", val);
+        exit(1);
+    }
+    if( table[addr].init != 1 ){
+        printf("ERROR : Usage before assignation : %s\n", val);
+        exit(1);
+    }
+
+    nbASM(fdClair, fdCode, addr);
 }
