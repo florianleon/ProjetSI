@@ -76,10 +76,10 @@ BEGIN
 		CLKP <= '0';
 		wait for CLKP_period/2;
 		CLKP <= '1';
-		wait for CLKP_period/2;
+		wait for	 CLKP_period/2;
    end process;
  
-	RSTP <= '0', '1' after 100 ns;
+	RSTP <= '1';
 
 
 END;

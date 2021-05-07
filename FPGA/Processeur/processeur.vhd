@@ -55,11 +55,11 @@ architecture Behavioral of processeur is
 	--Banc de mémoire
 	component BMD_module
 		 Port ( addr : in  STD_LOGIC_VECTOR (7 downto 0);
-				  Input : in  STD_LOGIC_VECTOR (7 downto 0);
+				  entree : in  STD_LOGIC_VECTOR (7 downto 0);
 				  RW : in  STD_LOGIC;
 				  RST : in  STD_LOGIC;
 				  CLK : in  STD_LOGIC;
-				  Output : out  STD_LOGIC_VECTOR (7 downto 0));
+				  Sortie : out  STD_LOGIC_VECTOR (7 downto 0));
 	end component;
 
 	--Banc d'instruction
@@ -112,9 +112,14 @@ architecture Behavioral of processeur is
 	
 	--MUX
 	signal LI_DI_MUX_DI_EX: STD_LOGIC_VECTOR(7 downto 0);
+	signal DI_EX_MUX_EX_MEM: STD_LOGIC_VECTOR(7 downto 0);
+	signal EX_MEM_MUX_MEM_RE_G: STD_LOGIC_VECTOR(7 downto 0);
+	signal EX_MEM_MUX_MEM_RE_D: STD_LOGIC_VECTOR(7 downto 0);
 	
 	--LC
 	signal MEM_RE_LC_OUT: std_logic;
+	signal DI_EX_LC_EX_MEM : std_logic_vector (2 downto 0);
+	signal EX_MEM_LC_MEM_RE : std_logic;
 	
 	--mémoire d'instruction
 	signal addr_instruc: STD_LOGIC_VECTOR(7 downto 0) := X"00";
@@ -122,6 +127,13 @@ architecture Behavioral of processeur is
 	
 	--Banc de registre
 	signal QAR, QBR : STD_LOGIC_VECTOR (7 downto 0);
+	
+	--ALU
+	signal ALU_S : STD_LOGIC_VECTOR (7 downto 0);
+	signal ALU_N, ALU_O, ALU_Z, ALU_C : std_logic;
+	
+	--Banc de Données
+	signal BMD_Sortie : STD_LOGIC_VECTOR (7 downto 0);
 
 begin
 	Aout <= QAR;
@@ -152,7 +164,7 @@ begin
 			CLK => CLKP,
 			inA => LI_DI_DI_EX.A,
 			inB => LI_DI_MUX_DI_EX,
-			inC => LI_DI_DI_EX.C, --REG_QB,
+			inC => QBR,
 			inOP => LI_DI_DI_EX.OP,
 			outOP => DI_EX_EX_MEM.OP,
 			outA => DI_EX_EX_MEM.A,
@@ -163,7 +175,7 @@ begin
 	EX_Mem :  pipeline PORT MAP (
 			CLK => CLKP,
 			inA => DI_EX_EX_MEM.A,
-			inB => DI_EX_EX_MEM.B, --DI_EX_MUX_EX_MEM,
+			inB => DI_EX_MUX_EX_MEM,
 			inC => DI_EX_EX_MEM.C,  --n'existe pas
 			inOP => DI_EX_EX_MEM.OP,
 			outOP => EX_MEM_MEM_RE.OP,
@@ -175,7 +187,7 @@ begin
 	Mem_RE :  pipeline PORT MAP (
 			CLK => CLKP,
 			inA => EX_MEM_MEM_RE.A,
-			inB => EX_MEM_MEM_RE.B, --MemD_OUT_MUX_MEM_RE,
+			inB => EX_MEM_MUX_MEM_RE_D,
 			inC => EX_MEM_MEM_RE.C, --n'existe pas
 			inOP => EX_MEM_MEM_RE.OP,
 			outOP => MEM_RE_OUT.OP,
@@ -197,12 +209,37 @@ begin
 			QB => QBR
 	);
 	
+	ALU : ALU_Module PORT MAP (
+			  A => DI_EX_EX_MEM.B,
+           B => DI_EX_EX_MEM.C,
+           Ctrl_Alu => DI_EX_LC_EX_MEM,
+           S => ALU_S,
+           N => ALU_N,
+           O => ALU_O,
+           Z => ALU_Z,
+           C => ALU_C
+	); 
+	
+	--Banc memoire de données
+	BMD : BMD_module PORT MAP ( 
+		addr => EX_MEM_MUX_MEM_RE_G,
+	   entree => EX_MEM_MEM_RE.B,
+	   RW => EX_MEM_LC_MEM_RE,
+	   RST => RSTP,
+	   CLK => CLKP,
+	   Sortie => BMD_Sortie
+	);
+	
 	--MUX
 	LI_DI_MUX_DI_EX <= LI_DI_DI_EX.B when LI_DI_DI_EX.OP = x"06" else QAR;
-	
+	DI_EX_MUX_EX_MEM <= ALU_S when DI_EX_EX_MEM.OP = x"01" or DI_EX_EX_MEM.OP = x"02" or DI_EX_EX_MEM.OP = x"03" else DI_EX_EX_MEM.B;
+	EX_MEM_MUX_MEM_RE_G <= EX_MEM_MEM_RE.A when EX_MEM_MEM_RE.OP = X"08" else EX_MEM_MEM_RE.B; --on cosidere que la lecture n'est pas dansgereuse
+	EX_MEM_MUX_MEM_RE_D <= BMD_Sortie when EX_MEM_MEM_RE.OP = X"07" else EX_MEM_MEM_RE.B;
 	
 	--LC
+	DI_EX_LC_EX_MEM <= DI_EX_EX_MEM.OP (2 downto 0) when DI_EX_EX_MEM.OP = x"01" or DI_EX_EX_MEM.OP = x"02" or DI_EX_EX_MEM.OP = x"03" else "000";
 	MEM_RE_LC_OUT  <= '1' when MEM_RE_OUT.OP = x"06" or MEM_RE_OUT.OP = x"05" else '0';
+	EX_MEM_LC_MEM_RE <= '0' when EX_MEM_MEM_RE.OP = X"08" else '1';
 
 	process
 	begin

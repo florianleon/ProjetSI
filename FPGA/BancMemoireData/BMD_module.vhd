@@ -33,11 +33,11 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 
 entity BMD_module is
     Port ( addr : in  STD_LOGIC_VECTOR (7 downto 0);
-           Input : in  STD_LOGIC_VECTOR (7 downto 0);
+           entree : in  STD_LOGIC_VECTOR (7 downto 0);
            RW : in  STD_LOGIC;
            RST : in  STD_LOGIC;
            CLK : in  STD_LOGIC;
-           Output : out  STD_LOGIC_VECTOR (7 downto 0));
+           Sortie : out  STD_LOGIC_VECTOR (7 downto 0));
 end BMD_module;
 
 architecture Behavioral of BMD_module is
@@ -57,10 +57,10 @@ begin
 		else
 			if RW = '1' then
 				--lecture
-				Output <= BMD(conv_integer(addr));
+				Sortie <= BMD(conv_integer(addr));
 			elsif RW = '0' then
 				-- ecriture
-				BMD(conv_integer(addr)) <= Input;
+				BMD(conv_integer(addr)) <= entree;
 			end if;
 		end if;
 

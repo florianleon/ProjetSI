@@ -5,14 +5,14 @@ Parameter TMPDIR set to /home/fleon/Bureau/ProjetSI/FPGA/Processeur/xst/projnav.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.14 secs
  
 --> 
 Parameter xsthdpdir set to /home/fleon/Bureau/ProjetSI/FPGA/Processeur/xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.14 secs
  
 --> 
 Reading design: processeur.prj
@@ -43,18 +43,33 @@ INFO:Xst - Part-select index evaluated to out of bound value may lead to incorre
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Pipeline/pipeline.vhd" into library work
+Parsing entity <pipeline>.
+Parsing architecture <Behavioral> of entity <pipeline>.
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/BancRegistres/BR_module.vhd" into library work
+Parsing entity <BR_module>.
+Parsing architecture <Behavioral> of entity <br_module>.
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/BancMemoireInstructions/BMI_module.vhd" into library work
+Parsing entity <BMI_module>.
+Parsing architecture <Behavioral> of entity <bmi_module>.
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/BancMemoireData/BMD_module.vhd" into library work
+Parsing entity <BMD_module>.
+Parsing architecture <Behavioral> of entity <bmd_module>.
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/ALU/ALU_Module.vhd" into library work
+Parsing entity <ALU_Module>.
+Parsing architecture <Behavioral> of entity <alu_module>.
 Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" into library work
 Parsing entity <processeur>.
 Parsing architecture <Behavioral> of entity <processeur>.
 
 
 Total REAL time to Xst completion: 2.00 secs
-Total CPU time to Xst completion: 2.04 secs
+Total CPU time to Xst completion: 2.11 secs
  
 --> 
 
 
-Total memory usage is 301316 kilobytes
+Total memory usage is 301500 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

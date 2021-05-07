@@ -5,40 +5,16 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 132: &lt;<arg fmt="%s" index="1">bmi_module</arg>&gt; remains a black-box since it has no binding entity.
+<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 212: &lt;<arg fmt="%s" index="1">alu_module</arg>&gt; remains a black-box since it has no binding entity.
 </msg>
 
-<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 139: &lt;<arg fmt="%s" index="1">pipeline</arg>&gt; remains a black-box since it has no binding entity.
+<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 224: &lt;<arg fmt="%s" index="1">bmd_module</arg>&gt; remains a black-box since it has no binding entity.
 </msg>
 
-<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 151: &lt;<arg fmt="%s" index="1">pipeline</arg>&gt; remains a black-box since it has no binding entity.
+<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">212</arg>. Instance <arg fmt="%s" index="3">alu_module</arg> is unbound
 </msg>
 
-<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 163: &lt;<arg fmt="%s" index="1">pipeline</arg>&gt; remains a black-box since it has no binding entity.
-</msg>
-
-<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 175: &lt;<arg fmt="%s" index="1">pipeline</arg>&gt; remains a black-box since it has no binding entity.
-</msg>
-
-<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 188: &lt;<arg fmt="%s" index="1">br_module</arg>&gt; remains a black-box since it has no binding entity.
-</msg>
-
-<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">132</arg>. Instance <arg fmt="%s" index="3">bmi_module</arg> is unbound
-</msg>
-
-<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">139</arg>. Instance <arg fmt="%s" index="3">pipeline</arg> is unbound
-</msg>
-
-<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">151</arg>. Instance <arg fmt="%s" index="3">pipeline</arg> is unbound
-</msg>
-
-<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">163</arg>. Instance <arg fmt="%s" index="3">pipeline</arg> is unbound
-</msg>
-
-<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">175</arg>. Instance <arg fmt="%s" index="3">pipeline</arg> is unbound
-</msg>
-
-<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">188</arg>. Instance <arg fmt="%s" index="3">br_module</arg> is unbound
+<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">224</arg>. Instance <arg fmt="%s" index="3">bmd_module</arg> is unbound
 </msg>
 
 </messages>

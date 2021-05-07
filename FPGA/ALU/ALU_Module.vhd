@@ -44,10 +44,10 @@ end ALU_Module;
 
 architecture Behavioral of ALU_Module is
 	-- Ctrl_Alu : 
-	-- 000 --> +
-	-- 001 --> -
+	-- 001 --> +
 	-- 010 --> *
-	-- 011 --> / --> ne pas faire
+	-- 011 --> -
+	-- 100 --> / --> ne pas faire
 	signal Aext: STD_LOGIC_VECTOR (15 downto 0);
 	signal Bext: STD_LOGIC_VECTOR (15 downto 0);
 	signal Result: STD_LOGIC_VECTOR (15 downto 0);
@@ -65,7 +65,7 @@ begin
 		C <= '0';
 		
 		-- ADD
-		if Ctrl_Alu = "000" then 
+		if Ctrl_Alu = "001" then 
 			--carry
 			if Aext + Bext > X"FF" then 
 				C <= '1';
@@ -81,7 +81,7 @@ begin
 			Result <= Aext + Bext;
 			
 		-- SUB
-		elsif Ctrl_Alu = "001" then 
+		elsif Ctrl_Alu = "011" then 
 			Result <= Aext - Bext;
 			-- 0
 			if Aext = Bext then 

@@ -88,7 +88,7 @@ BEGIN
 	
 	A <= X"01", X"05" after 100 ns, X"00" after 300 ns, X"05" after 400 ns;
 	B <= X"01", X"03" after 50 ns, X"FF" after 250 ns, X"00" after 300 ns, X"05" after 350 ns, X"00" after 450 ns;
-	Ctrl_Alu <= "000", "001" after 150 ns, "010" after 200 ns, "000" after 300 ns, "001" after 350 ns, "010" after 450 ns; 
+	Ctrl_Alu <= "001", "011" after 150 ns, "010" after 200 ns, "001" after 300 ns, "011" after 350 ns, "010" after 450 ns; 
  
 	
 

@@ -8,7 +8,7 @@ Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/ALU/ALU_test.vhd" into libra
 Starting static elaboration
 Completed static elaboration
 Fuse Memory Usage: 96828 KB
-Fuse CPU Usage: 700 ms
+Fuse CPU Usage: 760 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -16,8 +16,9 @@ Compiling package std_logic_unsigned
 Compiling architecture behavioral of entity ALU_Module [alu_module_default]
 Compiling architecture behavior of entity alu_test
 Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
 Compiled 7 VHDL Units
 Built simulation executable /home/fleon/Bureau/ProjetSI/FPGA/ALU/ALU_test_isim_beh.exe
 Fuse Memory Usage: 1717688 KB
-Fuse CPU Usage: 750 ms
-GCC CPU Usage: 110 ms
+Fuse CPU Usage: 800 ms
+GCC CPU Usage: 70 ms

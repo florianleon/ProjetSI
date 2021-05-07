@@ -1,2 +1,5 @@
+vhdl work "../Pipeline/pipeline.vhd"
+vhdl work "../BancRegistres/BR_module.vhd"
+vhdl work "../BancMemoireInstructions/BMI_module.vhd"
 vhdl work "processeur.vhd"
 vhdl work "processeur_test.vhd"
