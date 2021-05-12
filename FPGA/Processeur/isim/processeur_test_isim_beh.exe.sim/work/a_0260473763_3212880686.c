@@ -56,7 +56,7 @@ LAB0:    t1 = (t0 + 2624U);
 
 LAB3:    goto *t2;
 
-LAB2:    xsi_set_current_line(46, ng0);
+LAB2:    xsi_set_current_line(47, ng0);
 
 LAB6:    t2 = (t0 + 2944);
     *((int *)t2) = 1;
@@ -65,7 +65,7 @@ LAB6:    t2 = (t0 + 2944);
 LAB1:    return;
 LAB4:    t6 = (t0 + 2944);
     *((int *)t6) = 0;
-    xsi_set_current_line(47, ng0);
+    xsi_set_current_line(48, ng0);
     t2 = (t0 + 1648U);
     t4 = *((char **)t2);
     t2 = (t0 + 1032U);

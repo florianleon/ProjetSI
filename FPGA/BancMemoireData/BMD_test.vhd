@@ -42,24 +42,24 @@ ARCHITECTURE behavior OF BMD_test IS
     COMPONENT BMD_module
     PORT(
          addr : IN  std_logic_vector(7 downto 0);
-         Input : IN  std_logic_vector(7 downto 0);
+         entree : IN  std_logic_vector(7 downto 0);
          RW : IN  std_logic;
          RST : IN  std_logic;
          CLK : IN  std_logic;
-         Output : OUT  std_logic_vector(7 downto 0)
+         Sortie : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
    signal addr : std_logic_vector(7 downto 0) := (others => '0');
-   signal Input : std_logic_vector(7 downto 0) := (others => '0');
+   signal entree : std_logic_vector(7 downto 0) := (others => '0');
    signal RW : std_logic := '0';
    signal RST : std_logic := '0';
    signal CLK : std_logic := '0';
 
  	--Outputs
-   signal Output : std_logic_vector(7 downto 0);
+   signal Sortie : std_logic_vector(7 downto 0);
 
    -- Clock period definitions
    constant CLK_period : time := 10 ns;
@@ -69,11 +69,11 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: BMD_module PORT MAP (
           addr => addr,
-          Input => Input,
+          entree => entree,
           RW => RW,
           RST => RST,
           CLK => CLK,
-          Output => Output
+          Sortie => Sortie
         );
 
    -- Clock process definitions
@@ -87,7 +87,7 @@ BEGIN
  
 	RST <= '0', '1' after 50 ns, '0' after 300 ns;
 	addr <= X"01", X"02" after 200 ns;
-	Input <= X"D8", X"23" after 200 ns;
+	entree <= X"D8", X"23" after 200 ns;
 	RW <= '0', '1' after 150 ns;
 
 END;

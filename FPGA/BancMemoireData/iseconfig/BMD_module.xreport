@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2021-04-16T14:29:40</DateModified>
+  <DateModified>2021-05-12T10:34:55</DateModified>
   <ModuleName>BMD_module</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
   <SavedFilePath>/home/fleon/Bureau/ProjetSI/FPGA/BancMemoireData/iseconfig/BMD_module.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>/home/fleon/Bureau/ProjetSI/FPGA/BancMemoireData</ImplementationReportsDirectory>
+  <ImplementationReportsDirectory>/home/fleon/Bureau/ProjetSI/FPGA/BancMemoireData/</ImplementationReportsDirectory>
   <DateInitialized>2021-04-16T14:29:40</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>

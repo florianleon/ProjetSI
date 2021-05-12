@@ -233,12 +233,12 @@ begin
 	--MUX
 	LI_DI_MUX_DI_EX <= LI_DI_DI_EX.B when LI_DI_DI_EX.OP = x"06" else QAR;
 	DI_EX_MUX_EX_MEM <= ALU_S when DI_EX_EX_MEM.OP = x"01" or DI_EX_EX_MEM.OP = x"02" or DI_EX_EX_MEM.OP = x"03" else DI_EX_EX_MEM.B;
-	EX_MEM_MUX_MEM_RE_G <= EX_MEM_MEM_RE.A when EX_MEM_MEM_RE.OP = X"08" else EX_MEM_MEM_RE.B; --on cosidere que la lecture n'est pas dansgereuse
+	EX_MEM_MUX_MEM_RE_G <= EX_MEM_MEM_RE.A when EX_MEM_MEM_RE.OP = X"08" else EX_MEM_MEM_RE.B; --on considere que la lecture n'est pas dangereuse
 	EX_MEM_MUX_MEM_RE_D <= BMD_Sortie when EX_MEM_MEM_RE.OP = X"07" else EX_MEM_MEM_RE.B;
 	
 	--LC
 	DI_EX_LC_EX_MEM <= DI_EX_EX_MEM.OP (2 downto 0) when DI_EX_EX_MEM.OP = x"01" or DI_EX_EX_MEM.OP = x"02" or DI_EX_EX_MEM.OP = x"03" else "000";
-	MEM_RE_LC_OUT  <= '1' when MEM_RE_OUT.OP = x"06" or MEM_RE_OUT.OP = x"05" else '0';
+	MEM_RE_LC_OUT  <= '1' when MEM_RE_OUT.OP = x"06" or MEM_RE_OUT.OP = x"05" or MEM_RE_OUT.OP = x"01" or MEM_RE_OUT.OP = x"02" or MEM_RE_OUT.OP = x"03" else '0';
 	EX_MEM_LC_MEM_RE <= '0' when EX_MEM_MEM_RE.OP = X"08" else '1';
 
 	process

@@ -6,16 +6,14 @@ Determining compilation order of HDL files
 Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/../Pipeline/pipeline.vhd" into library work
 Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/../BancRegistres/BR_module.vhd" into library work
 Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/../BancMemoireInstructions/BMI_module.vhd" into library work
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/../BancMemoireData/BMD_module.vhd" into library work
+Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/../ALU/ALU_Module.vhd" into library work
 Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" into library work
 Parsing VHDL file "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur_test.vhd" into library work
 Starting static elaboration
-WARNING:HDLCompiler:89 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 212: <alu_module> remains a black-box since it has no binding entity.
-WARNING:HDLCompiler:89 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 224: <bmd_module> remains a black-box since it has no binding entity.
 Completed static elaboration
-Fuse Memory Usage: 97056 KB
-Fuse CPU Usage: 750 ms
-WARNING:Simulator:648 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 212. Instance alu_module is unbound
-WARNING:Simulator:648 - "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 224. Instance bmd_module is unbound
+Fuse Memory Usage: 97208 KB
+Fuse CPU Usage: 730 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -23,12 +21,13 @@ Compiling package std_logic_unsigned
 Compiling architecture behavioral of entity BMI_module [bmi_module_default]
 Compiling architecture behavioral of entity pipeline [pipeline_default]
 Compiling architecture behavioral of entity BR_module [br_module_default]
+Compiling architecture behavioral of entity ALU_Module [alu_module_default]
+Compiling architecture behavioral of entity BMD_module [bmd_module_default]
 Compiling architecture behavioral of entity processeur [processeur_default]
 Compiling architecture behavior of entity processeur_test
 Time Resolution for simulation is 1ps.
-Waiting for 1 sub-compilation(s) to finish...
-Compiled 13 VHDL Units
+Compiled 17 VHDL Units
 Built simulation executable /home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur_test_isim_beh.exe
-Fuse Memory Usage: 1717980 KB
-Fuse CPU Usage: 860 ms
-GCC CPU Usage: 140 ms
+Fuse Memory Usage: 1718092 KB
+Fuse CPU Usage: 800 ms
+GCC CPU Usage: 110 ms

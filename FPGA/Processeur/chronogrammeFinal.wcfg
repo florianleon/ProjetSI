@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur_test_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="processeur_test" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="19" />
+   <wvobject fp_name="/processeur_test/clkp" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clkp</obj_property>
+      <obj_property name="ObjectShortName">clkp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/rstp" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rstp</obj_property>
+      <obj_property name="ObjectShortName">rstp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/aout" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">aout[7:0]</obj_property>
+      <obj_property name="ObjectShortName">aout[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/bout" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bout[7:0]</obj_property>
+      <obj_property name="ObjectShortName">bout[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/clkp_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clkp_period</obj_property>
+      <obj_property name="ObjectShortName">clkp_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/bmd_sortie" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bmd_sortie[7:0]</obj_property>
+      <obj_property name="ObjectShortName">bmd_sortie[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/li_di_di_ex" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">li_di_di_ex</obj_property>
+      <obj_property name="ObjectShortName">li_di_di_ex</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/di_ex_ex_mem" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">di_ex_ex_mem</obj_property>
+      <obj_property name="ObjectShortName">di_ex_ex_mem</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/ex_mem_mem_re" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ex_mem_mem_re</obj_property>
+      <obj_property name="ObjectShortName">ex_mem_mem_re</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/mem_re_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mem_re_out</obj_property>
+      <obj_property name="ObjectShortName">mem_re_out</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/li_di_mux_di_ex" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">li_di_mux_di_ex[7:0]</obj_property>
+      <obj_property name="ObjectShortName">li_di_mux_di_ex[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/di_ex_mux_ex_mem" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">di_ex_mux_ex_mem[7:0]</obj_property>
+      <obj_property name="ObjectShortName">di_ex_mux_ex_mem[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/ex_mem_mux_mem_re_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ex_mem_mux_mem_re_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ex_mem_mux_mem_re_g[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/ex_mem_mux_mem_re_d" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ex_mem_mux_mem_re_d[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ex_mem_mux_mem_re_d[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/mem_re_lc_out" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">mem_re_lc_out</obj_property>
+      <obj_property name="ObjectShortName">mem_re_lc_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/di_ex_lc_ex_mem" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">di_ex_lc_ex_mem[2:0]</obj_property>
+      <obj_property name="ObjectShortName">di_ex_lc_ex_mem[2:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/ex_mem_lc_mem_re" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ex_mem_lc_mem_re</obj_property>
+      <obj_property name="ObjectShortName">ex_mem_lc_mem_re</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/instruc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instruc[31:0]</obj_property>
+      <obj_property name="ObjectShortName">instruc[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/processeur_test/uut/bmd_sortie" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bmd_sortie[7:0]</obj_property>
+      <obj_property name="ObjectShortName">bmd_sortie[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+</wave_config>

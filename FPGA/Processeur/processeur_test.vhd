@@ -79,6 +79,7 @@ BEGIN
 		wait for	 CLKP_period/2;
    end process;
  
+	--RSTP <= '0', '1' after 20 ns;
 	RSTP <= '1';
 
 

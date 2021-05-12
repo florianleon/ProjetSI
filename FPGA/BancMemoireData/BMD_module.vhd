@@ -50,7 +50,7 @@ begin
 	process
 	
 	begin
-		wait until CLK'event and CLK = '1';
+		wait until CLK'event and CLK = '0';
 		
 		if RST = '0' then 
 			BMD <= (others => X"00");

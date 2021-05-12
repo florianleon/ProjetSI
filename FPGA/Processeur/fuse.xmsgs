@@ -5,17 +5,5 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 212: &lt;<arg fmt="%s" index="1">alu_module</arg>&gt; remains a black-box since it has no binding entity.
-</msg>
-
-<msg type="warning" file="HDLCompiler" num="89" delta="unknown" >"/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd" Line 224: &lt;<arg fmt="%s" index="1">bmd_module</arg>&gt; remains a black-box since it has no binding entity.
-</msg>
-
-<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">212</arg>. Instance <arg fmt="%s" index="3">alu_module</arg> is unbound
-</msg>
-
-<msg type="warning" file="Simulator" num="648" delta="unknown" >&quot;<arg fmt="%s" index="1">/home/fleon/Bureau/ProjetSI/FPGA/Processeur/processeur.vhd</arg>&quot; Line <arg fmt="%d" index="2">224</arg>. Instance <arg fmt="%s" index="3">bmd_module</arg> is unbound
-</msg>
-
 </messages>
 
