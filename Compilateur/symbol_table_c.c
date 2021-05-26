@@ -2,38 +2,39 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+
 #include "symbol_table_c.h"
 
 
-ligne table[TAILLE]; // var-> <-tmp
+ligne table[TAILLE];                                // TABLE DES VARIABLES (gère l'adresse/const/init des variables) var-> <-tmp
 int tmpIndex = TAILLE - 1;
 
-int tableIndex[MAX_INDENT];
+int tableIndex[MAX_INDENT];                         // TABLE D'INDEX (gère les "zones" de recherches de variables pour la localité)
 int indexIndex = 0;
 
-char* tableVariable[TAILLE_TABLE_VARIABLE];
+char* tableVariable[TAILLE_TABLE_VARIABLE];         // LISTE DE VARIABLES (pour les déclarations multiples)
 int varIndex = 0;
 
-jump tableJump[TAILLE_JUMP];
+jump tableJump[TAILLE_JUMP];                        // LISTE DES "JUMPS" (permet de vérifier que les "jumps par paire" soient bien par paire (if, else, while)
 int indexJump = 0;
 
-labelC tableLabel[TAILLE_JUMP];
+labelC tableLabel[TAILLE_JUMP];                     // LISTE DES LABEL (gère l'incrémentation des label, if, else, while)
 int indexLabel = 0;
 
-int cntLigne = 0;
+int cntLigne = 0;                                   // Compte le nombre de ligne ASM actuellement traitée
 
-int cntRet = 0;
+int cntRet = 0;                                     // Permet de vérifier le nombre de return (0 ou 1*) dans les fonctions, pour vérifier la déclaration)
 
-char buf[TAILLE_BUF]; // bufer des labels
+char buf[TAILLE_BUF]; // bufer des labels           // BUFFER LABEL (afin de créer le bon label (base + numéro) )
 
-fonction tableFonction[MAX_FONCTION];
+fonction tableFonction[MAX_FONCTION];               // TABLE DE FONCTIONS (gère le nombre d'argument, leur nom, la ligne de jump des fonctions)
 int indexFonction = 0;
 
-char * listeArg[NB_ARG];
+char * listeArg[NB_ARG];                            //LISTE ARG (pareil que multi déclaration, pour les arguments d'une fonction)
 int indexListeArg = 0;
 
-int variableMaxAtteinte = 0; // permet d'éviter les effets de bors lié aux "indentations" et fin de fct.
-int precVariableMaxAtteinte = 0;
+int variableMaxAtteinte = 0;                        // permet d'éviter les effets de bors lié aux "indentations" et fin de fct.
+int precVariableMaxAtteinte = 0;                    // idem
 
 // début des fct //
 
@@ -645,6 +646,7 @@ void jumpMaxVariable(){
     precVariableMaxAtteinte = variableMaxAtteinte;
 }
 
+// Crée la liste d'arg d'une fonction (pareil que multi déclaration)
 void ajouterListeArg(char * argu){
 
     if(indexListeArg == NB_ARG){
@@ -656,6 +658,7 @@ void ajouterListeArg(char * argu){
     indexListeArg++;
 }
 
+// Ajoute une fonction à la liste
 void ajouterFct(FILE* fdClair, FILE* fdCode, char* nom, int retourne){
 
     int addrFct = adresseFct(nom);

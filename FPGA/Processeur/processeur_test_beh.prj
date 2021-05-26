@@ -1,7 +1,0 @@
-vhdl work "../Pipeline/pipeline.vhd"
-vhdl work "../BancRegistres/BR_module.vhd"
-vhdl work "../BancMemoireInstructions/BMI_module.vhd"
-vhdl work "../BancMemoireData/BMD_module.vhd"
-vhdl work "../ALU/ALU_Module.vhd"
-vhdl work "processeur.vhd"
-vhdl work "processeur_test.vhd"

@@ -17,14 +17,14 @@ typedef struct { // gere l'ouverture/fermeture des label de renvoie unique (if, 
     int ouvert; // 1 -> ouvert ; 0 -> fermé
 } jump;
 
-typedef struct { // gere les jumps uniques (//TODO peut remplacer entièrement celui d'au dessus ?)
+typedef struct { // gere les jumps uniques 
     char nom[TAILLE_BUF];
     int addrG;
     int addrD;
 } labelC;
 
 
-typedef struct { // gere les jump multiples (fct) (//TODO peut remplacer celui d'au dessus ? Dans encore un autre ??? (plus général ??))
+typedef struct { // gere les jump multiples (fct)
     char * nom;
     int nbArg;
     int retourne; // 1 --> int ; 0 --> void

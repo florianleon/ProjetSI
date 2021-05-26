@@ -8,7 +8,7 @@ interpreter: ./src/interpreter.y ./src/interpreter.l ./src/instructions.c
 	gcc lex.yy.c y.tab.c ./src/instructions.c -Isrc -o interpreter
 
 run: interpreter
-	./interpreter < input.txt
+	./interpreter < input.txt > output.txt
 
 clean:
 	rm -f lex.yy.c interpreter y.tab.h y.tab.c *.o

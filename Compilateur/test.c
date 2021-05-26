@@ -1,14 +1,8 @@
-void fct3(){
-    int a = 0;
-}
-
 int fct1(int z, int y){
     int krrr;
     krrr = 7778;
     int a, b = 78;
     a = b + z;
-    fct3();
-
     return krrr;
 }
 
@@ -19,7 +13,6 @@ int main(){
     int e, f, g;
 
     if(a==3){
-        int dfg;
         int b = fct1(3,4);
         printf(b);
     }
@@ -31,19 +24,9 @@ int main(){
         a = 330;
         printf(a);
         while(c > 75){
-            int bbbb;
-            bbbb = 888;
-            int h;
-            c = c-1;
-            int b = fct1(3,4);
-            printf(b);
+            int b = 5;
+            int * p = &b;
         }
-        
         a = a + 1;
     }
 }
-
-void fcttt(int a){
-    a = 789;
-}
-

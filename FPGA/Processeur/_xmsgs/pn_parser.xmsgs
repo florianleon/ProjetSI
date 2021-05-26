@@ -8,7 +8,22 @@
 <!-- Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.    -->
 
 <messages>
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/fleon/Bureau/ProjetSI/FPGA/BancMemoireData/BMD_module.vhd&quot; into library work</arg>
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/picco/4A/Projet Systeme Informatique/ProjetSI/FPGA/ALU/ALU_Module.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/picco/4A/Projet Systeme Informatique/ProjetSI/FPGA/BancMemoireData/BMD_module.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/picco/4A/Projet Systeme Informatique/ProjetSI/FPGA/BancMemoireInstructions/BMI_module.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/picco/4A/Projet Systeme Informatique/ProjetSI/FPGA/BancRegistres/BR_module.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/picco/4A/Projet Systeme Informatique/ProjetSI/FPGA/Pipeline/pipeline.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/picco/4A/Projet Systeme Informatique/ProjetSI/FPGA/Processeur/processeur.vhd&quot; into library work</arg>
 </msg>
 
 </messages>

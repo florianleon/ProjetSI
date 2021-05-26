@@ -1,5 +1,5 @@
-set -tmpdir "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/xst/projnav.tmp"
-set -xsthdpdir "/home/fleon/Bureau/ProjetSI/FPGA/Processeur/xst"
+set -tmpdir "/home/picco/4A/Projet Systeme Informatique/ProjetSI/FPGA/Processeur/xst/projnav.tmp"
+set -xsthdpdir "/home/picco/4A/Projet Systeme Informatique/ProjetSI/FPGA/Processeur/xst"
 run -compileonly yes
 -p xc6slx16-3-csg324
 -top processeur

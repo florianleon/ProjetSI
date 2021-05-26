@@ -1,2 +1,7 @@
+vhdl isim_temp "../Pipeline/pipeline.vhd"
+vhdl isim_temp "../BancRegistres/BR_module.vhd"
+vhdl isim_temp "../BancMemoireInstructions/BMI_module.vhd"
+vhdl isim_temp "../BancMemoireData/BMD_module.vhd"
+vhdl isim_temp "../ALU/ALU_Module.vhd"
 vhdl isim_temp "processeur.vhd"
 vhdl isim_temp "processeur_test.vhd"
